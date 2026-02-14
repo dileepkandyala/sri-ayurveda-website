@@ -1,0 +1,379 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Inter:wght@300;400;600&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Luxurious Ayurvedic theme */
+:root {
+  --emerald: #0b4f3b; /* deep emerald */
+  --deep-green: #2f8b57; /* lighter, fresher green */
+  --gold: #D4AF37; /* luxury gold */
+  --amber: #b7791f;
+  --ivory: #FBF7F0; /* soft warm background */
+  --charcoal: #2b2b2b; /* primary text */
+  --muted-olive: #8a9a76;
+  --card-bg: rgba(255,255,255,0.85);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  line-height: 1.6;
+  color: var(--charcoal);
+  background-color: var(--ivory);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  position: relative;
+  overflow-x: hidden;
+}
+
+/* Subtle decorative texture */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background-image: radial-gradient(rgba(13,62,44,0.02) 1px, transparent 1px), radial-gradient(rgba(13,62,44,0.02) 1px, transparent 1px);
+  background-position: 0 0, 25px 25px;
+  background-size: 50px 50px;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+/* Header / Nav: background image with overlay, brand, and top-left menu */
+.site-header {
+  position: relative;
+  color: var(--ivory);
+  box-shadow: 0 6px 30px rgba(11,79,59,0.12);
+  overflow: visible; /* allow dropdown to appear outside header */
+}
+
+.site-header::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: linear-gradient(180deg, rgba(11,79,59,0.45), rgba(11,79,59,0.18)), url('https://images.unsplash.com/photo-1501004318641-b39e6451bec6?auto=format&fit=crop&w=1600&q=80');
+  background-size: cover;
+  background-position: center;
+  filter: saturate(0.95) contrast(0.95);
+  z-index: 0;
+}
+
+.header-inner {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 2.25rem 1rem;
+}
+
+nav {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 1rem;
+}
+
+nav ul {
+  display: flex;
+  list-style: none;
+  gap: 1.25rem;
+}
+
+nav a {
+  color: var(--ivory);
+  text-decoration: none;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+
+nav a:hover {
+  color: var(--gold);
+}
+
+/* Top-left hamburger/menu button */
+.menu-button {
+  position: absolute;
+  right: 1rem;
+  top: 3rem;
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.08);
+  width: 52px;
+  height: 52px;
+  display: flex; /* always visible */
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+  z-index: 60;
+  backdrop-filter: blur(4px);
+}
+
+.menu-button:focus {
+  outline: 2px solid rgba(212,175,55,0.2);
+}
+
+.hamburger {
+  display: block;
+  width: 20px;
+  height: 2px;
+  background: var(--ivory);
+  position: relative;
+  transition: background 200ms ease-in-out;
+}
+
+.hamburger::before,
+.hamburger::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  width: 20px;
+  height: 2px;
+  background: var(--ivory);
+  transition: transform 220ms cubic-bezier(.2,.9,.2,1), top 220ms ease-in-out, opacity 220ms ease-in-out;
+}
+
+.hamburger::before { top: -7px; }
+.hamburger::after { top: 7px; }
+
+/* Hamburger -> X when menu open (uses aria-expanded on the button) */
+.menu-button[aria-expanded="true"] .hamburger { background: transparent; }
+.menu-button[aria-expanded="true"] .hamburger::before {
+  transform: translateY(7px) rotate(45deg);
+}
+.menu-button[aria-expanded="true"] .hamburger::after {
+  transform: translateY(-7px) rotate(-45deg);
+}
+
+/* Desktop and dropdown menu link colors: make menu names green */
+.site-nav a { color: var(--deep-green) !important; }
+.site-nav a:hover { color: var(--gold) !important; }
+
+.brand-tile {
+  color: var(--ivory);
+}
+
+.brand {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.25rem;
+  letter-spacing: 0.08em;
+}
+
+.brand-sub {
+  font-size: 0.85rem;
+  opacity: 0.95;
+}
+
+.brand-logo {
+  max-height: 80px;
+  width: auto;
+  object-fit: contain;
+  transition: transform 180ms ease, opacity 300ms ease;
+  opacity: 0.92;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
+}
+
+.brand-tile:hover .brand-logo {
+  transform: scale(1.05);
+  opacity: 1;
+}
+
+/* site-nav defaults (desktop) */
+/* Hide nav by default; show when burger toggles `.open` */
+.site-nav {
+  display: none !important;
+  gap: 1.25rem;
+  align-items: center;
+}
+
+.site-nav.open {
+  display: block !important;
+  position: absolute;
+  right: 1rem;
+  top: calc(100% + 8px);
+  z-index: 999;
+  min-width: 200px;
+  background: var(--card-bg);
+  border-radius: 10px;
+  padding: 0.5rem;
+  box-shadow: 0 14px 40px rgba(11,79,59,0.12);
+  border: 1px solid rgba(212,175,55,0.06);
+  opacity: 1;
+  transform: translateY(0) scale(1);
+  pointer-events: auto;
+}
+
+/* Responsive dropdown behavior */
+@media (max-width: 768px) {
+  .menu-button { display: flex; }
+
+  /* make header padding slightly smaller on small screens */
+  .header-inner { padding: 1.25rem 1rem; }
+}
+
+/* Vertical menu link styles */
+.site-nav a {
+  display: block;
+  padding: 0.75rem 1rem;
+  color: var(--deep-green) !important;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: 600;
+  transition: all 180ms ease;
+  cursor: pointer;
+}
+
+.site-nav a:hover {
+  background: rgba(47,139,87,0.08);
+  color: var(--gold) !important;
+  padding-left: 1.25rem;
+}
+
+/* Headings */
+h1, h2, h3, h4 {
+  font-family: 'Playfair Display', serif;
+  color: var(--deep-green);
+  letter-spacing: 0.01em;
+}
+
+h1 {
+  font-size: 2.75rem;
+  margin-bottom: 1.25rem;
+}
+
+h2 {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+}
+
+p {
+  margin-bottom: 1rem;
+  color: #3a3a3a;
+}
+
+/* Cards and sections */
+.card, .lux-card {
+  background: var(--card-bg);
+  border-radius: 14px;
+  padding: 1.25rem;
+  box-shadow: 0 10px 30px rgba(11,79,59,0.06);
+  border: 1px solid rgba(212,175,55,0.08);
+}
+
+.accent-underline {
+  height: 4px;
+  width: 6rem;
+  background: linear-gradient(90deg, var(--gold), var(--amber));
+  border-radius: 4px;
+}
+
+/* Buttons */
+.btn-primary {
+  background: linear-gradient(90deg, var(--gold), #c4972b);
+  color: #fff;
+  padding: 0.6rem 1rem;
+  border-radius: 999px;
+  font-weight: 600;
+  border: none;
+  box-shadow: 0 8px 20px rgba(180,140,50,0.18);
+}
+
+.btn-ghost {
+  background: transparent;
+  color: var(--deep-green);
+  border: 1px solid rgba(15,90,67,0.08);
+  padding: 0.5rem 0.9rem;
+  border-radius: 999px;
+}
+
+/* Form inputs */
+input, textarea, select {
+  background: rgba(255,255,255,0.9);
+  border: 1px solid rgba(11,79,59,0.06);
+  padding: 0.6rem 0.9rem;
+  border-radius: 8px;
+}
+
+/* Footer tweaks */
+footer {
+  background: linear-gradient(180deg, rgba(11,79,59,0.95), rgba(10,54,40,0.95));
+  color: var(--ivory);
+  padding: 2rem 0;
+}
+
+/* Tailwind green class overrides to match new lighter palette */
+.text-green-900 { color: var(--deep-green) !important; }
+.text-green-800 { color: var(--emerald) !important; }
+.text-green-700 { color: var(--muted-olive) !important; }
+.text-green-200 { color: rgba(47,139,87,0.35) !important; }
+.text-green-100 { color: rgba(47,139,87,0.22) !important; }
+.bg-green-50 { background-color: rgba(47,139,87,0.06) !important; }
+.bg-green-100 { background-color: rgba(47,139,87,0.10) !important; }
+.hover\:text-green-700:hover { color: var(--muted-olive) !important; }
+.hover\:bg-green-50:hover { background-color: rgba(47,139,87,0.06) !important; }
+
+/* Small screens */
+@media (max-width: 768px) {
+  nav ul {
+    gap: 1rem;
+  }
+
+  h1 {
+    font-size: 2rem;
+  }
+
+  h2 {
+    font-size: 1.5rem;
+  }
+}
+
+/* Smooth scroll animations */
+html {
+  scroll-behavior: smooth;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes fadeInRight {
+  from {
+    opacity: 0;
+    transform: translateX(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.home-section:nth-child(4) { animation-delay: 300ms; }
