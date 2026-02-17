@@ -5,6 +5,26 @@ export default defineConfig({
   plugins: [react()],
   assetsInclude: ['**/*.JPG', '**/*.jpg', '**/*.png', '**/*.svg'],
   server: {
-    port: 3000
+    port: 3000,
+    proxy: {
+      '/api': {
+        target: 'http://localhost:5000',
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/api/, '/api')
+      }
+    }
+  },
+  build: {
+    // Optimize production build
+    minify: 'terser',
+    sourcemap: false,
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          'react-vendor': ['react', 'react-dom', 'react-router-dom'],
+          'icons': ['lucide-react']
+        }
+      }
+    }
   }
 })

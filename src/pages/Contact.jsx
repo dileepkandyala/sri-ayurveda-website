@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { MapPin, Phone, Mail, MessageCircle, Instagram, Send } from 'lucide-react';
+import { fetchApi } from '../lib/api';
 import './Contact.css';
 
 export default function Contact() {
@@ -17,19 +18,10 @@ export default function Contact() {
 
     try {
       // Send to backend to save to Excel file
-      const response = await fetch('http://localhost:5000/api/contact-submit', {
+      const data = await fetchApi('/contact-submit', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
         body: JSON.stringify(formData),
       });
-
-      if (!response.ok) {
-        throw new Error('Failed to submit form');
-      }
-
-      const data = await response.json();
       console.log('Form submitted successfully:', data);
 
       setStatus('success');
