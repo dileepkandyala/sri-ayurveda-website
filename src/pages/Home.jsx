@@ -41,12 +41,20 @@ const Home = () => {
       {/* Hero Section */}
       <section id="home-hero" className="scroll-reveal home-intro py-16" style={{ marginBottom: '3rem' }}>
         <div className="max-w-4xl mx-auto">
-          <h1 className="text-3xl md:text-4xl font-bold text-deep-green mb-4">
-            SRI AYURVEDA CLINIC & PANCHAKARMA CENTER
+          <h1 className="text-3xl md:text-5xl font-bold text-deep-green mb-4">
+            Authentic Ayurvedic Healing in Ramanagara
           </h1>
-          <p className="text-2xl text-muted-olive font-semibold mb-6">
-            Restore health, renew vitality, live in harmony.
+          <p className="text-xl md:text-2xl text-muted-olive font-semibold mb-6">
+            Restore health, renew vitality, live in harmony with Dr. Shreelakshmi's Panchakarma Center
           </p>
+          <div className="flex gap-4 mb-8 flex-wrap">
+            <a href="#section-contact" className="inline-block bg-deep-green text-white px-8 py-3 rounded-lg font-semibold hover:bg-emerald-600 transition">
+              Book Consultation
+            </a>
+            <a href="/treatments" className="inline-block border-2 border-deep-green text-deep-green px-8 py-3 rounded-lg font-semibold hover:bg-green-50 transition">
+              Explore Treatments
+            </a>
+          </div>
           <div className="h-1 w-24 bg-gradient-to-r from-gold to-amber rounded-full"></div>
         </div>
       </section>
@@ -76,18 +84,30 @@ const Home = () => {
 
       {/* About Dr. Shreelakshmi */}
         <section id="section-doctor" className="scroll-reveal home-section py-16 grid md:grid-cols-2 gap-8 items-center mb-12">
+        <div className="ayurveda-image order-2 md:order-1">
+          <img 
+            src={sreeLakshmiImg}
+            alt="Dr. Shreelakshmi M.V. - BAMS Certified Ayurvedic Doctor at Sri Ayurveda Panchakarma Center"
+            style={{ minHeight: '400px', objectFit: 'cover', borderRadius: '1rem', boxShadow: '0 25px 50px rgba(0,0,0,0.1)' }}
+          />
+        </div>
         <div className="order-1 md:order-2">
           <h2 className="text-4xl font-bold text-deep-green mb-6">Meet Dr. Shreelakshmi M.V.</h2>
           <p className="text-lg text-gray-700 mb-4 leading-relaxed">
-            Our experienced Ayurvedic practitioner, Dr. Shreelakshmi M.V., (also a 
-            Certified Yoga professional) offers personalized consultations, holistic 
-            therapies, and wellness programs tailored to your unique needs.
+            <span className="font-semibold">BAMS certified Ayurvedic doctor</span> with expertise in Panchakarma therapies and holistic wellness. Dr. Shreelakshmi offers personalized consultations and evidence-based treatments tailored to your unique constitution (Prakriti).
           </p>
-          <p className="text-lg text-gray-700 leading-relaxed">
-            From managing chronic conditions and strengthening immunity to relieving stress 
-            and improving lifestyle health, we guide you with treatments and lifestyle 
-            advice aligned with timeless Ayurvedic principles.
+          <p className="text-lg text-gray-700 mb-4 leading-relaxed">
+            As a <span className="font-semibold">certified Yoga professional</span>, she integrates ancient wisdom with modern understanding to address:
           </p>
+          <ul className="text-lg text-gray-700 mb-6 space-y-2">
+            <li>✓ Chronic conditions & pain management</li>
+            <li>✓ Immunity strengthening & detoxification</li>
+            <li>✓ Stress relief & mental wellness</li>
+            <li>✓ Lifestyle optimization & preventive care</li>
+          </ul>
+          <a href="/about" className="inline-block text-deep-green font-semibold hover:text-emerald-600 transition">
+            Read Full Biography →
+          </a>
         </div>
       </section>
 

@@ -1,0 +1,25 @@
+# Robots.txt for Sri Ayurveda Website
+# Helps search engines crawl and index the site
+
+User-agent: *
+Allow: /
+Disallow: /admin/
+Disallow: /private/
+Disallow: /.env
+Disallow: /node_modules/
+Disallow: /dist/
+Disallow: /*.json$
+Disallow: /server/
+
+# Specific rules for Googlebot
+User-agent: Googlebot
+Allow: /
+Crawl-delay: 0
+
+# Specific rules for Bingbot
+User-agent: Bingbot
+Allow: /
+Crawl-delay: 1
+
+# Sitemap location
+Sitemap: https://www.sriayurvedawellness.com/sitemap.xml
