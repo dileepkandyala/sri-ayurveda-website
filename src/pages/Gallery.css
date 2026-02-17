@@ -156,3 +156,177 @@
     opacity: 1;
   }
 }
+
+/* Extra small screens (320px - 479px) */
+@media (max-width: 479px) {
+  .gallery-item {
+    border-radius: 8px;
+  }
+
+  .gallery-item .overlay {
+    padding: 0.75rem;
+  }
+
+  .gallery-item h3 {
+    font-size: 0.95rem;
+  }
+
+  .lightbox-overlay {
+    z-index: 1000;
+  }
+
+  .lightbox-content {
+    max-width: 95vw;
+    max-height: 95vh;
+    padding: 1rem;
+  }
+
+  .lightbox-image {
+    max-height: 80vh;
+    border-radius: 6px;
+  }
+
+  .lightbox-nav {
+    padding: 0.6rem;
+    width: 40px;
+    height: 40px;
+  }
+
+  .lightbox-nav svg {
+    width: 20px;
+    height: 20px;
+  }
+
+  .lightbox-prev {
+    left: 0.5rem;
+  }
+
+  .lightbox-next {
+    right: 0.5rem;
+  }
+
+  .lightbox-close {
+    top: 0.5rem;
+    right: 0.5rem;
+    width: 36px;
+    height: 36px;
+  }
+
+  .lightbox-close svg {
+    width: 20px;
+    height: 20px;
+  }
+
+  .lightbox-info {
+    bottom: 0.5rem;
+    padding: 0.5rem 1rem;
+    font-size: 0.85rem;
+    border-radius: 6px;
+  }
+}
+
+/* Small screens (480px - 767px) */
+@media (max-width: 767px) {
+  .gallery-item {
+    border-radius: 10px;
+  }
+
+  .gallery-item .overlay {
+    padding: 0.85rem;
+  }
+
+  .gallery-item h3 {
+    font-size: 1rem;
+  }
+
+  .lightbox-content {
+    max-width: 92vw;
+    max-height: 92vh;
+  }
+
+  .lightbox-image {
+    max-height: 82vh;
+  }
+
+  .lightbox-nav {
+    padding: 0.75rem;
+    width: 44px;
+    height: 44px;
+  }
+
+  .lightbox-nav svg {
+    width: 22px;
+    height: 22px;
+  }
+
+  .lightbox-prev {
+    left: 0.75rem;
+  }
+
+  .lightbox-next {
+    right: 0.75rem;
+  }
+
+  .lightbox-close {
+    top: 0.75rem;
+    right: 0.75rem;
+    width: 40px;
+    height: 40px;
+  }
+
+  .lightbox-info {
+    bottom: 1rem;
+    padding: 0.6rem 1.25rem;
+    font-size: 0.9rem;
+  }
+}
+
+/* Medium screens (768px - 1023px) */
+@media (min-width: 768px) and (max-width: 1023px) {
+  .gallery-item {
+    border-radius: 12px;
+    height: 280px;
+  }
+
+  .lightbox-nav {
+    padding: 0.875rem;
+  }
+
+  .lightbox-nav svg {
+    width: 24px;
+    height: 24px;
+  }
+}
+
+/* Large screens (1024px+) */
+@media (min-width: 1024px) {
+  .gallery-item {
+    height: 320px;
+  }
+
+  .gallery-item:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.15);
+  }
+
+  .lightbox-nav {
+    padding: 1rem;
+  }
+
+  .lightbox-nav:hover {
+    background-color: rgba(255, 255, 255, 0.5);
+  }
+}
+
+/* Touch device optimizations */
+@media (hover: none) and (pointer: coarse) {
+  .gallery-item:hover .overlay {
+    background-color: rgba(0, 0, 0, 0.3);
+  }
+
+  .lightbox-nav,
+  .lightbox-close {
+    min-height: 48px;
+    min-width: 48px;
+  }
+}

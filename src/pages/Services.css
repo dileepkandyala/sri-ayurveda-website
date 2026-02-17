@@ -50,8 +50,78 @@
   }
 }
 
-@media (max-width: 768px) {
+/* Extra small screens (320px - 479px) */
+@media (max-width: 479px) {
   .service-card {
     animation-delay: 0 !important;
+    padding: 1rem !important;
+    border-radius: 8px;
+  }
+
+  .service-card h3 {
+    font-size: 1.1rem;
+  }
+
+  .service-card p {
+    font-size: 0.85rem;
+  }
+
+  .service-card ul {
+    font-size: 0.85rem;
+  }
+}
+
+/* Small screens (480px - 767px) */
+@media (max-width: 767px) {
+  .service-card {
+    animation-delay: 0 !important;
+    padding: 1.25rem !important;
+    border-radius: 10px;
+  }
+
+  .service-card h3 {
+    font-size: 1.3rem;
+  }
+
+  .service-card p {
+    font-size: 0.9rem;
+  }
+
+  .service-card ul {
+    font-size: 0.9rem;
+  }
+}
+
+/* Medium screens (768px - 1023px) */
+@media (min-width: 768px) and (max-width: 1023px) {
+  .service-card {
+    padding: 1.5rem !important;
+  }
+
+  .service-card h3 {
+    font-size: 1.5rem;
+  }
+
+  .service-card p {
+    font-size: 0.95rem;
+  }
+}
+
+/* Large screens (1024px+) */
+@media (min-width: 1024px) {
+  .service-card:hover {
+    transform: translateY(-8px);
+    animation: pulse-card 1s ease infinite;
+  }
+
+  .service-card h3 {
+    font-size: 1.6rem;
+  }
+}
+
+/* Touch device optimizations */
+@media (hover: none) and (pointer: coarse) {
+  .service-card {
+    animation: pulse-card 2s ease infinite !important;
   }
 }

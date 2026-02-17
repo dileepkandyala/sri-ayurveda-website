@@ -42,3 +42,181 @@
 .home-section:nth-child(2) { animation-delay: 100ms; }
 .home-section:nth-child(3) { animation-delay: 200ms; }
 .home-section:nth-child(4) { animation-delay: 300ms; }
+
+/* Extra small screens (320px - 479px) */
+@media (max-width: 479px) {
+  .home-intro {
+    margin-bottom: 1.5rem !important;
+    padding: 1rem 0;
+  }
+
+  .home-intro h1 {
+    font-size: 1.5rem;
+    margin-bottom: 0.75rem;
+    line-height: 1.2;
+  }
+
+  .home-intro p {
+    font-size: 0.9rem;
+    margin-bottom: 1rem;
+  }
+
+  .home-intro .flex {
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .home-intro a {
+    width: 100%;
+    text-align: center;
+    padding: 0.65rem 1rem !important;
+    font-size: 0.9rem;
+  }
+
+  .home-section {
+    margin-bottom: 2rem !important;
+    padding: 1rem 0 !important;
+  }
+
+  .home-section h2 {
+    font-size: 1.4rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .home-section p {
+    font-size: 0.925rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .ayurveda-image {
+    border-radius: 8px;
+    height: 200px;
+    margin: 0.75rem 0;
+  }
+
+  .home-section ul {
+    margin: 0.5rem 0;
+  }
+
+  .home-section li {
+    font-size: 0.9rem;
+    margin-bottom: 0.4rem;
+  }
+}
+
+/* Small screens (480px - 767px) */
+@media (max-width: 767px) {
+  .home-intro {
+    margin-bottom: 2rem !important;
+    padding: 1.25rem 0;
+  }
+
+  .home-intro h1 {
+    font-size: 1.75rem;
+    margin-bottom: 0.75rem;
+    line-height: 1.3;
+  }
+
+  .home-intro p {
+    font-size: 0.975rem;
+    margin-bottom: 1rem;
+  }
+
+  .home-intro .flex {
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .home-intro a {
+    width: 100%;
+    text-align: center;
+    padding: 0.65rem 1rem !important;
+  }
+
+  .home-section {
+    margin-bottom: 2rem !important;
+    padding: 1.25rem 0 !important;
+  }
+
+  .home-section h2 {
+    font-size: 1.6rem;
+    margin-bottom: 1rem;
+  }
+
+  .home-section p {
+    font-size: 0.95rem;
+    margin-bottom: 0.75rem;
+    line-height: 1.6;
+  }
+
+  .ayurveda-image {
+    border-radius: 10px;
+    height: 250px;
+    margin: 1rem 0;
+  }
+
+  .home-section ul {
+    margin: 0.75rem 0;
+  }
+
+  .home-section li {
+    font-size: 0.95rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .home-section a {
+    font-size: 0.95rem;
+  }
+}
+
+/* Medium screens (768px - 1023px) */
+@media (min-width: 768px) and (max-width: 1023px) {
+  .home-intro {
+    margin-bottom: 2.5rem !important;
+    padding: 1.5rem 0;
+  }
+
+  .home-intro h1 {
+    font-size: 2.25rem;
+    line-height: 1.3;
+  }
+
+  .home-intro .flex {
+    gap: 1rem;
+  }
+
+  .home-intro a {
+    width: auto;
+  }
+
+  .home-section {
+    margin-bottom: 2.5rem !important;
+    padding: 1.5rem 0 !important;
+  }
+
+  .ayurveda-image {
+    min-height: 300px;
+  }
+}
+
+/* Large screens (1024px+) */
+@media (min-width: 1024px) {
+  .home-intro {
+    margin-bottom: 3rem !important;
+    padding: 2rem 0;
+  }
+
+  .home-section {
+    margin-bottom: 3rem !important;
+    padding: 2rem 0 !important;
+  }
+
+  .ayurveda-image {
+    min-height: 400px;
+  }
+
+  .ayurveda-image:hover {
+    transform: translateY(-12px);
+    box-shadow: 0 25px 70px rgba(11,79,59,0.25);
+  }
+}

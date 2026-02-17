@@ -41,3 +41,56 @@
 .stats-card:hover {
   animation: pulse-glow 2s infinite;
 }
+
+/* Extra small screens (320px - 479px) */
+@media (max-width: 479px) {
+  .stats-card {
+    padding: 1rem;
+    border-radius: 8px;
+    animation-delay: 0 !important;
+  }
+
+  .stats-card h3 {
+    font-size: 1rem;
+  }
+
+  .stats-card p {
+    font-size: 0.85rem;
+  }
+}
+
+/* Small screens (480px - 767px) */
+@media (max-width: 767px) {
+  .stats-card {
+    padding: 1.25rem;
+    border-radius: 10px;
+    animation-delay: 0 !important;
+  }
+
+  .stats-card h3 {
+    font-size: 1.2rem;
+  }
+
+  .stats-card p {
+    font-size: 0.9rem;
+  }
+}
+
+/* Medium screens (768px - 1023px) */
+@media (min-width: 768px) and (max-width: 1023px) {
+  .stats-card {
+    padding: 1.5rem;
+  }
+
+  .stats-card h3 {
+    font-size: 1.4rem;
+  }
+}
+
+/* Large screens (1024px+) */
+@media (min-width: 1024px) {
+  .stats-card:hover {
+    transform: translateY(-8px);
+    animation: pulse-glow 2s infinite;
+  }
+}

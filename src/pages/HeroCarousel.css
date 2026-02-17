@@ -41,8 +41,30 @@
   animation: bounce 2s infinite;
 }
 
-@media (max-width: 768px) {
+/* Extra small screens (320px - 479px) */
+@media (max-width: 479px) {
   .hero-carousel {
-    height: 300px;
+    height: 200px;
+  }
+}
+
+/* Small screens (480px - 767px) */
+@media (max-width: 767px) {
+  .hero-carousel {
+    height: 250px;
+  }
+}
+
+/* Medium screens (768px - 1023px) */
+@media (min-width: 768px) and (max-width: 1023px) {
+  .hero-carousel {
+    height: 350px;
+  }
+}
+
+/* Large screens (1024px+) */
+@media (min-width: 1024px) {
+  .hero-carousel {
+    height: 450px;
   }
 }
