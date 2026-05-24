@@ -113,7 +113,7 @@ const FeaturedTreatments = () => {
                 </div>
               </div>
 
-              <button className="bg-amber-500 hover:bg-amber-600 text-white font-bold py-3 px-8 rounded-full transition transform hover:scale-105 flex items-center justify-center gap-2">
+              <button className="btn btn-amber btn-lg">
                 Book Now
               </button>
             </div>
@@ -164,7 +164,7 @@ const FeaturedTreatments = () => {
                   ))}
                 </div>
 
-                <button className="text-sm font-semibold bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-500 hover:to-emerald-500 text-white px-4 py-2 rounded-lg hover:shadow-md transition transform hover:scale-105 inline-flex items-center gap-2">
+                <button className="btn btn-sm btn-primary">
                   Learn More
                 </button>
               </div>

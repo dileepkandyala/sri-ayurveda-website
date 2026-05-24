@@ -1,11 +1,35 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Mail, CheckCircle, AlertCircle } from 'lucide-react';
+import { SEO_CONFIG } from '../lib/seo';
 import './Newsletter.css';
 
 const Newsletter = () => {
   const [email, setEmail] = useState('');
   const [status, setStatus] = useState('idle'); // idle, loading, success, error
   const [message, setMessage] = useState('');
+
+  useEffect(() => {
+    const schema = {
+      '@context': 'https://schema.org',
+      '@type': 'WebPageElement',
+      'name': 'Sri Ayurveda Wellness Newsletter',
+      'description': SEO_CONFIG.pages.newsletter.description,
+      'url': `${SEO_CONFIG.siteUrl}/#newsletter`,
+      'isPartOf': {
+        '@type': 'WebPage',
+        '@id': `${SEO_CONFIG.siteUrl}/`
+      }
+    };
+
+    const script = document.createElement('script');
+    script.type = 'application/ld+json';
+    script.textContent = JSON.stringify(schema);
+    document.head.appendChild(script);
+
+    return () => {
+      document.head.removeChild(script);
+    };
+  }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();

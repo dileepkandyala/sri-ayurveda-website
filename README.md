@@ -4,13 +4,16 @@ Authentic Ayurvedic wellness center website with modern, responsive design and c
 
 **Live Site:** https://www.sriayurvedawellness.com
 
-## 🎯 Quick Links
+## 📚 Complete Documentation
 
-- 📋 **[IMPROVEMENTS.md](IMPROVEMENTS.md)** - Latest fixes and enhancements (Feb 17, 2026)
-- 🚀 **[DEPLOYMENT_READY.md](DEPLOYMENT_READY.md)** - Full production readiness status
-- 📖 **[STEP_BY_STEP_DEPLOYMENT.md](STEP_BY_STEP_DEPLOYMENT.md)** - Detailed deployment guide
-- ✅ **[PRE_DEPLOYMENT_CHECKLIST.md](PRE_DEPLOYMENT_CHECKLIST.md)** - Launch checklist
-- ⚙️ **[ENV_SETUP.md](ENV_SETUP.md)** - Environment configuration guide
+👉 **[DOCUMENTATION.md](DOCUMENTATION.md)** - Complete guide with all information consolidated in one file:
+- Quick Start & Setup
+- Environment Configuration  
+- Deployment Guide (Railway, Render, Heroku)
+- Post-Deployment Testing
+- Recent Improvements & Fixes
+- Verification Checklist
+- Troubleshooting Guide
 
 ## ✨ Key Features
 

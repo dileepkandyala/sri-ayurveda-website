@@ -1,10 +1,24 @@
 import { GraduationCap, Heart, User } from 'lucide-react';
 import sreeLakshmiImg from '../images/SreeLakshmi.jpg';
+import Seo from '../components/Seo';
+import { SEO_CONFIG } from '../lib/seo';
 import './About.css';
 
 export default function About() {
   return (
     <section id="about" className="py-20 bg-white">
+      <Seo
+        title={SEO_CONFIG.pages.about.title}
+        description={SEO_CONFIG.pages.about.description}
+        keywords={SEO_CONFIG.pages.about.keywords}
+        canonical={`${SEO_CONFIG.siteUrl}/about`}
+        openGraph={{
+          title: SEO_CONFIG.pages.about.title,
+          description: SEO_CONFIG.pages.about.description,
+          url: `${SEO_CONFIG.siteUrl}/about`,
+          image: SEO_CONFIG.siteImage,
+        }}
+      />
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
           <h2 className="text-4xl font-bold text-green-900 mb-4">About Us</h2>
@@ -28,7 +42,7 @@ export default function About() {
             </p>
 
             <p>
-              I completed my bachelors at Indian Institute of Ayurveda Medicine and Research College, Bengaluru in 2022, during which I received extensive hands-on training from experienced doctors and professors. With an aim to help our patients overcome their medical limitations, restore their former health and well-being, and experience the holistic benefits of Ayurveda, I founded Sri Ayurveda and started my own Ayurvedic practice in 2023.
+              I completed my bachelors at Indian Institute of Ayurveda Medicine and Research College, Bengaluru in 2022, during which I received extensive hands-on training from experienced doctors and professors. With an aim to help our patients overcome their medical limitations, restore their former health and well-being, and experience the holistic benefits of Ayurveda, I founded Sri Ayurveda in 2023 and opened our clinic in Ramanagara.
             </p>
 
             <p>
