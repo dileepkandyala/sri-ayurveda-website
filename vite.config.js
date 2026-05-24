@@ -15,8 +15,8 @@ export default defineConfig({
     }
   },
   build: {
-    // Optimize production build
-    minify: 'terser',
+    // Optimize production build using esbuild so the build works without optional terser dependency
+    minify: 'esbuild',
     sourcemap: false,
     rollupOptions: {
       output: {
