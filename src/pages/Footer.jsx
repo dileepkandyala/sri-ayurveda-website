@@ -126,7 +126,7 @@ export default function Footer() {
 
         <div className="border-t border-green-700 pt-8 text-center">
           <p className="text-green-100 flex items-center justify-center space-x-2">
-            <span>© 2025 Sri Ayurveda Clinic & Panchakarma Center. Made with</span>
+            <span>© 2026 Sri Ayurveda Clinic & Panchakarma Center. Made with</span>
             <Heart className="h-4 w-4 text-red-400 fill-current" />
             <span>for your wellness</span>
           </p>

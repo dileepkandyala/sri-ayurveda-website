@@ -1,6 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import ayurvedicImg from '../images/ayurvedic.jpg';
 import sreeLakshmiImg from '../images/SreeLakshmi.jpg';
+import Seo from '../components/Seo';
+import { SEO_CONFIG } from '../lib/seo';
 import Testimonials from './Testimonials';
 import DoshaQuiz from './DoshaQuiz';
 import Stats from './Stats';
@@ -38,20 +40,32 @@ const Home = () => {
 
   return (
     <main className="container">
+      <Seo
+        title={SEO_CONFIG.pages.home.title}
+        description={SEO_CONFIG.pages.home.description}
+        keywords={SEO_CONFIG.pages.home.keywords}
+        canonical={`${SEO_CONFIG.siteUrl}/`}
+        openGraph={{
+          title: SEO_CONFIG.pages.home.title,
+          description: SEO_CONFIG.pages.home.description,
+          url: `${SEO_CONFIG.siteUrl}/`,
+          image: SEO_CONFIG.siteImage,
+        }}
+      />
       {/* Hero Section */}
       <section id="home-hero" className="scroll-reveal home-intro py-16" style={{ marginBottom: '3rem' }}>
         <div className="max-w-4xl mx-auto">
           <h1 className="text-3xl md:text-5xl font-bold text-deep-green mb-4">
-            Authentic Ayurvedic Healing in Ramanagara
+            Sri Ayurveda Clinic & Panchakarma Center
           </h1>
           <p className="text-xl md:text-2xl text-muted-olive font-semibold mb-6">
-            Restore health, renew vitality, live in harmony with Dr. Shreelakshmi's Panchakarma Center
+            Restore health, renew vitality, and live in harmony with personalized Ayurvedic care by Dr. Shreelakshmi M.V., BAMS.
           </p>
-          <div className="flex gap-4 mb-8 flex-wrap">
-            <a href="#section-contact" className="inline-block bg-deep-green text-white px-8 py-3 rounded-lg font-semibold hover:bg-emerald-600 transition">
+          <div className="flex gap-6 mb-12 flex-wrap">
+            <a href="#section-contact" className="btn-primary">
               Book Consultation
             </a>
-            <a href="/treatments" className="inline-block border-2 border-deep-green text-deep-green px-8 py-3 rounded-lg font-semibold hover:bg-green-50 transition">
+            <a href="/treatments" className="btn-ghost">
               Explore Treatments
             </a>
           </div>
@@ -63,14 +77,12 @@ const Home = () => {
       <HeroCarousel />
 
       {/* Welcome Section with Image */}
-      <section id="section-welcome" className="scroll-reveal home-section py-16 grid md:grid-cols-2 gap-8 items-center mb-12">
+      <section id="section-welcome" className="scroll-reveal home-section py-20 grid md:grid-cols-2 gap-12 items-center mb-20">
         <div>
-          <h2 className="text-4xl font-bold text-deep-green mb-6">YOUR HEALTH IS OUR PRIORITY</h2>
-          <p className="text-lg text-gray-700 mb-4 leading-relaxed">
-            Welcome to Sri Ayurveda, where ancient Ayurvedic wisdom meets modern care. 
-            At Sri Ayurveda, we believe true health comes from balance—of body, mind, 
-            and spirit. Rooted in the ancient science of Ayurveda, our clinic is 
-            dedicated to helping individuals heal naturally and live with vitality.
+          <h2 className="text-4xl font-bold text-deep-green mb-8">YOUR HEALTH IS OUR PRIORITY</h2>
+          <p className="text-lg text-gray-700 mb-6 leading-relaxed">
+            Welcome to Sri Ayurveda Clinic & Panchakarma Center, where ancient Ayurvedic wisdom meets thoughtful modern care.
+            We believe true health comes from balance—of body, mind, and spirit. Rooted in the science of Ayurveda, our clinic supports natural healing and lasting vitality through personalized Panchakarma therapies.
           </p>
         </div>
         <div className="ayurveda-image">
@@ -83,8 +95,10 @@ const Home = () => {
       </section>
 
       {/* About Dr. Shreelakshmi */}
-        <section id="section-doctor" className="scroll-reveal home-section py-16 grid md:grid-cols-2 gap-8 items-center mb-12">
-        <div className="ayurveda-image order-2 md:order-1">
+        <section id="section-doctor" className="scroll-reveal home-section py-20 grid md:grid-cols-2 gap-12 items-center mb-20">
+        <div className="ayurveda-image order-2 md:order-1 mt-0 pt-0">
+
+
           <img 
             src={sreeLakshmiImg}
             alt="Dr. Shreelakshmi M.V. - BAMS Certified Ayurvedic Doctor at Sri Ayurveda Panchakarma Center"
@@ -92,20 +106,20 @@ const Home = () => {
           />
         </div>
         <div className="order-1 md:order-2">
-          <h2 className="text-4xl font-bold text-deep-green mb-6">Meet Dr. Shreelakshmi M.V.</h2>
-          <p className="text-lg text-gray-700 mb-4 leading-relaxed">
+          <h2 className="text-4xl font-bold text-deep-green mb-8">Meet Dr. Shreelakshmi M.V.</h2>
+          <p className="text-lg text-gray-700 mb-6 leading-relaxed">
             <span className="font-semibold">BAMS certified Ayurvedic doctor</span> with expertise in Panchakarma therapies and holistic wellness. Dr. Shreelakshmi offers personalized consultations and evidence-based treatments tailored to your unique constitution (Prakriti).
           </p>
-          <p className="text-lg text-gray-700 mb-4 leading-relaxed">
+          <p className="text-lg text-gray-700 mb-6 leading-relaxed">
             As a <span className="font-semibold">certified Yoga professional</span>, she integrates ancient wisdom with modern understanding to address:
           </p>
-          <ul className="text-lg text-gray-700 mb-6 space-y-2">
+          <ul className="text-lg text-gray-700 mb-8 space-y-3">
             <li>✓ Chronic conditions & pain management</li>
             <li>✓ Immunity strengthening & detoxification</li>
             <li>✓ Stress relief & mental wellness</li>
             <li>✓ Lifestyle optimization & preventive care</li>
           </ul>
-          <a href="/about" className="inline-block text-deep-green font-semibold hover:text-emerald-600 transition">
+          <a href="/about" className="inline-block btn-primary">
             Read Full Biography →
           </a>
         </div>
@@ -153,41 +167,47 @@ const Home = () => {
       </section>
 
       {/* Contact Info Section */}
-      <section id="section-contact" className="scroll-reveal home-section py-16">
-        <h2 className="text-4xl font-bold text-deep-green mb-8 text-center">Get In Touch</h2>
-        <div className="grid md:grid-cols-2 gap-8">
-          <div className="bg-gradient-to-br from-green-50 to-white p-8 rounded-2xl shadow-lg">
-            <h3 className="text-2xl font-bold text-deep-green mb-6">Contact Information</h3>
-            <div className="space-y-4">
+      <section id="section-contact" className="scroll-reveal home-section py-20 mb-20">
+        <h2 className="text-4xl font-bold text-deep-green mb-12 text-center">Get In Touch</h2>
+        <div className="grid md:grid-cols-2 gap-12">
+          <div className="bg-gradient-to-br from-green-50 to-white p-10 rounded-2xl shadow-lg">
+            <h3 className="text-2xl font-bold text-deep-green mb-8">Contact Information</h3>
+            <div className="space-y-6">
               <p className="text-lg">
                 <span className="font-semibold text-deep-green">WhatsApp:</span>
-                <a href="https://wa.me/917619529616" target="_blank" rel="noopener noreferrer" className="text-gold hover:text-amber ml-2">
+                <a href="https://wa.me/917619529616" target="_blank" rel="noopener noreferrer" className="text-gold hover:text-amber ml-2 transition">
                   +91 7619529616
                 </a>
               </p>
               <p className="text-lg">
                 <span className="font-semibold text-deep-green">Phone:</span>
-                <a href="tel:8113452402" className="text-gold hover:text-amber ml-2">
+                <a href="tel:8113452402" className="text-gold hover:text-amber ml-2 transition">
                   8113452402
                 </a>
               </p>
               <p className="text-lg">
                 <span className="font-semibold text-deep-green">Email:</span>
-                <a href="mailto:sriayurveda23@gmail.com" className="text-gold hover:text-amber ml-2">
+                <a href="mailto:sriayurveda23@gmail.com" className="text-gold hover:text-amber ml-2 transition">
                   sriayurveda23@gmail.com
                 </a>
               </p>
               <p className="text-lg">
                 <span className="font-semibold text-deep-green">Instagram:</span>
-                <a href="https://www.instagram.com/sri_ayurveda_clinic" target="_blank" rel="noopener noreferrer" className="text-gold hover:text-amber ml-2">
+                <a href="https://www.instagram.com/sri_ayurveda_clinic" target="_blank" rel="noopener noreferrer" className="text-gold hover:text-amber ml-2 transition">
                   @sri_ayurveda_clinic
+                </a>
+              </p>
+              <p className="text-lg">
+                <span className="font-semibold text-deep-green">Website:</span>
+                <a href="https://www.sriayurvedawellness.com" target="_blank" rel="noopener noreferrer" className="text-gold hover:text-amber ml-2 transition">
+                  sriayurvedawellness.com
                 </a>
               </p>
             </div>
           </div>
-          <div className="bg-gradient-to-br from-amber-50 to-white p-8 rounded-2xl shadow-lg">
-            <h3 className="text-2xl font-bold text-deep-green mb-6">Location</h3>
-            <p className="text-lg text-gray-700 leading-relaxed mb-6">
+          <div className="bg-gradient-to-br from-amber-50 to-white p-10 rounded-2xl shadow-lg">
+            <h3 className="text-2xl font-bold text-deep-green mb-8">Location</h3>
+            <p className="text-lg text-gray-700 leading-relaxed mb-8">
               #Hamsa complex, Magadi main road,
               <br />
               near Sharath Memorial School,

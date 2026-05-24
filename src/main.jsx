@@ -3,6 +3,8 @@ import { createRoot } from 'react-dom/client'
 import App from './App'
 import './index.css'
 import favicon from './images/favicon.JPG'
+import sreeLakshmiImg from './images/SreeLakshmi.jpg'
+import ayurvedicImg from './images/ayurvedic.jpg'
 
 // Set favicon dynamically
 const faviconLink = document.querySelector("link[rel='icon']")
@@ -10,16 +12,20 @@ if (faviconLink) {
   faviconLink.href = favicon
 }
 
-// Initialize Google Analytics
-window.dataLayer = window.dataLayer || [];
-function gtag(){dataLayer.push(arguments);}
-gtag('js', new Date());
-// Update with your Google Analytics ID
+// Initialize Google Analytics only when configured
 if (import.meta.env.VITE_GOOGLE_ANALYTICS_ID) {
+  const gaScript = document.createElement('script')
+  gaScript.async = true
+  gaScript.src = `https://www.googletagmanager.com/gtag/js?id=${import.meta.env.VITE_GOOGLE_ANALYTICS_ID}`
+  document.head.appendChild(gaScript)
+
+  window.dataLayer = window.dataLayer || []
+  function gtag(){window.dataLayer.push(arguments)}
+  gtag('js', new Date())
   gtag('config', import.meta.env.VITE_GOOGLE_ANALYTICS_ID, {
-    'anonymize_ip': true,
-    'allow_google_signals': true
-  });
+    anonymize_ip: true,
+    allow_google_signals: true
+  })
 }
 
 // Add JSON-LD Structured Data for SEO
@@ -30,8 +36,8 @@ const structuredData = {
   "name": "Sri Ayurveda Clinic & Panchakarma Center",
   "description": "Authentic Ayurvedic wellness center offering Panchakarma therapies, yoga, and personalized treatments by Dr. Shreelakshmi M.V., BAMS",
   "image": [
-    "https://www.sriayurvedawellness.com/src/images/SreeLakshmi.jpg",
-    "https://www.sriayurvedawellness.com/src/images/ayurvedic.jpg"
+    sreeLakshmiImg,
+    ayurvedicImg
   ],
   "url": "https://www.sriayurvedawellness.com",
   "telephone": "+91-8113452402",

@@ -1,8 +1,10 @@
+import 'dotenv/config';
 import express from 'express';
 import cors from 'cors';
 import path from 'path';
 import fs from 'fs';
 import ExcelJS from 'exceljs';
+import nodemailer from 'nodemailer';
 import { fileURLToPath } from 'url';
 
 const __filename = fileURLToPath(import.meta.url);
@@ -74,11 +76,11 @@ app.post('/api/contact-submit', async (req, res) => {
     const { workbook, filepath } = await getOrCreateWorkbook();
     const worksheet = workbook.worksheets[0];
     
-    // Add new row
+    // Add new row and save workbook (synchronous before responding)
     const now = new Date();
     const date = now.toISOString().split('T')[0];
     const time = now.toTimeString().split(' ')[0];
-    
+
     worksheet.addRow({
       date,
       time,
@@ -87,15 +89,83 @@ app.post('/api/contact-submit', async (req, res) => {
       phone,
       message,
     });
-    
+
     // Save workbook
     await workbook.xlsx.writeFile(filepath);
-    
+
+    // Respond immediately after saving the Excel file
     res.json({ 
       success: true, 
-      message: 'Contact submission saved successfully',
-      filename: getMonthFilename()
+      message: 'Contact submission saved successfully. Notification email will be sent shortly.',
+      filename: getMonthFilename(),
     });
+
+    // Send email asynchronously (background task)
+    (async function sendNotificationEmail() {
+      try {
+        const smtpHost = process.env.SMTP_HOST;
+        const smtpPort = process.env.SMTP_PORT || 587;
+        const smtpUser = process.env.SMTP_USER;
+        const smtpPass = process.env.SMTP_PASS;
+
+        let transporter;
+
+        // Dev preview via Ethereal if requested
+        if (process.env.DEV_EMAIL_PREVIEW === 'ethereal') {
+          const testAccount = await nodemailer.createTestAccount();
+          transporter = nodemailer.createTransport({
+            host: 'smtp.ethereal.email',
+            port: 587,
+            auth: { user: testAccount.user, pass: testAccount.pass },
+          });
+          console.log('Using Ethereal test account for email preview');
+        } else if (smtpHost && smtpUser && smtpPass) {
+          transporter = nodemailer.createTransport({
+            host: smtpHost,
+            port: Number(smtpPort),
+            secure: Number(smtpPort) === 465,
+            auth: { user: smtpUser, pass: smtpPass },
+            tls: { rejectUnauthorized: false },
+          });
+        } else {
+          console.log('No SMTP configuration provided and dev preview not enabled; skipping email send.');
+          return;
+        }
+
+        // prepare mail options
+        const mailOptions = {
+          from: `${process.env.SMTP_FROM || (process.env.SMTP_USER || 'no-reply@example.com')}`,
+          to: process.env.NOTIFY_EMAIL || 'sriayurveda25@gmail.com',
+          subject: `New contact form submission — ${name}`,
+          text: `New contact form submission:\n\nName: ${name}\nEmail: ${email}\nPhone: ${phone}\nMessage: ${message}\n\nReceived at: ${date} ${time}`,
+          html: `<h3>New contact form submission</h3><p><strong>Name:</strong> ${name}</p><p><strong>Email:</strong> ${email}</p><p><strong>Phone:</strong> ${phone}</p><p><strong>Message:</strong><br/>${message}</p><p><small>Received at: ${date} ${time}</small></p>`,
+        };
+
+        // Verify transporter
+        try {
+          await transporter.verify();
+          console.log('SMTP transporter verified');
+        } catch (verifyErr) {
+          console.error('SMTP verification failed:', verifyErr);
+          // continue to attempt send; some providers may not allow verify
+        }
+
+        try {
+          const info = await transporter.sendMail(mailOptions);
+          console.log('Background notification email sent:', info.messageId || info);
+          // If Ethereal, log the preview URL
+          if (process.env.DEV_EMAIL_PREVIEW === 'ethereal') {
+            const previewUrl = nodemailer.getTestMessageUrl(info);
+            console.log('Ethereal preview URL:', previewUrl);
+          }
+        } catch (sendErr) {
+          console.error('Failed to send background notification email:', sendErr);
+        }
+      } catch (bgErr) {
+        console.error('Unexpected error in background email task:', bgErr);
+      }
+    })();
+    
   } catch (error) {
     console.error('Error saving contact data:', error);
     res.status(500).json({ error: 'Failed to save contact data' });

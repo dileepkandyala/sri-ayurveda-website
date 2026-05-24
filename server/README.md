@@ -17,6 +17,19 @@ npm start
 
 The server will run on `http://localhost:5000`
 
+> Email notifications: To enable email notifications on contact form submission, set the following environment variables in your `.env.local` or hosting dashboard:
+
+```
+SMTP_HOST=smtp.gmail.com
+SMTP_PORT=587
+SMTP_USER=your-email@example.com
+SMTP_PASS=your-email-app-password
+NOTIFY_EMAIL=sriayurveda25@gmail.com
+SMTP_FROM="Sri Ayurveda" <your-email@example.com>
+```
+
+If SMTP variables are not provided, the server will still save submissions to Excel but will skip email notifications.
+
 ## How it works
 
 - When a user submits the contact form, data is sent to the backend
@@ -58,6 +71,19 @@ Accepts contact form data and saves to Excel
 
 ### GET /api/health
 Health check endpoint
+
+## Dev email preview (Ethereal)
+
+For safe local testing without a real SMTP account, enable Ethereal preview by creating a local `.env` with:
+
+```
+DEV_EMAIL_PREVIEW=ethereal
+# Optional: override recipient/sender
+NOTIFY_EMAIL=sriayurveda25@gmail.com
+SMTP_FROM="Sri Ayurveda" <no-reply@example.com>
+```
+
+Start the server and submit the contact form. The server log will print an `Ethereal preview URL:` which you can open in your browser to view the rendered email.
 
 ## Files Location
 Excel files are saved in: `code/data/YYYY-MM.xlsx`

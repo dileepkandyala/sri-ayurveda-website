@@ -123,10 +123,7 @@ const WellnessPath = () => {
         {/* CTA */}
         <div className="text-center mt-16">
           <p className="text-lg text-gray-700 mb-6">Ready to start your wellness journey?</p>
-          <a
-            href="#contact"
-            className="inline-block px-8 py-4 bg-gradient-to-r from-green-700 to-emerald-700 text-white font-bold rounded-full hover:shadow-lg transition transform hover:scale-105 flex items-center gap-2"
-          >
+          <a href="#contact" className="btn btn-lg btn-primary">
             Schedule Consultation
             <ArrowRight className="w-5 h-5" />
           </a>

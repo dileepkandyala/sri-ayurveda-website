@@ -1,4 +1,6 @@
 import { Droplets, Wind, Activity, Sparkles, Shield } from 'lucide-react';
+import Seo from '../components/Seo';
+import { SEO_CONFIG } from '../lib/seo';
 
 export default function Panchakarma() {
   const therapies = [
@@ -11,6 +13,18 @@ export default function Panchakarma() {
 
   return (
     <section id="panchakarma" className="py-20 bg-gradient-to-br from-amber-50 via-white to-green-50">
+      <Seo
+        title={SEO_CONFIG.pages.panchakarma.title}
+        description={SEO_CONFIG.pages.panchakarma.description}
+        keywords={SEO_CONFIG.pages.panchakarma.keywords}
+        canonical={`${SEO_CONFIG.siteUrl}/panchakarma`}
+        openGraph={{
+          title: SEO_CONFIG.pages.panchakarma.title,
+          description: SEO_CONFIG.pages.panchakarma.description,
+          url: `${SEO_CONFIG.siteUrl}/panchakarma`,
+          image: SEO_CONFIG.siteImage,
+        }}
+      />
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
           <h2 className="text-4xl font-bold text-green-900 mb-4">Panchakarma Treatment</h2>
@@ -58,7 +72,7 @@ export default function Panchakarma() {
             <p className="mb-4">Customized Panchakarma treatment plans designed specifically for your unique constitution and health needs.</p>
             <button
               onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })}
-              className="text-sm font-semibold bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-500 hover:to-emerald-500 text-white px-4 py-2 rounded-lg transition transform hover:scale-105 hover:shadow-md inline-flex items-center gap-2"
+              className="btn btn-sm btn-primary"
             >
               Learn More
             </button>
