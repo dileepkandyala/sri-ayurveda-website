@@ -33,12 +33,12 @@ export default function Hero() {
             </div>
           </div>
 
-          <button
-            onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })}
-            className="bg-green-700 text-white px-8 py-4 rounded-full text-lg font-semibold hover:bg-green-800 transition transform hover:scale-105 shadow-lg"
+          <a
+            href="/contact#contact"
+            className="bg-green-700 text-white px-8 py-4 rounded-full text-lg font-semibold hover:bg-green-800 transition transform hover:scale-105 shadow-lg inline-block"
           >
             Book Your Consultation
-          </button>
+          </a>
         </div>
       </div>
     </section>

@@ -110,7 +110,7 @@ const Services = () => {
               Schedule a consultation with Dr. Shreelakshmi to discover which services are perfect for your unique constitution and health goals.
             </p>
             <a
-              href="#contact"
+              href="/contact#contact"
               className="inline-block btn-primary bg-white text-green-700 hover:bg-green-50"
             >
               Book Your Consultation

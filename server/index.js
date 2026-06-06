@@ -47,8 +47,11 @@ async function getOrCreateWorkbook() {
     
     // Add headers
     worksheet.columns = [
-      { header: 'Date', key: 'date', width: 15 },
-      { header: 'Time', key: 'time', width: 12 },
+      { header: 'Submission Date', key: 'date', width: 15 },
+      { header: 'Submission Time', key: 'time', width: 12 },
+      { header: 'Appointment Date', key: 'appointmentDate', width: 15 },
+      { header: 'Appointment Time', key: 'appointmentTime', width: 15 },
+      { header: 'Consultation Type', key: 'consultationType', width: 18 },
       { header: 'Name', key: 'name', width: 20 },
       { header: 'Email', key: 'email', width: 30 },
       { header: 'Phone', key: 'phone', width: 15 },
@@ -67,9 +70,9 @@ async function getOrCreateWorkbook() {
 // Handle contact form submission
 app.post('/api/contact-submit', async (req, res) => {
   try {
-    const { name, email, phone, message } = req.body;
+    const { name, email, phone, appointmentDate, appointmentTime, consultationType, message } = req.body;
     
-    if (!name || !email || !phone || !message) {
+    if (!name || !email || !phone || !appointmentDate || !appointmentTime || !message) {
       return res.status(400).json({ error: 'Missing required fields' });
     }
     
@@ -84,6 +87,9 @@ app.post('/api/contact-submit', async (req, res) => {
     worksheet.addRow({
       date,
       time,
+      appointmentDate,
+      appointmentTime,
+      consultationType,
       name,
       email,
       phone,

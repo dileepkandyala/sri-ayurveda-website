@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { BrowserRouter, Routes, Route, Link } from 'react-router-dom'
+import { createBrowserRouter, RouterProvider, Link, Outlet } from 'react-router-dom'
 import Home from './pages/Home'
 import About from './pages/About'
 import Panchakarma from './pages/Panchakarma'
@@ -46,21 +46,41 @@ function Header(){
   )
 }
 
-export default function App(){
+function Layout() {
   return (
-    <BrowserRouter>
+    <>
       <Header />
       <main className="container">
-        <Routes>
-          <Route path="/" element={<Home/>} />
-          <Route path="/treatments" element={<TreatmentsPage/>} />
-          <Route path="/gallery" element={<GalleryPage/>} />
-          <Route path="/about" element={<About/>} />
-          <Route path="/panchakarma" element={<Panchakarma/>} />
-          <Route path="/contact" element={<Contact/>} />
-        </Routes>
+        <Outlet />
       </main>
       <Footer />
-    </BrowserRouter>
+    </>
   )
+}
+
+const router = createBrowserRouter(
+  [
+    {
+      path: '/',
+      element: <Layout />,
+      children: [
+        { index: true, element: <Home /> },
+        { path: 'treatments', element: <TreatmentsPage /> },
+        { path: 'gallery', element: <GalleryPage /> },
+        { path: 'about', element: <About /> },
+        { path: 'panchakarma', element: <Panchakarma /> },
+        { path: 'contact', element: <Contact /> },
+      ],
+    },
+  ],
+  {
+    future: {
+      v7_startTransition: true,
+      v7_relativeSplatPath: true,
+    },
+  }
+)
+
+export default function App(){
+  return <RouterProvider router={router} />
 }
