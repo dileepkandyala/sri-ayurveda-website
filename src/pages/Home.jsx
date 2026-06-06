@@ -73,8 +73,8 @@ const Home = () => {
         </div>
       </section>
 
-      {/* Hero Carousel */}
-      <HeroCarousel />
+      {/* Dosha Quiz Section */}
+      <DoshaQuiz />
 
       {/* Welcome Section with Image */}
       <section id="section-welcome" className="scroll-reveal home-section py-20 grid md:grid-cols-2 gap-12 items-center mb-20">
@@ -228,8 +228,8 @@ const Home = () => {
       {/* Stats Section */}
       <Stats />
 
-      {/* Dosha Quiz Section */}
-      <DoshaQuiz />
+      {/* Hero Carousel */}
+      <HeroCarousel />
 
       {/* Newsletter Section */}
       <Newsletter />

@@ -10,8 +10,22 @@ export default function Contact() {
     name: '',
     email: '',
     phone: '',
+    appointmentDate: '',
+    appointmentTime: '',
+    consultationType: 'In-person',
     message: '',
   });
+
+  const availableTimes = [
+    '09:30 AM',
+    '11:00 AM',
+    '12:30 PM',
+    '02:00 PM',
+    '03:30 PM',
+    '05:00 PM',
+  ];
+
+  const consultationTypes = ['In-person', 'Online', 'Phone'];
   const [status, setStatus] = useState('idle');
   const [emailInfo, setEmailInfo] = useState(null);
 
@@ -28,7 +42,15 @@ export default function Contact() {
       console.log('Form submitted successfully:', data);
       setEmailInfo(data.email || null);
       setStatus('success');
-      setFormData({ name: '', email: '', phone: '', message: '' });
+      setFormData({
+        name: '',
+        email: '',
+        phone: '',
+        appointmentDate: '',
+        appointmentTime: '',
+        consultationType: 'In-person',
+        message: '',
+      });
       setTimeout(() => setStatus('idle'), 5000);
     } catch (error) {
       console.error('Error submitting form:', error);
@@ -166,43 +188,105 @@ export default function Contact() {
                   />
                 </div>
 
-                <div>
-                  <label htmlFor="email" className="block text-sm font-semibold text-gray-700 mb-3">
-                    Email Address
-                  </label>
-                  <input
-                    type="email"
-                    id="email"
-                    name="email"
-                    autoComplete="email"
-                    required
-                    value={formData.email}
-                    onChange={handleChange}
-                    className="w-full px-4 py-3 rounded-lg border-2 border-gray-200 focus:ring-2 focus:ring-green-500 focus:border-green-500 transition bg-white"
-                    placeholder="your.email@example.com"
-                  />
+                <div className="grid sm:grid-cols-2 gap-6">
+                  <div>
+                    <label htmlFor="email" className="block text-sm font-semibold text-gray-700 mb-3">
+                      Email Address
+                    </label>
+                    <input
+                      type="email"
+                      id="email"
+                      name="email"
+                      autoComplete="email"
+                      required
+                      value={formData.email}
+                      onChange={handleChange}
+                      className="w-full px-4 py-3 rounded-lg border-2 border-gray-200 focus:ring-2 focus:ring-green-500 focus:border-green-500 transition bg-white"
+                      placeholder="your.email@example.com"
+                    />
+                  </div>
+
+                  <div>
+                    <label htmlFor="phone" className="block text-sm font-semibold text-gray-700 mb-3">
+                      Phone Number
+                    </label>
+                    <input
+                      type="tel"
+                      id="phone"
+                      name="phone"
+                      autoComplete="tel"
+                      required
+                      value={formData.phone}
+                      onChange={handleChange}
+                      className="w-full px-4 py-3 rounded-lg border-2 border-gray-200 focus:ring-2 focus:ring-green-500 focus:border-green-500 transition bg-white"
+                      placeholder="+91 XXXXXXXXXX"
+                    />
+                  </div>
+                </div>
+
+                <div className="grid sm:grid-cols-2 gap-6">
+                  <div>
+                    <label htmlFor="appointmentDate" className="block text-sm font-semibold text-gray-700 mb-3">
+                      Preferred Consultation Date
+                    </label>
+                    <input
+                      type="date"
+                      id="appointmentDate"
+                      name="appointmentDate"
+                      required
+                      min={new Date().toISOString().split('T')[0]}
+                      value={formData.appointmentDate}
+                      onChange={handleChange}
+                      className="w-full px-4 py-3 rounded-lg border-2 border-gray-200 focus:ring-2 focus:ring-green-500 focus:border-green-500 transition bg-white"
+                    />
+                  </div>
+
+                  <div>
+                    <label htmlFor="appointmentTime" className="block text-sm font-semibold text-gray-700 mb-3">
+                      Preferred Time Slot
+                    </label>
+                    <select
+                      id="appointmentTime"
+                      name="appointmentTime"
+                      required
+                      value={formData.appointmentTime}
+                      onChange={handleChange}
+                      className="w-full px-4 py-3 rounded-lg border-2 border-gray-200 focus:ring-2 focus:ring-green-500 focus:border-green-500 transition bg-white"
+                    >
+                      <option value="" disabled>
+                        Select a time
+                      </option>
+                      {availableTimes.map((time) => (
+                        <option key={time} value={time}>
+                          {time}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
                 </div>
 
                 <div>
-                  <label htmlFor="phone" className="block text-sm font-semibold text-gray-700 mb-3">
-                    Phone Number
+                  <label htmlFor="consultationType" className="block text-sm font-semibold text-gray-700 mb-3">
+                    Consultation Type
                   </label>
-                  <input
-                    type="tel"
-                    id="phone"
-                    name="phone"
-                    autoComplete="tel"
-                    required
-                    value={formData.phone}
+                  <select
+                    id="consultationType"
+                    name="consultationType"
+                    value={formData.consultationType}
                     onChange={handleChange}
                     className="w-full px-4 py-3 rounded-lg border-2 border-gray-200 focus:ring-2 focus:ring-green-500 focus:border-green-500 transition bg-white"
-                    placeholder="+91 XXXXXXXXXX"
-                  />
+                  >
+                    {consultationTypes.map((type) => (
+                      <option key={type} value={type}>
+                        {type}
+                      </option>
+                    ))}
+                  </select>
                 </div>
 
                 <div>
                   <label htmlFor="message" className="block text-sm font-semibold text-gray-700 mb-3">
-                    Your Message
+                    Tell Us About Your Concern
                   </label>
                   <textarea
                     id="message"
@@ -213,13 +297,21 @@ export default function Contact() {
                     onChange={handleChange}
                     rows={5}
                     className="w-full px-4 py-3 rounded-lg border-2 border-gray-200 focus:ring-2 focus:ring-green-500 focus:border-green-500 transition resize-none bg-white"
-                    placeholder="Tell us how we can help you..."
+                    placeholder="Share your symptoms, goals, or any Ayurveda questions..."
                   ></textarea>
+                </div>
+
+                <div className="rounded-3xl border border-green-200 bg-green-50 p-5 text-sm text-green-900">
+                  <p className="font-semibold mb-2">Quick booking note</p>
+                  <p>
+                    Choose a preferred date and time, and our Ayurveda wellness coordinator will confirm the final slot shortly.
+                    We prioritise appointments based on your selected consultation type and availability.
+                  </p>
                 </div>
 
                 {status === 'success' && (
                   <div className="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded-lg">
-                    <p>Thank you for contacting us! We'll get back to you soon.</p>
+                    <p>Thank you! Your consultation request is received.</p>
                     {emailInfo && emailInfo.sent === false && (
                       <p className="text-sm text-yellow-800 mt-2">Notification email was not sent: {emailInfo.error || 'unknown reason'}. Please contact us directly at sriayurveda25@gmail.com.</p>
                     )}
@@ -240,7 +332,7 @@ export default function Contact() {
                   disabled={status === 'loading'}
                   className="btn btn-primary btn-lg btn-block"
                 >
-                  <span>{status === 'loading' ? 'Sending...' : 'Send Message'}</span>
+                  <span>{status === 'loading' ? 'Booking...' : 'Book Consultation'}</span>
                   <Send className="h-5 w-5" />
                 </button>
               </form>

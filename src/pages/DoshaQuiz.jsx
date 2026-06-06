@@ -226,7 +226,7 @@ const DoshaQuiz = () => {
                 Retake Quiz
               </button>
               <a
-                href="#contact"
+                href="/contact#contact"
                 className="px-8 py-3 bg-gradient-to-r from-green-700 to-green-800 text-white font-bold rounded-full hover:shadow-lg transition text-center"
               >
                 Book Consultation

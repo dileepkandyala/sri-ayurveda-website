@@ -47,8 +47,11 @@ async function getOrCreateWorkbook() {
     
     // Add headers
     worksheet.columns = [
-      { header: 'Date', key: 'date', width: 15 },
-      { header: 'Time', key: 'time', width: 12 },
+      { header: 'Submission Date', key: 'date', width: 15 },
+      { header: 'Submission Time', key: 'time', width: 12 },
+      { header: 'Appointment Date', key: 'appointmentDate', width: 15 },
+      { header: 'Appointment Time', key: 'appointmentTime', width: 15 },
+      { header: 'Consultation Type', key: 'consultationType', width: 18 },
       { header: 'Name', key: 'name', width: 20 },
       { header: 'Email', key: 'email', width: 30 },
       { header: 'Phone', key: 'phone', width: 15 },
@@ -67,9 +70,9 @@ async function getOrCreateWorkbook() {
 // Handle contact form submission
 app.post('/api/contact-submit', async (req, res) => {
   try {
-    const { name, email, phone, message } = req.body;
+    const { name, email, phone, appointmentDate, appointmentTime, consultationType, message } = req.body;
     
-    if (!name || !email || !phone || !message) {
+    if (!name || !email || !phone || !appointmentDate || !appointmentTime || !message) {
       return res.status(400).json({ error: 'Missing required fields' });
     }
     
@@ -84,6 +87,9 @@ app.post('/api/contact-submit', async (req, res) => {
     worksheet.addRow({
       date,
       time,
+      appointmentDate,
+      appointmentTime,
+      consultationType,
       name,
       email,
       phone,
@@ -136,9 +142,9 @@ app.post('/api/contact-submit', async (req, res) => {
         const mailOptions = {
           from: `${process.env.SMTP_FROM || (process.env.SMTP_USER || 'no-reply@example.com')}`,
           to: process.env.NOTIFY_EMAIL || 'sriayurveda25@gmail.com',
-          subject: `New contact form submission — ${name}`,
-          text: `New contact form submission:\n\nName: ${name}\nEmail: ${email}\nPhone: ${phone}\nMessage: ${message}\n\nReceived at: ${date} ${time}`,
-          html: `<h3>New contact form submission</h3><p><strong>Name:</strong> ${name}</p><p><strong>Email:</strong> ${email}</p><p><strong>Phone:</strong> ${phone}</p><p><strong>Message:</strong><br/>${message}</p><p><small>Received at: ${date} ${time}</small></p>`,
+          subject: `New consultation booking request — ${name}`,
+          text: `New consultation booking request:\n\nName: ${name}\nEmail: ${email}\nPhone: ${phone}\nConsultation type: ${consultationType}\nPreferred appointment: ${appointmentDate} ${appointmentTime}\nMessage: ${message}\n\nReceived at: ${date} ${time}`,
+          html: `<h3>New consultation booking request</h3><p><strong>Name:</strong> ${name}</p><p><strong>Email:</strong> ${email}</p><p><strong>Phone:</strong> ${phone}</p><p><strong>Consultation type:</strong> ${consultationType}</p><p><strong>Preferred appointment:</strong> ${appointmentDate} ${appointmentTime}</p><p><strong>Message:</strong><br/>${message}</p><p><small>Received at: ${date} ${time}</small></p>`,
         };
 
         // Verify transporter
