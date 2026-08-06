@@ -3,6 +3,7 @@ import { MapPin, Phone, Mail, MessageCircle, Instagram, Send } from 'lucide-reac
 import { fetchApi } from '../lib/api';
 import Seo from '../components/Seo';
 import { SEO_CONFIG } from '../lib/seo';
+import { sendWhatsAppMessage } from '../lib/whatsapp';
 import './Contact.css';
 
 export default function Contact() {
@@ -34,6 +35,9 @@ export default function Contact() {
     setStatus('loading');
 
     try {
+      const whatsappResult = await sendWhatsAppMessage(formData);
+      console.log('WhatsApp message opened:', whatsappResult);
+
       // Send to backend to save to Excel file
       const data = await fetchApi('/contact-submit', {
         method: 'POST',
@@ -64,7 +68,7 @@ export default function Contact() {
   };
 
   return (
-    <section id="contact" className="py-24 bg-white">
+    <section id="contact" className="py-14 bg-white">
       <Seo
         title={SEO_CONFIG.pages.contact.title}
         description={SEO_CONFIG.pages.contact.description}
@@ -78,7 +82,7 @@ export default function Contact() {
         }}
       />
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-20">
+        <div className="text-center mb-10">
           <h2 className="text-4xl font-bold text-green-900 mb-6">Get In Touch</h2>
           <p className="text-xl text-gray-700 mb-8">Book a consultation at Sri Ayurveda Clinic & Panchakarma Center in Ramanagara for authentic Ayurvedic care.</p>
           <div className="w-24 h-1 bg-green-700 mx-auto"></div>

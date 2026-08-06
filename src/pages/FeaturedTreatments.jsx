@@ -52,9 +52,9 @@ const FeaturedTreatments = () => {
   ];
 
   return (
-    <section id="featured-treatments" className="py-20 bg-gradient-to-br from-white via-emerald-50 to-white">
+    <section id="featured-treatments" className="py-14 bg-gradient-to-br from-white via-emerald-50 to-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-16">
+        <div className="text-center mb-10">
           <h2 className="text-4xl font-bold text-green-900 mb-4">Featured Treatments</h2>
           <p className="text-xl text-gray-700">Our most popular and effective therapies</p>
           <div className="w-24 h-1 bg-gradient-to-r from-green-700 to-amber-600 mx-auto mt-4"></div>

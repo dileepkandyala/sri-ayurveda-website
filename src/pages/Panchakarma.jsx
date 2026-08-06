@@ -12,7 +12,7 @@ export default function Panchakarma() {
   ];
 
   return (
-    <section id="panchakarma" className="py-20 bg-gradient-to-br from-amber-50 via-white to-green-50">
+    <section id="panchakarma" className="py-14 bg-gradient-to-br from-amber-50 via-white to-green-50">
       <Seo
         title={SEO_CONFIG.pages.panchakarma.title}
         description={SEO_CONFIG.pages.panchakarma.description}
@@ -26,7 +26,7 @@ export default function Panchakarma() {
         }}
       />
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-16">
+        <div className="text-center mb-10">
           <h2 className="text-4xl font-bold text-green-900 mb-4">Panchakarma Treatment</h2>
           <p className="text-xl text-green-700 font-semibold mb-4">Detoxify, Rejuvenate, Rebalance</p>
           <div className="w-24 h-1 bg-green-700 mx-auto"></div>
