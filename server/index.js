@@ -4,7 +4,8 @@ import cors from 'cors';
 import path from 'path';
 import fs from 'fs';
 import ExcelJS from 'exceljs';
-// import nodemailer from 'nodemailer'; // mail feature temporarily disabled
+import nodemailer from 'nodemailer';
+import twilio from 'twilio';
 import { fileURLToPath } from 'url';
 
 const __filename = fileURLToPath(import.meta.url);
@@ -12,6 +13,7 @@ const __dirname = path.dirname(__filename);
 
 const app = express();
 const DEFAULT_PORT = Number(process.env.PORT) || 5000;
+const otpStore = new Map();
 
 // Middleware
 app.use(cors());
@@ -22,6 +24,88 @@ app.use(express.static(path.join(__dirname, '../dist')));
 const dataDir = path.join(__dirname, '../data');
 if (!fs.existsSync(dataDir)) {
   fs.mkdirSync(dataDir, { recursive: true });
+}
+
+function generateOtp() {
+  return Math.floor(100000 + Math.random() * 900000).toString();
+}
+
+function getOtpKey(type, contact) {
+  return `${type}:${contact.toLowerCase()}`;
+}
+
+function storeOtp(type, contact, otp) {
+  const expiresAt = Date.now() + 5 * 60 * 1000;
+  otpStore.set(getOtpKey(type, contact), { otp, expiresAt });
+}
+
+function getStoredOtp(type, contact) {
+  const key = getOtpKey(type, contact);
+  const otpEntry = otpStore.get(key);
+
+  if (!otpEntry) {
+    return null;
+  }
+
+  if (otpEntry.expiresAt < Date.now()) {
+    otpStore.delete(key);
+    return null;
+  }
+
+  return otpEntry;
+}
+
+function deleteStoredOtp(type, contact) {
+  otpStore.delete(getOtpKey(type, contact));
+}
+
+function normalizePhone(phone) {
+  const digits = phone.replace(/\D/g, '');
+  return digits ? `+${digits}` : phone;
+}
+
+async function sendEmailOtp(email, otp) {
+  const host = process.env.SMTP_HOST;
+  const port = Number(process.env.SMTP_PORT || 587);
+  const user = process.env.SMTP_USER;
+  const pass = process.env.SMTP_PASS;
+  const from = process.env.SMTP_FROM || process.env.EMAIL_FROM || user;
+
+  if (!host || !user || !pass) {
+    throw new Error('Email delivery is not configured on this server.');
+  }
+
+  const transporter = nodemailer.createTransport({
+    host,
+    port,
+    secure: port === 465,
+    auth: { user, pass },
+  });
+
+  await transporter.sendMail({
+    from,
+    to: email,
+    subject: 'Sri Ayurveda verification code',
+    text: `Your Sri Ayurveda verification code is ${otp}. It expires in 5 minutes.`,
+    html: `<p>Your Sri Ayurveda verification code is <strong>${otp}</strong>.</p><p>It expires in 5 minutes.</p>`,
+  });
+}
+
+async function sendSmsOtp(phone, otp) {
+  const accountSid = process.env.TWILIO_ACCOUNT_SID;
+  const authToken = process.env.TWILIO_AUTH_TOKEN;
+  const fromNumber = process.env.TWILIO_PHONE_NUMBER;
+
+  if (!accountSid || !authToken || !fromNumber) {
+    throw new Error('SMS delivery is not configured on this server.');
+  }
+
+  const client = twilio(accountSid, authToken);
+  await client.messages.create({
+    body: `Your Sri Ayurveda verification code is ${otp}. It expires in 5 minutes.`,
+    from: fromNumber,
+    to: normalizePhone(phone),
+  });
 }
 
 // Get current month filename (YYYY-MM.xlsx)
@@ -66,6 +150,74 @@ async function getOrCreateWorkbook() {
   
   return { workbook, filepath };
 }
+
+app.post('/api/send-otp', async (req, res) => {
+  try {
+    const { type, contact } = req.body;
+
+    if (!type || !contact) {
+      return res.status(400).json({ error: 'OTP type and contact are required.' });
+    }
+
+    if (type === 'email') {
+      const emailRegex = /\S+@\S+\.\S+/;
+      if (!emailRegex.test(contact)) {
+        return res.status(400).json({ error: 'Please provide a valid email address.' });
+      }
+    } else if (type === 'phone') {
+      const phoneRegex = /^\+?[0-9\s-]{10,15}$/;
+      if (!phoneRegex.test(contact)) {
+        return res.status(400).json({ error: 'Please provide a valid phone number.' });
+      }
+    } else {
+      return res.status(400).json({ error: 'OTP type must be email or phone.' });
+    }
+
+    const otp = generateOtp();
+    storeOtp(type, contact, otp);
+
+    if (type === 'email') {
+      await sendEmailOtp(contact, otp);
+    } else {
+      await sendSmsOtp(contact, otp);
+    }
+
+    res.json({ success: true, message: `OTP sent to your ${type === 'email' ? 'email' : 'phone'}.` });
+  } catch (error) {
+    console.error('Error sending OTP:', error);
+
+    if (process.env.NODE_ENV !== 'production') {
+      return res.status(200).json({ success: true, message: 'OTP generated locally for development testing.', otp: generateOtp() });
+    }
+
+    res.status(500).json({ error: error.message || 'Unable to send OTP right now.' });
+  }
+});
+
+app.post('/api/verify-otp', async (req, res) => {
+  try {
+    const { type, contact, otp } = req.body;
+
+    if (!type || !contact || !otp) {
+      return res.status(400).json({ error: 'OTP type, contact, and code are required.' });
+    }
+
+    const storedOtp = getStoredOtp(type, contact);
+    if (!storedOtp) {
+      return res.status(400).json({ error: 'No active OTP found for this contact.' });
+    }
+
+    if (storedOtp.otp !== otp) {
+      return res.status(400).json({ error: 'The OTP you entered is incorrect.' });
+    }
+
+    deleteStoredOtp(type, contact);
+    res.json({ success: true, message: 'OTP verified successfully.' });
+  } catch (error) {
+    console.error('Error verifying OTP:', error);
+    res.status(500).json({ error: 'Unable to verify OTP.' });
+  }
+});
 
 // Handle contact form submission
 app.post('/api/contact-submit', async (req, res) => {

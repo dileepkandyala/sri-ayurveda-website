@@ -217,6 +217,70 @@
   }
 }
 
+/* OTP verification */
+.otp-actions {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  margin-top: 0.75rem;
+}
+
+.otp-btn,
+.otp-verify-btn {
+  border: none;
+  border-radius: 999px;
+  padding: 0.6rem 1rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.otp-btn {
+  background: #e9f7ee;
+  color: #166534;
+}
+
+.otp-verify-btn {
+  background: #166534;
+  color: white;
+}
+
+.otp-btn:hover,
+.otp-verify-btn:hover {
+  transform: translateY(-1px);
+}
+
+.otp-step {
+  display: flex;
+  gap: 0.75rem;
+  margin-top: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.otp-input {
+  flex: 1;
+  min-width: 140px;
+  padding: 0.8rem 0.95rem;
+  border: 1px solid #cbd5c1;
+  border-radius: 10px;
+  font-size: 0.95rem;
+}
+
+.otp-success {
+  margin-top: 0.6rem;
+  color: #166534;
+  font-size: 0.92rem;
+  font-weight: 600;
+}
+
+.otp-error {
+  margin-top: 0.6rem;
+  color: #b91c1c;
+  font-size: 0.92rem;
+  font-weight: 600;
+}
+
 /* Contact info cards */
 .contact-info-card {
   background: linear-gradient(135deg, rgba(255,255,255,0.9) 0%, rgba(245,247,243,0.9) 100%);
