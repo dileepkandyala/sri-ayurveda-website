@@ -61,7 +61,7 @@ const Home = () => {
           <p className="text-xl md:text-2xl text-muted-olive font-semibold mb-6">
             Restore health, renew vitality, and live in harmony with personalized Ayurvedic care by Dr. Shreelakshmi M.V., BAMS.
           </p>
-          <div className="flex gap-6 mb-12 flex-wrap">
+          <div className="flex gap-6 mb-8 flex-wrap">
             <a href="#section-contact" className="btn-primary">
               Book Consultation
             </a>
@@ -69,12 +69,10 @@ const Home = () => {
               Explore Treatments
             </a>
           </div>
+
           <div className="h-1 w-24 bg-gradient-to-r from-gold to-amber rounded-full"></div>
         </div>
       </section>
-
-      {/* Dosha Quiz Section */}
-      <DoshaQuiz />
 
       {/* Welcome Section with Image */}
       <section id="section-welcome" className="scroll-reveal home-section py-20 grid md:grid-cols-2 gap-12 items-center mb-20">
@@ -230,6 +228,8 @@ const Home = () => {
 
       {/* Hero Carousel */}
       <HeroCarousel />
+
+      <DoshaQuiz />
 
       {/* Newsletter Section */}
       <Newsletter />

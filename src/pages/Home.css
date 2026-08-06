@@ -43,6 +43,9 @@
 
 .home-intro {
   padding: 2rem 1rem;
+  text-align: center;
+  max-width: 980px;
+  margin: 0 auto 3rem;
 }
 
 @media (max-width: 640px) {
@@ -130,19 +133,23 @@
 }
 
 .home-intro h1 {
-  font-size: clamp(2rem, 5vw, 3.5rem);
-  line-height: 1.15;
-  margin-bottom: 1.5rem;
+  font-size: clamp(2.3rem, 5vw, 4.1rem);
+  line-height: 1.1;
+  margin-bottom: 1.25rem;
   letter-spacing: -1px;
   font-weight: 800;
 }
 
 .home-intro p {
-  font-size: clamp(1rem, 2vw, 1.3rem);
+  font-size: clamp(1.05rem, 2vw, 1.4rem);
   font-weight: 500;
-  line-height: 1.6;
+  line-height: 1.7;
   margin-bottom: 2rem;
   color: #5a5a5a;
+  text-align: center;
+  max-width: 780px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .home-intro .flex {
@@ -150,6 +157,7 @@
   flex-wrap: wrap;
   gap: 1.5rem;
   margin-bottom: 2.5rem;
+  justify-content: center;
 }
 
 .home-intro a {
@@ -178,7 +186,7 @@
   height: 5px;
   background: linear-gradient(90deg, #2f8b57, #D4AF37);
   border-radius: 3px;
-  margin-top: 2rem;
+  margin: 2rem auto 0;
   box-shadow: 0 4px 12px rgba(212,175,55,0.3);
 }
 

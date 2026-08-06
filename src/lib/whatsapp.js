@@ -1,33 +1,34 @@
-// Simple backend to handle WhatsApp messages via Twilio
-// This is a placeholder - you'll need to host this on a backend server
+// Build and open a WhatsApp message with the contact form details.
+export function buildWhatsAppMessage(formData) {
+  return [
+    'New Contact Submission',
+    `Name: ${formData.name || 'N/A'}`,
+    `Email: ${formData.email || 'N/A'}`,
+    `Phone: ${formData.phone || 'N/A'}`,
+    `Preferred Date: ${formData.appointmentDate || 'N/A'}`,
+    `Preferred Time: ${formData.appointmentTime || 'N/A'}`,
+    `Consultation Type: ${formData.consultationType || 'N/A'}`,
+    `Message: ${formData.message || 'N/A'}`,
+  ].join('\n');
+}
 
-export async function sendWhatsAppMessage(formData) {
+export function createWhatsAppUrl(formData, phoneNumber = '917619529616') {
+  const cleanNumber = phoneNumber.replace(/[^\d]/g, '');
+  const message = encodeURIComponent(buildWhatsAppMessage(formData));
+  return `https://wa.me/${cleanNumber}?text=${message}`;
+}
+
+export async function sendWhatsAppMessage(formData, phoneNumber = '917619529616') {
   try {
-    // Method 1: Use a webhook service like Make/Zapier
-    // Or Method 2: Call a backend endpoint that has Twilio credentials
-    
-    const message = `
-New Contact Submission:
-Name: ${formData.name}
-Email: ${formData.email}
-Phone: ${formData.phone}
-Message: ${formData.message}
-    `.trim();
+    const url = createWhatsAppUrl(formData, phoneNumber);
 
-    // For now, we'll log to console and show success
-    console.log('WhatsApp message would be sent:', message);
-    
-    // TODO: Replace with actual Twilio API call to backend endpoint
-    // const response = await fetch('/api/send-whatsapp', {
-    //   method: 'POST',
-    //   headers: { 'Content-Type': 'application/json' },
-    //   body: JSON.stringify({ message, formData })
-    // });
-    // return response.json();
+    if (typeof window !== 'undefined') {
+      window.open(url, '_blank', 'noopener,noreferrer');
+    }
 
-    return { success: true, message: 'Message queued for WhatsApp' };
+    return { success: true, message: 'WhatsApp message opened', url };
   } catch (error) {
-    console.error('Error sending WhatsApp message:', error);
+    console.error('Error opening WhatsApp message:', error);
     throw error;
   }
 }

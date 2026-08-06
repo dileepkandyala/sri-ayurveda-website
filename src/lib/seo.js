@@ -60,6 +60,11 @@ export const SEO_CONFIG = {
       title: 'Sri Ayurveda Wellness Newsletter | Ayurvedic Health Tips',
       description: 'Subscribe to the Sri Ayurveda newsletter for Ayurvedic wellness tips, seasonal health guidance, and special offers.',
       keywords: 'Ayurveda newsletter, wellness tips, health advice, subscription'
+    },
+    shop: {
+      title: 'Ayurvedic Shop | Sri Ayurveda Wellness Products',
+      description: 'Explore Ayurvedic wellness products, herbal essentials, and daily care items from Sri Ayurveda.',
+      keywords: 'Ayurvedic products, herbal wellness, Ayurvedic shop, wellness essentials'
     }
   },
 

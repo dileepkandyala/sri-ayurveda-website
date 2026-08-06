@@ -78,6 +78,20 @@ export default function Footer() {
                 <span className="text-green-50 font-semibold">Contact</span>
                 <ChevronRight className="h-5 w-5 text-amber-400 group-hover:translate-x-1 transition" />
               </Link>
+              <Link
+                to="/terms-of-service"
+                className="group flex items-center justify-between px-4 py-3 bg-gradient-to-r from-emerald-800 to-green-800 hover:from-emerald-700 hover:to-green-700 rounded-lg transition transform hover:translate-x-1 shadow-md hover:shadow-lg"
+              >
+                <span className="text-green-50 font-semibold">Terms of Service</span>
+                <ChevronRight className="h-5 w-5 text-amber-400 group-hover:translate-x-1 transition" />
+              </Link>
+              <Link
+                to="/privacy-policy"
+                className="group flex items-center justify-between px-4 py-3 bg-gradient-to-r from-green-800 to-emerald-800 hover:from-green-700 hover:to-emerald-700 rounded-lg transition transform hover:translate-x-1 shadow-md hover:shadow-lg"
+              >
+                <span className="text-green-50 font-semibold">Privacy Policy</span>
+                <ChevronRight className="h-5 w-5 text-amber-400 group-hover:translate-x-1 transition" />
+              </Link>
             </div>
           </div>
 

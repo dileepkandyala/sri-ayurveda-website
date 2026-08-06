@@ -50,9 +50,9 @@ const Services = () => {
   ];
 
   return (
-    <section id="services" className="py-24 bg-gradient-to-b from-white via-green-50 to-white">
+    <section id="services" className="py-14 bg-gradient-to-b from-white via-green-50 to-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-20">
+        <div className="text-center mb-10">
           <h2 className="text-4xl font-bold text-green-900 mb-6">Our Services</h2>
           <p className="text-xl text-gray-700 mb-8">Comprehensive Ayurvedic wellness solutions tailored to your needs</p>
           <div className="w-24 h-1 bg-gradient-to-r from-green-700 to-amber-600 mx-auto"></div>
