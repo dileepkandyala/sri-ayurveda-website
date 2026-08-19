@@ -5,7 +5,6 @@ import path from 'path';
 import fs from 'fs';
 import ExcelJS from 'exceljs';
 import nodemailer from 'nodemailer';
-import twilio from 'twilio';
 import { fileURLToPath } from 'url';
 
 const __filename = fileURLToPath(import.meta.url);
@@ -132,6 +131,7 @@ async function sendSmsOtp(phone, otp) {
     throw new Error('SMS delivery is not configured on this server.');
   }
 
+  const { default: twilio } = await import('twilio');
   const client = twilio(accountSid, authToken);
   await client.messages.create({
     body: `Your Sri Ayurveda verification code is ${otp}. It expires in 5 minutes.`,

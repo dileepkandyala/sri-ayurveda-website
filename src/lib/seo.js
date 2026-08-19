@@ -5,6 +5,7 @@ export const SEO_CONFIG = {
   siteName: 'Sri Ayurveda Clinic & Panchakarma Center',
   siteUrl: 'https://www.sriayurvedawellness.com',
   siteImage: 'https://www.sriayurvedawellness.com/logo.png',
+  locale: 'en_IN',
   description: 'Authentic Ayurvedic wellness center in Ramanagara, Karnataka. Panchakarma therapies, yoga, and personalized treatments by Dr. Shreelakshmi M.V., BAMS.',
   
   keywords: [
@@ -65,6 +66,16 @@ export const SEO_CONFIG = {
       title: 'Ayurvedic Shop | Sri Ayurveda Wellness Products',
       description: 'Explore Ayurvedic wellness products, herbal essentials, and daily care items from Sri Ayurveda.',
       keywords: 'Ayurvedic products, herbal wellness, Ayurvedic shop, wellness essentials'
+    },
+    privacy: {
+      title: 'Privacy Policy | Sri Ayurveda Clinic',
+      description: 'Learn how Sri Ayurveda Clinic handles personal information for consultations, telemedicine, orders, and website services.',
+      keywords: 'Ayurveda clinic privacy policy, patient data protection, DPDP Act'
+    },
+    terms: {
+      title: 'Terms & Conditions | Sri Ayurveda Clinic',
+      description: 'Terms and conditions for using Sri Ayurveda Clinic services, website content, consultations, and wellness products.',
+      keywords: 'Ayurveda clinic terms, consultation terms, wellness service terms'
     }
   },
 
