@@ -14,6 +14,7 @@ const __dirname = path.dirname(__filename);
 const app = express();
 const DEFAULT_PORT = Number(process.env.PORT) || 5000;
 const otpStore = new Map();
+const verifiedContactStore = new Map();
 
 // Middleware
 app.use(cors());
@@ -31,7 +32,15 @@ function generateOtp() {
 }
 
 function getOtpKey(type, contact) {
-  return `${type}:${contact.toLowerCase()}`;
+  return `${type}:${normalizeContact(type, contact)}`;
+}
+
+function normalizeContact(type, contact) {
+  if (type === 'phone') {
+    return normalizePhone(contact);
+  }
+
+  return contact.trim().toLowerCase();
 }
 
 function storeOtp(type, contact, otp) {
@@ -57,6 +66,29 @@ function getStoredOtp(type, contact) {
 
 function deleteStoredOtp(type, contact) {
   otpStore.delete(getOtpKey(type, contact));
+}
+
+function storeVerifiedContact(type, contact) {
+  verifiedContactStore.set(getOtpKey(type, contact), Date.now() + 5 * 60 * 1000);
+}
+
+function isVerifiedContact(type, contact) {
+  const expiresAt = verifiedContactStore.get(getOtpKey(type, contact));
+
+  if (!expiresAt) {
+    return false;
+  }
+
+  if (expiresAt < Date.now()) {
+    verifiedContactStore.delete(getOtpKey(type, contact));
+    return false;
+  }
+
+  return true;
+}
+
+function deleteVerifiedContact(type, contact) {
+  verifiedContactStore.delete(getOtpKey(type, contact));
 }
 
 function normalizePhone(phone) {
@@ -152,6 +184,8 @@ async function getOrCreateWorkbook() {
 }
 
 app.post('/api/send-otp', async (req, res) => {
+  let otp;
+
   try {
     const { type, contact } = req.body;
 
@@ -173,7 +207,7 @@ app.post('/api/send-otp', async (req, res) => {
       return res.status(400).json({ error: 'OTP type must be email or phone.' });
     }
 
-    const otp = generateOtp();
+    otp = generateOtp();
     storeOtp(type, contact, otp);
 
     if (type === 'email') {
@@ -187,7 +221,7 @@ app.post('/api/send-otp', async (req, res) => {
     console.error('Error sending OTP:', error);
 
     if (process.env.NODE_ENV !== 'production') {
-      return res.status(200).json({ success: true, message: 'OTP generated locally for development testing.', otp: generateOtp() });
+      return res.status(200).json({ success: true, message: 'OTP generated locally for development testing.', otp });
     }
 
     res.status(500).json({ error: error.message || 'Unable to send OTP right now.' });
@@ -212,6 +246,7 @@ app.post('/api/verify-otp', async (req, res) => {
     }
 
     deleteStoredOtp(type, contact);
+    storeVerifiedContact(type, contact);
     res.json({ success: true, message: 'OTP verified successfully.' });
   } catch (error) {
     console.error('Error verifying OTP:', error);
@@ -226,6 +261,10 @@ app.post('/api/contact-submit', async (req, res) => {
     
     if (!name || !email || !phone || !appointmentDate || !appointmentTime || !message) {
       return res.status(400).json({ error: 'Missing required fields' });
+    }
+
+    if (!isVerifiedContact('email', email) || !isVerifiedContact('phone', phone)) {
+      return res.status(403).json({ error: 'Please verify both your email and phone number before scheduling an appointment.' });
     }
     
     const { workbook, filepath } = await getOrCreateWorkbook();
@@ -250,6 +289,8 @@ app.post('/api/contact-submit', async (req, res) => {
 
     // Save workbook
     await workbook.xlsx.writeFile(filepath);
+    deleteVerifiedContact('email', email);
+    deleteVerifiedContact('phone', phone);
 
     // Respond immediately after saving the Excel file
     res.json({ 
