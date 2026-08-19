@@ -2,6 +2,15 @@
 // Tracks user engagement, conversions, and key business metrics
 
 export const trackEvent = (eventName, eventData = {}) => {
+  let consentGiven = false;
+  try {
+    consentGiven = localStorage.getItem('sri-ayurveda-cookie-consent') === 'accepted';
+  } catch {
+    consentGiven = false;
+  }
+
+  if (!consentGiven) return;
+
   // Google Analytics
   if (window.gtag) {
     window.gtag('event', eventName, eventData);

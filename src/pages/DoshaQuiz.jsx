@@ -239,7 +239,7 @@ const DoshaQuiz = () => {
   }
 
   return (
-    <section id="dosha-quiz" className="py-20 bg-gradient-to-br from-green-50 via-white to-amber-50">
+    <section id="dosha-quiz" className="dosha-quiz-section py-20 bg-gradient-to-br from-green-50 via-white to-amber-50">
       <div className="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-12">
           <h2 className="text-4xl font-bold text-green-900 mb-4">Find Your Dosha</h2>
@@ -249,35 +249,35 @@ const DoshaQuiz = () => {
           <div className="w-24 h-1 bg-gradient-to-r from-green-700 to-amber-600 mx-auto"></div>
         </div>
 
-        <div className="bg-white rounded-3xl shadow-2xl p-8 md:p-12">
+        <div className="dosha-quiz-card bg-white rounded-3xl shadow-2xl p-8 md:p-12">
           {/* Progress bar */}
           <div className="mb-8">
-            <div className="flex justify-between items-center mb-4">
-              <span className="text-gray-700 font-semibold">Question {currentQuestion + 1} of {questions.length}</span>
-              <span className="text-green-700 font-bold">{Math.round(((currentQuestion + 1) / questions.length) * 100)}%</span>
+            <div className="dosha-progress-labels flex justify-between items-center mb-4">
+              <span>Question {currentQuestion + 1} of {questions.length}</span>
+              <span>{Math.round(((currentQuestion + 1) / questions.length) * 100)}%</span>
             </div>
-            <div className="w-full bg-gray-200 rounded-full h-2">
+            <div className="dosha-progress-track w-full bg-gray-200 rounded-full h-2">
               <div
-                className="bg-gradient-to-r from-green-700 to-amber-600 h-2 rounded-full transition-all duration-500"
+                className="dosha-progress-fill bg-gradient-to-r from-green-700 to-amber-600 h-2 rounded-full transition-all duration-500"
                 style={{ width: `${((currentQuestion + 1) / questions.length) * 100}%` }}
               ></div>
             </div>
           </div>
 
           {/* Question */}
-          <h3 className="text-2xl md:text-3xl font-bold text-gray-900 mb-8">
+          <h3 className="dosha-question text-2xl md:text-3xl font-bold text-gray-900 mb-8">
             {questions[currentQuestion].question}
           </h3>
 
           {/* Answers */}
-          <div className="space-y-4">
+          <div className="dosha-answers space-y-4">
             {questions[currentQuestion].answers.map((answer, idx) => {
               const Icon = answer.icon;
               return (
                 <button
                   key={idx}
                   onClick={() => handleAnswer(answer.dosha)}
-                  className="w-full text-left p-6 rounded-xl border-2 border-gray-200 hover:border-green-700 hover:bg-green-50 transition-all duration-300 group"
+                  className="dosha-answer w-full text-left p-6 rounded-xl border-2 border-gray-200 hover:border-green-700 hover:bg-green-50 transition-all duration-300 group"
                 >
                   <div className="flex items-center gap-4">
                     <div className="flex-shrink-0">

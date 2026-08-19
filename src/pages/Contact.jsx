@@ -38,6 +38,9 @@ export default function Contact() {
   const [otpNotice, setOtpNotice] = useState('');
   const [otpError, setOtpError] = useState('');
   const [otpSending, setOtpSending] = useState(false);
+  const [privacyConsent, setPrivacyConsent] = useState(false);
+  const [communicationConsent, setCommunicationConsent] = useState(false);
+  const [teleconsultationConsent, setTeleconsultationConsent] = useState(false);
 
   const validatePhone = (value) => /^\+?[0-9\s-]{10,15}$/.test(value);
   const validateEmail = (value) => /\S+@\S+\.\S+/.test(value);
@@ -128,7 +131,7 @@ export default function Contact() {
       formData.phone && phoneOtpVerified && formData.email && emailOtpVerified,
     );
 
-    if (!hasVerifiedContacts) {
+    if (!hasVerifiedContacts || !privacyConsent || !communicationConsent || (formData.consultationType === 'Online' && !teleconsultationConsent)) {
       setOtpError('Please verify both your phone number and email before scheduling an appointment.');
       setOtpNotice('');
       setStatus('error');
@@ -167,6 +170,9 @@ export default function Contact() {
       setEmailOtpInput('');
       setOtpNotice('');
       setOtpError('');
+      setPrivacyConsent(false);
+      setCommunicationConsent(false);
+      setTeleconsultationConsent(false);
       setTimeout(() => setStatus('idle'), 5000);
     } catch (error) {
       console.error('Error submitting form:', error);
@@ -454,7 +460,7 @@ export default function Contact() {
                     id="consultationType"
                     name="consultationType"
                     value={formData.consultationType}
-                    onChange={handleChange}
+                    onChange={(event) => { handleChange(event); if (event.target.value !== 'Online') setTeleconsultationConsent(false); }}
                     className="w-full px-4 py-3 rounded-lg border-2 border-gray-200 focus:ring-2 focus:ring-green-500 focus:border-green-500 transition bg-white"
                   >
                     {consultationTypes.map((type) => (
@@ -464,6 +470,8 @@ export default function Contact() {
                     ))}
                   </select>
                 </div>
+
+                {formData.consultationType === 'Online' && <div className="consent-group"><label><input type="checkbox" checked={teleconsultationConsent} onChange={(event) => setTeleconsultationConsent(event.target.checked)} required /> <span>I consent to the <a href="/terms-of-service">online consultation terms</a>.</span></label></div>}
 
                 <div>
                   <label htmlFor="message" className="block text-sm font-semibold text-gray-700 mb-3">
@@ -508,9 +516,15 @@ export default function Contact() {
                   </div>
                 )}
 
+                <div className="appointment-consent consent-group">
+                  <p className="appointment-consent-title">Before you book</p>
+                  <label><input type="checkbox" checked={privacyConsent} onChange={(event) => setPrivacyConsent(event.target.checked)} required /> <span>I agree to the <a href="/privacy-policy">Privacy Policy</a>.</span></label>
+                  <label><input type="checkbox" checked={communicationConsent} onChange={(event) => setCommunicationConsent(event.target.checked)} required /> <span>I consent to receive communication from the clinic about my appointment and care.</span></label>
+                </div>
+
                 <button
                   type="submit"
-                  disabled={status === 'loading' || !formData.phone || !formData.email || !phoneOtpVerified || !emailOtpVerified}
+                  disabled={status === 'loading' || !formData.phone || !formData.email || !phoneOtpVerified || !emailOtpVerified || !privacyConsent || !communicationConsent}
                   className="btn btn-primary btn-lg btn-block"
                 >
                   <span>{status === 'loading' ? 'Booking...' : 'Book Consultation'}</span>
