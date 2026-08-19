@@ -211,12 +211,24 @@ const Home = () => {
               <br />
               Ramanagara - 562159
             </p>
-            <div className="ayurveda-image h-64 mt-6">
-              <img 
-                src="https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?auto=format&fit=crop&w=400&q=60" 
-                alt="Location map"
-                style={{ height: '100%', objectFit: 'cover' }}
+            <div className="location-map mt-6">
+              <iframe
+                title="Sri Ayurveda Clinic location map"
+                src="https://www.google.com/maps?q=12.7273669%2C77.2725671&z=17&output=embed"
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+                allowFullScreen
               />
+              <a
+                className="location-map-pin"
+                href="https://www.google.com/maps/place/Sri+Ayurveda+Clinic/@12.7273669,77.2725671,17z/data=!3m1!4b1!4m6!3m5!1s0x3bae4d66c8658679:0x5902240bc4760281!8m2!3d12.7273669!4d77.2725671!16s%2Fg%2F11kpt5jw8h?entry=ttu&g_ep=EgoyMDI2MDgxNi4wIKXMDSoASAFQAw%3D%3D"
+                aria-label="Open the exact Sri Ayurveda Clinic location in Google Maps"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <span className="location-map-pin__icon" aria-hidden="true" />
+                <span>Sri Ayurveda Clinic</span>
+              </a>
             </div>
           </div>
         </div>

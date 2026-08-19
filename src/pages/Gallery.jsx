@@ -64,7 +64,7 @@ const Gallery = () => {
   };
 
   return (
-    <section id="gallery" className="py-14 bg-gradient-to-br from-green-50 via-white to-amber-50">
+    <section id="gallery" className="gallery-section py-16 bg-gradient-to-br from-green-50 via-white to-amber-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-8 md:mb-10">
           <p className="text-sm uppercase tracking-[0.35em] text-emerald-700 font-semibold mb-3">Gallery</p>
@@ -73,9 +73,9 @@ const Gallery = () => {
           <div className="w-24 h-1 bg-gradient-to-r from-green-700 to-amber-600 mx-auto mt-4"></div>
         </div>
 
-        <div className="gallery-masonry mb-8">
+        <div className="gallery-masonry mb-10">
           {galleryItems.map((item, index) => {
-            const spanClass = index % 5 === 0 ? 'gallery-card--wide' : index % 3 === 0 ? 'gallery-card--tall' : '';
+            const spanClass = index === 0 ? 'gallery-card--feature' : index === 1 || index === 5 ? 'gallery-card--tall' : index === 8 ? 'gallery-card--wide' : '';
             return (
               <div key={`${item.type}-${index}`} className={`gallery-card ${spanClass}`} onClick={() => handleItemClick(index)}>
                 <div className="gallery-card__media">

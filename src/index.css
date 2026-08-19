@@ -502,9 +502,9 @@ p { margin-bottom: 1rem; color: #3a3a3a; }
 .lux-card {
   position: relative;
   overflow: hidden;
-  padding: 2rem;
+  padding: clamp(1.15rem, 2vw, 1.75rem);
   border: 1px solid rgba(212, 175, 55, 0.2);
-  border-radius: 20px;
+  border-radius: 16px;
   background: rgba(255, 255, 255, 0.92);
   backdrop-filter: blur(12px);
   box-shadow: 0 12px 40px rgba(11, 79, 59, 0.15), 0 6px 20px rgba(0, 0, 0, 0.08);
@@ -522,7 +522,7 @@ p { margin-bottom: 1rem; color: #3a3a3a; }
 
 .card:hover,
 .lux-card:hover {
-  transform: translateY(-8px) scale(1.01);
+  transform: translateY(-5px);
   border-color: rgba(212, 175, 55, 0.4);
   box-shadow: 0 20px 60px rgba(11, 79, 59, 0.25), 0 12px 32px rgba(0, 0, 0, 0.12), 0 0 30px rgba(212, 175, 55, 0.15);
 }
