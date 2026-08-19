@@ -42,7 +42,7 @@ const WellnessPath = () => {
   ];
 
   return (
-    <section id="wellness-path" className="py-20 bg-gradient-to-br from-white via-green-50 to-white">
+    <section id="wellness-path" className="wellness-path py-16 bg-gradient-to-br from-white via-green-50 to-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
           <h2 className="text-4xl font-bold text-green-900 mb-4">Your Wellness Journey</h2>
@@ -61,14 +61,13 @@ const WellnessPath = () => {
               {steps.map((step, index) => (
                 <div key={index} className="wellness-step group">
                   <div className="mb-8">
-                    {/* Circle with number */}
-                    <div className="w-20 h-20 mx-auto bg-gradient-to-br from-green-700 to-emerald-700 rounded-full flex items-center justify-center text-white font-bold text-2xl shadow-lg group-hover:shadow-2xl group-hover:scale-110 transition-all duration-300">
-                      {step.number}
+                    <div className="wellness-marker">
+                      <CheckCircle aria-hidden="true" />
                     </div>
                   </div>
 
                   {/* Card */}
-                  <div className="bg-white rounded-xl shadow-lg p-6 group-hover:shadow-2xl transition-all duration-300 transform group-hover:-translate-y-2">
+                  <div className="wellness-card bg-white rounded-xl shadow-lg p-6 group-hover:shadow-2xl transition-all duration-300 transform group-hover:-translate-y-2">
                     <h3 className="text-xl font-bold text-green-900 mb-3">{step.title}</h3>
                     <p className="text-gray-700 mb-4 text-sm leading-relaxed">{step.description}</p>
 
@@ -94,8 +93,8 @@ const WellnessPath = () => {
               <div className="flex gap-6">
                 {/* Left side - circles and line */}
                 <div className="flex flex-col items-center">
-                  <div className="w-16 h-16 bg-gradient-to-br from-green-700 to-emerald-700 rounded-full flex items-center justify-center text-white font-bold text-xl shadow-lg">
-                    {step.number}
+                  <div className="wellness-marker wellness-marker-mobile">
+                    <CheckCircle aria-hidden="true" />
                   </div>
                   {index < steps.length - 1 && (
                     <div className="w-1 h-12 bg-gradient-to-b from-green-400 to-amber-400 mt-2"></div>
@@ -103,7 +102,7 @@ const WellnessPath = () => {
                 </div>
 
                 {/* Right side - card */}
-                <div className="bg-white rounded-xl shadow-lg p-6 flex-1 mb-4">
+                <div className="wellness-card bg-white rounded-xl shadow-lg p-6 flex-1 mb-4">
                   <h3 className="text-lg font-bold text-green-900 mb-2">{step.title}</h3>
                   <p className="text-gray-700 mb-3 text-sm">{step.description}</p>
                   <div className="space-y-2">

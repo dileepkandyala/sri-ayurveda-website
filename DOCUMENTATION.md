@@ -1,6 +1,20 @@
+# Privacy, Security & Commerce Readiness
+
+Before production launch, the deployment owner must verify:
+
+- HTTPS is enforced with a valid SSL certificate and secure hosting configuration.
+- CAPTCHA is enabled on appointment, newsletter, and purchase-related forms using the configured provider.
+- Admin and data-storage access is restricted to authorized staff with strong credentials and least privilege.
+- Contact workbooks and backups are encrypted, access-controlled, and backed up on a tested schedule.
+- Patient information is never shown publicly. Patient photographs or testimonials require written consent before publication; the public testimonial section is disabled until consent records exist.
+- Cookie consent is accepted before non-essential preferences or analytics are stored.
+- Privacy Policy links remain visible on every page that collects personal data.
+
+The site collects appointment, newsletter, and order consent in the UI. Provider credentials and deployment controls must be configured outside the frontend before accepting real users.
+
 # Sri Ayurveda Clinic & Panchakarma Center - Complete Documentation
 
-**Status:** ✅ **PRODUCTION READY**  
+**Status:** ⚠️ **CODE-READY; DEPLOYMENT AND LEGAL REVIEW REQUIRED**  
 **Last Updated:** May 24, 2026  
 **Live Site:** https://www.sriayurvedawellness.com
 
@@ -18,6 +32,25 @@
 8. [Recent Improvements](#recent-improvements)
 9. [Verification Checklist](#verification-checklist)
 10. [Troubleshooting](#troubleshooting)
+11. [Compliance Package](#compliance-package)
+
+---
+
+## Compliance Package
+
+### Public policies implemented
+
+The website exposes public pages for Privacy Policy, Terms & Conditions, Website Terms of Use, Medical Disclaimer, Telemedicine Policy, Cookie Policy, Data Retention & Security, Patient Rights & Responsibilities, Patient Confidentiality, Emergency & Clinical Limitations, AI Usage & Chatbot Disclaimer, Refund & Cancellation, Shipping & Delivery, Disclaimer, and Grievance Redressal.
+
+Appointment forms require Privacy Policy acceptance and clinic communication consent. Online appointments additionally require teleconsultation terms consent. Newsletter signup requires privacy and communication consent. Product checkout requires Shipping & Return Policy acceptance. The cookie banner blocks analytics events until consent is accepted.
+
+### Restricted internal documents still required
+
+Create and keep access-controlled versions of the Patient Consent Forms (clinic, website, WhatsApp, Instagram, and legal forms), Advertising & Social Media Policy, Staff Confidentiality/NDA, Internal Patient Data Handling SOP, CGHS policies where applicable, incident-response procedure, backup/restore procedure, and written media-consent register. These should not be published as public web pages unless counsel approves them.
+
+### Deployment gates
+
+Do not describe the site as fully compliant until an Indian lawyer reviews the policy text and the clinic verifies its actual operations. Before launch, configure HTTPS/SSL, secure hosting, production CAPTCHA with server-side verification, restricted admin access, encrypted backups, retention schedules, access logging, and a tested breach-response process. Confirm Meta Ads, Google Business Profile, WhatsApp Business, and Instagram wording against their current platform rules before publishing campaigns.
 
 ---
 

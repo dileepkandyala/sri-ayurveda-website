@@ -2,6 +2,30 @@
   animation: fadeIn 0.6s ease;
 }
 
+.dosha-quiz-section { position: relative; overflow: hidden; }
+.dosha-quiz-section::before {
+  content: '';
+  position: absolute;
+  width: 28rem;
+  height: 28rem;
+  top: -14rem;
+  right: -10rem;
+  border: 1px solid rgba(212, 175, 55, 0.22);
+  border-radius: 50%;
+  box-shadow: 0 0 0 2rem rgba(212, 175, 55, 0.04), 0 0 0 5rem rgba(212, 175, 55, 0.025);
+  pointer-events: none;
+}
+.dosha-quiz-card { position: relative; border: 1px solid rgba(47, 139, 87, 0.14); border-radius: 1.5rem; box-shadow: 0 24px 70px rgba(11, 79, 59, 0.13); }
+.dosha-progress-labels { color: #58705f; font-size: 0.78rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; }
+.dosha-progress-labels span:last-child { color: #b7791f; }
+.dosha-progress-track { height: 0.45rem; background: #e8eee5; }
+.dosha-progress-fill { height: 100%; box-shadow: 0 2px 8px rgba(47, 139, 87, 0.3); }
+.dosha-question { max-width: 34rem; color: #163f32; letter-spacing: -0.02em; }
+.dosha-answer { display: flex; align-items: center; min-height: 5rem; border-color: rgba(47, 139, 87, 0.14) !important; background: rgba(250, 252, 248, 0.8) !important; }
+.dosha-answer:hover { border-color: #d4af37 !important; background: #f4f8ef !important; box-shadow: 0 12px 25px rgba(11, 79, 59, 0.08); }
+.dosha-answer .lucide { color: #6b9474; }
+.dosha-answer:hover .lucide { color: #17684b; }
+
 #dosha-quiz button {
   position: relative;
   width: 100%;
@@ -109,6 +133,8 @@
   .dosha-result-card p {
     font-size: 0.9rem;
   }
+
+  .dosha-quiz-card { border-radius: 1.15rem; }
 }
 
 /* Small screens (480px - 767px) */

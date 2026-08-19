@@ -7,6 +7,7 @@ const Newsletter = () => {
   const [email, setEmail] = useState('');
   const [status, setStatus] = useState('idle'); // idle, loading, success, error
   const [message, setMessage] = useState('');
+  const [privacyConsent, setPrivacyConsent] = useState(false);
 
   useEffect(() => {
     const schema = {
@@ -33,6 +34,7 @@ const Newsletter = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (!privacyConsent) return;
     setStatus('loading');
 
     try {
@@ -43,6 +45,7 @@ const Newsletter = () => {
       setStatus('success');
       setMessage('Thank you! Check your email for wellness tips.');
       setEmail('');
+      setPrivacyConsent(false);
       
       setTimeout(() => {
         setStatus('idle');
@@ -85,6 +88,11 @@ const Newsletter = () => {
                 className="w-full pl-12 pr-4 py-3 rounded-lg text-gray-900 font-semibold placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-amber-500"
               />
             </div>
+          </div>
+
+          <label className="newsletter-consent"><input type="checkbox" checked={privacyConsent} onChange={(event) => setPrivacyConsent(event.target.checked)} required /> <span>I agree to the <a href="/privacy-policy">Privacy Policy</a> and consent to receive wellness communications.</span></label>
+
+          <div className="newsletter-submit-row">
             <button
               type="submit"
               disabled={status === 'loading'}

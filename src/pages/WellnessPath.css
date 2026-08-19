@@ -1,6 +1,24 @@
-.wellness-path-container {
+.wellness-path {
   animation: fadeInUp 0.9s ease-out;
 }
+
+.wellness-marker {
+  display: grid;
+  width: 4.25rem;
+  height: 4.25rem;
+  margin: 0 auto;
+  place-items: center;
+  color: #f8f3df;
+  background: linear-gradient(145deg, #17684b, #0b4f3b);
+  border: 5px solid #edf5e8;
+  border-radius: 50%;
+  box-shadow: 0 10px 24px rgba(11, 79, 59, 0.2), 0 0 0 1px rgba(212, 175, 55, 0.45);
+  transition: transform 280ms ease, box-shadow 280ms ease;
+}
+.wellness-marker svg { width: 1.65rem; height: 1.65rem; }
+.wellness-step:hover .wellness-marker { transform: translateY(-3px) scale(1.06); box-shadow: 0 16px 32px rgba(11, 79, 59, 0.25), 0 0 0 4px rgba(212, 175, 55, 0.14); }
+.wellness-card { border: 1px solid rgba(47, 139, 87, 0.12); box-shadow: 0 12px 30px rgba(11, 79, 59, 0.08); }
+.wellness-card h3 { letter-spacing: 0.01em; }
 
 .wellness-step {
   animation: fadeInUp 0.8s ease-out forwards;
@@ -119,11 +137,8 @@
     border-radius: 14px;
   }
 
-  .wellness-step-number {
-    width: 48px;
-    height: 48px;
-    font-size: 1.2rem;
-  }
+  .wellness-marker { width: 3.25rem; height: 3.25rem; }
+  .wellness-marker-mobile { margin: 0; }
 
   .wellness-step-title {
     font-size: 1.15rem;
@@ -144,12 +159,7 @@
     border-radius: 12px;
   }
 
-  .wellness-step-number {
-    width: 44px;
-    height: 44px;
-    font-size: 1.1rem;
-    margin-bottom: 0.75rem;
-  }
+  .wellness-marker { width: 2.9rem; height: 2.9rem; }
 
   .wellness-step-title {
     font-size: 1.05rem;

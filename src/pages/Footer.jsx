@@ -74,11 +74,17 @@ export default function Footer() {
               >
                 <span>Contact</span><ChevronRight aria-hidden="true" />
               </Link>
+            </div>
+          </div>
+
+          <div className="footer-policy-column">
+            <h4 className="footer-heading">Policies</h4>
+            <div className="footer-link-list">
               <Link
                 to="/terms-of-service"
                 className="footer-link"
               >
-                <span>Terms of Service</span><ChevronRight aria-hidden="true" />
+                <span>Terms & Conditions</span><ChevronRight aria-hidden="true" />
               </Link>
               <Link
                 to="/privacy-policy"
@@ -86,10 +92,15 @@ export default function Footer() {
               >
                 <span>Privacy Policy</span><ChevronRight aria-hidden="true" />
               </Link>
+              <Link to="/refund-cancellation-policy" className="footer-link"><span>Refund & Cancellation</span><ChevronRight aria-hidden="true" /></Link>
+              <Link to="/shipping-delivery-policy" className="footer-link"><span>Shipping & Delivery</span><ChevronRight aria-hidden="true" /></Link>
+              <Link to="/disclaimer-policy" className="footer-link"><span>Disclaimer Policy</span><ChevronRight aria-hidden="true" /></Link>
+              <Link to="/grievance-redressal" className="footer-link"><span>Grievance Redressal</span><ChevronRight aria-hidden="true" /></Link>
+              <Link to="/cookie-policy" className="footer-link"><span>Cookie Policy</span><ChevronRight aria-hidden="true" /></Link>
             </div>
           </div>
 
-          <div>
+          <div className="footer-contact-column">
             <h4 className="footer-heading">Connect With Us</h4>
             <div className="footer-contact-list">
               <a
@@ -110,33 +121,35 @@ export default function Footer() {
           </div>
         </div>
 
-        <div className="footer-social-section">
-          <h4 className="footer-heading">Follow Us</h4>
-          <div className="footer-social-links">
-            {socialLinks.map((social) => {
-              const Icon = social.icon;
-              return (
-                <a
-                  key={social.name}
-                  href={social.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  title={social.name}
-                  className={`footer-social-link ${social.color}`}
-                >
-                  <Icon aria-hidden="true" />
-                </a>
-              );
-            })}
+        <div className="footer-meta">
+          <div className="footer-social-section">
+            <h4 className="footer-heading">Follow Us</h4>
+            <div className="footer-social-links">
+              {socialLinks.map((social) => {
+                const Icon = social.icon;
+                return (
+                  <a
+                    key={social.name}
+                    href={social.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    title={social.name}
+                    className={`footer-social-link ${social.color}`}
+                  >
+                    <Icon aria-hidden="true" />
+                  </a>
+                );
+              })}
+            </div>
           </div>
-        </div>
 
-        <div className="footer-bottom">
-          <p>
-            <span>© 2026 Sri Ayurveda Clinic & Panchakarma Center. Made with</span>
-            <Heart aria-hidden="true" />
-            <span>for your wellness</span>
-          </p>
+          <div className="footer-bottom">
+            <p>
+              <span>© 2026 Sri Ayurveda Clinic & Panchakarma Center</span>
+              <Heart aria-hidden="true" />
+              <span>Made for your wellness</span>
+            </p>
+          </div>
         </div>
       </div>
     </footer>

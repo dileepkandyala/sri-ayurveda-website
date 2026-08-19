@@ -3,7 +3,6 @@ import ayurvedicImg from '../images/ayurvedic.jpg';
 import sreeLakshmiImg from '../images/SreeLakshmi.jpg';
 import Seo from '../components/Seo';
 import { SEO_CONFIG } from '../lib/seo';
-import Testimonials from './Testimonials';
 import DoshaQuiz from './DoshaQuiz';
 import Stats from './Stats';
 import Services from './Services';
@@ -234,8 +233,6 @@ const Home = () => {
       {/* Newsletter Section */}
       <Newsletter />
 
-      {/* Testimonials Section */}
-      <Testimonials />
     </main>
   );
 };
