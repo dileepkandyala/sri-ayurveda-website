@@ -31,95 +31,88 @@ export default function Footer() {
   ];
 
   return (
-    <footer className="bg-gradient-to-br from-green-900 to-green-800 text-green-50">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid md:grid-cols-3 gap-12 mb-8">
-          <div>
-            <div className="flex items-center space-x-3 mb-4">
-              <Leaf className="h-8 w-8" />
+    <footer className="site-footer">
+      <div className="container footer-inner">
+        <div className="footer-grid">
+          <div className="footer-brand-column">
+            <div className="footer-brand">
+              <span className="footer-brand-mark"><Leaf aria-hidden="true" /></span>
               <div>
-                <h3 className="text-xl font-bold text-green-50">SRI AYURVEDA CLINIC</h3>
-                <p className="text-sm text-green-100">& PANCHAKARMA CENTER</p>
+                <h3>SRI AYURVEDA CLINIC</h3>
+                <p>& PANCHAKARMA CENTER</p>
               </div>
             </div>
-            <p className="text-green-100 text-sm leading-relaxed">
+            <p className="footer-copy">
               Restore health, renew vitality, live in harmony. Your trusted partner in holistic wellness through authentic Ayurvedic care.
             </p>
           </div>
 
           <div>
-            <h4 className="text-lg font-bold mb-6 text-green-100">Quick Links</h4>
-            <div className="space-y-3">
+            <h4 className="footer-heading">Explore</h4>
+            <div className="footer-link-list">
               <Link
                 to="/"
-                className="group flex items-center justify-between px-4 py-3 bg-gradient-to-r from-green-700 to-emerald-700 hover:from-green-600 hover:to-emerald-600 rounded-lg transition transform hover:translate-x-1 shadow-md hover:shadow-lg"
+                className="footer-link"
               >
-                <span className="text-green-50 font-semibold">Home</span>
-                <ChevronRight className="h-5 w-5 text-amber-400 group-hover:translate-x-1 transition" />
+                <span>Home</span><ChevronRight aria-hidden="true" />
               </Link>
               <Link
                 to="/about"
-                className="group flex items-center justify-between px-4 py-3 bg-gradient-to-r from-emerald-700 to-teal-700 hover:from-emerald-600 hover:to-teal-600 rounded-lg transition transform hover:translate-x-1 shadow-md hover:shadow-lg"
+                className="footer-link"
               >
-                <span className="text-green-50 font-semibold">About Us</span>
-                <ChevronRight className="h-5 w-5 text-amber-400 group-hover:translate-x-1 transition" />
+                <span>About Us</span><ChevronRight aria-hidden="true" />
               </Link>
               <Link
                 to="/panchakarma"
-                className="group flex items-center justify-between px-4 py-3 bg-gradient-to-r from-teal-700 to-cyan-700 hover:from-teal-600 hover:to-cyan-600 rounded-lg transition transform hover:translate-x-1 shadow-md hover:shadow-lg"
+                className="footer-link"
               >
-                <span className="text-green-50 font-semibold">Panchakarma</span>
-                <ChevronRight className="h-5 w-5 text-amber-400 group-hover:translate-x-1 transition" />
+                <span>Panchakarma</span><ChevronRight aria-hidden="true" />
               </Link>
               <Link
                 to="/contact"
-                className="group flex items-center justify-between px-4 py-3 bg-gradient-to-r from-cyan-700 to-green-700 hover:from-cyan-600 hover:to-green-600 rounded-lg transition transform hover:translate-x-1 shadow-md hover:shadow-lg"
+                className="footer-link"
               >
-                <span className="text-green-50 font-semibold">Contact</span>
-                <ChevronRight className="h-5 w-5 text-amber-400 group-hover:translate-x-1 transition" />
+                <span>Contact</span><ChevronRight aria-hidden="true" />
               </Link>
               <Link
                 to="/terms-of-service"
-                className="group flex items-center justify-between px-4 py-3 bg-gradient-to-r from-emerald-800 to-green-800 hover:from-emerald-700 hover:to-green-700 rounded-lg transition transform hover:translate-x-1 shadow-md hover:shadow-lg"
+                className="footer-link"
               >
-                <span className="text-green-50 font-semibold">Terms of Service</span>
-                <ChevronRight className="h-5 w-5 text-amber-400 group-hover:translate-x-1 transition" />
+                <span>Terms of Service</span><ChevronRight aria-hidden="true" />
               </Link>
               <Link
                 to="/privacy-policy"
-                className="group flex items-center justify-between px-4 py-3 bg-gradient-to-r from-green-800 to-emerald-800 hover:from-green-700 hover:to-emerald-700 rounded-lg transition transform hover:translate-x-1 shadow-md hover:shadow-lg"
+                className="footer-link"
               >
-                <span className="text-green-50 font-semibold">Privacy Policy</span>
-                <ChevronRight className="h-5 w-5 text-amber-400 group-hover:translate-x-1 transition" />
+                <span>Privacy Policy</span><ChevronRight aria-hidden="true" />
               </Link>
             </div>
           </div>
 
           <div>
-            <h4 className="text-lg font-bold mb-4 text-green-50">Connect With Us</h4>
-            <div className="space-y-3">
+            <h4 className="footer-heading">Connect With Us</h4>
+            <div className="footer-contact-list">
               <a
                 href="tel:8113452402"
-                className="flex items-center space-x-3 text-green-100 hover:text-green-50 transition"
+                className="footer-contact-link"
               >
-                <Phone className="h-5 w-5" />
+                <Phone aria-hidden="true" />
                 <span>8113452402</span>
               </a>
               <a
                 href="mailto:sriayurveda23@gmail.com"
-                className="flex items-center space-x-3 text-green-100 hover:text-green-50 transition"
+                className="footer-contact-link"
               >
-                <Mail className="h-5 w-5" />
+                <Mail aria-hidden="true" />
                 <span>sriayurveda23@gmail.com</span>
               </a>
             </div>
           </div>
         </div>
 
-        {/* Social Media Icons */}
-        <div className="border-t border-green-700 pt-8 mb-8">
-          <h4 className="text-lg font-bold mb-4 text-center text-green-50">Follow Us</h4>
-          <div className="flex justify-center gap-6">
+        <div className="footer-social-section">
+          <h4 className="footer-heading">Follow Us</h4>
+          <div className="footer-social-links">
             {socialLinks.map((social) => {
               const Icon = social.icon;
               return (
@@ -129,19 +122,19 @@ export default function Footer() {
                   target="_blank"
                   rel="noopener noreferrer"
                   title={social.name}
-                  className={`text-green-100 transition transform hover:scale-125 ${social.color}`}
+                  className={`footer-social-link ${social.color}`}
                 >
-                  <Icon className="h-7 w-7" />
+                  <Icon aria-hidden="true" />
                 </a>
               );
             })}
           </div>
         </div>
 
-        <div className="border-t border-green-700 pt-8 text-center">
-          <p className="text-green-100 flex items-center justify-center space-x-2">
+        <div className="footer-bottom">
+          <p>
             <span>© 2026 Sri Ayurveda Clinic & Panchakarma Center. Made with</span>
-            <Heart className="h-4 w-4 text-red-400 fill-current" />
+            <Heart aria-hidden="true" />
             <span>for your wellness</span>
           </p>
         </div>

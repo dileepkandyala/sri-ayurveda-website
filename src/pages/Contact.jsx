@@ -124,10 +124,12 @@ export default function Contact() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const hasVerifiedContact = (formData.phone && phoneOtpVerified) || (formData.email && emailOtpVerified);
+    const hasVerifiedContacts = Boolean(
+      formData.phone && phoneOtpVerified && formData.email && emailOtpVerified,
+    );
 
-    if (!hasVerifiedContact) {
-      setOtpError('Please verify your phone number or email before submitting the form.');
+    if (!hasVerifiedContacts) {
+      setOtpError('Please verify both your phone number and email before scheduling an appointment.');
       setOtpNotice('');
       setStatus('error');
       setTimeout(() => setStatus('idle'), 4000);
@@ -344,6 +346,8 @@ export default function Contact() {
                         <input
                           type="text"
                           inputMode="numeric"
+                          maxLength={6}
+                          pattern="[0-9]{6}"
                           value={emailOtpInput}
                           onChange={(e) => setEmailOtpInput(e.target.value)}
                           className="otp-input"
@@ -382,6 +386,8 @@ export default function Contact() {
                         <input
                           type="text"
                           inputMode="numeric"
+                          maxLength={6}
+                          pattern="[0-9]{6}"
                           value={phoneOtpInput}
                           onChange={(e) => setPhoneOtpInput(e.target.value)}
                           className="otp-input"
@@ -504,7 +510,7 @@ export default function Contact() {
 
                 <button
                   type="submit"
-                  disabled={status === 'loading' || (!formData.phone && !formData.email) || (!phoneOtpVerified && !emailOtpVerified)}
+                  disabled={status === 'loading' || !formData.phone || !formData.email || !phoneOtpVerified || !emailOtpVerified}
                   className="btn btn-primary btn-lg btn-block"
                 >
                   <span>{status === 'loading' ? 'Booking...' : 'Book Consultation'}</span>
