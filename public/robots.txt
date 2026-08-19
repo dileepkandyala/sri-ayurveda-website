@@ -8,7 +8,6 @@ Disallow: /private/
 Disallow: /.env
 Disallow: /node_modules/
 Disallow: /dist/
-Disallow: /*.json$
 Disallow: /server/
 
 # Specific rules for Googlebot

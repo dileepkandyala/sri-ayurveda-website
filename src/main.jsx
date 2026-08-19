@@ -31,18 +31,15 @@ if (import.meta.env.VITE_GOOGLE_ANALYTICS_ID) {
 // Add JSON-LD Structured Data for SEO
 const structuredData = {
   "@context": "https://schema.org",
-  "@type": "LocalBusiness",
-  "@id": "https://www.sriayurvedawellness.com",
+  "@type": ["MedicalClinic", "LocalBusiness"],
+  "@id": "https://www.sriayurvedawellness.com/#clinic",
   "name": "Sri Ayurveda Clinic & Panchakarma Center",
   "description": "Authentic Ayurvedic wellness center offering Panchakarma therapies, yoga, and personalized treatments by Dr. Shreelakshmi M.V., BAMS",
-  "image": [
-    sreeLakshmiImg,
-    ayurvedicImg
-  ],
+  "image": "https://www.sriayurvedawellness.com/logo.png",
   "url": "https://www.sriayurvedawellness.com",
   "telephone": "+91-8113452402",
   "email": "sriayurveda23@gmail.com",
-  "areaServed": "IN",
+  "areaServed": ["Ramanagara", "Bengaluru", "Karnataka"],
   "priceRange": "₹₹₹",
   "address": {
     "@type": "PostalAddress",
@@ -67,8 +64,17 @@ const structuredData = {
     "opens": "09:00",
     "closes": "18:00"
   },
-  "serviceType": "Ayurvedic Medicine",
   "medicalSpecialty": "Ayurveda",
+  "knowsAbout": ["Ayurveda", "Panchakarma", "Abhyanga", "Shirodhara", "Ayurvedic nutrition", "Yoga and wellness"],
+  "hasOfferCatalog": {
+    "@type": "OfferCatalog",
+    "name": "Ayurvedic services",
+    "itemListElement": [
+      { "@type": "Offer", "itemOffered": { "@type": "MedicalTherapy", "name": "Panchakarma treatment" } },
+      { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Ayurvedic consultation" } },
+      { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Yoga and wellness guidance" } }
+    ]
+  },
   "founder": {
     "@type": "Person",
     "name": "Dr. Shreelakshmi M.V.",
