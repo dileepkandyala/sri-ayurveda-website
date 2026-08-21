@@ -20,7 +20,7 @@ const Stats = () => {
     },
     {
       label: 'Treatments Given',
-      target: 2500,
+      target: 7000,
       icon: Leaf,
       color: 'from-green-500 to-emerald-600',
       suffix: '+'
@@ -51,7 +51,7 @@ const Stats = () => {
 
       setCounts({
         patients: Math.floor(500 * progress),
-        treatments: Math.floor(2500 * progress),
+        treatments: Math.floor(7000 * progress),
         experience: Math.floor(5 * progress),
         satisfaction: Math.floor(98 * progress)
       });

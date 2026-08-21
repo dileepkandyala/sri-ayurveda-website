@@ -20,6 +20,8 @@
 
 .page-header h1 {
   color: white;
+  -webkit-text-fill-color: #f1c95b;
+  background: none;
 }
 
 .page-header__eyebrow {

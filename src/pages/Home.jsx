@@ -125,6 +125,9 @@ const Home = () => {
       {/* Our Approach */}
       <Services />
 
+      {/* Dosha Quiz */}
+      <DoshaQuiz />
+
       {/* Wellness Journey Path */}
       <WellnessPath />
 
@@ -178,8 +181,8 @@ const Home = () => {
               </p>
               <p className="text-lg">
                 <span className="font-semibold text-deep-green">Phone:</span>
-                <a href="tel:8113452402" className="text-gold hover:text-amber ml-2 transition">
-                  8113452402
+                <a href="tel:+919187398489" className="text-gold hover:text-amber ml-2 transition">
+                  +919187398489
                 </a>
               </p>
               <p className="text-lg">
@@ -239,8 +242,6 @@ const Home = () => {
 
       {/* Hero Carousel */}
       <HeroCarousel />
-
-      <DoshaQuiz />
 
       {/* Newsletter Section */}
       <Newsletter />

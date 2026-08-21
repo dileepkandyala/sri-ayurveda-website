@@ -244,7 +244,7 @@ export default function Contact() {
                   </div>
                   <div>
                     <h4 className="font-semibold text-green-900 mb-2 text-lg">Phone</h4>
-                    <p className="text-gray-700">8113452402</p>
+                    <p className="text-gray-700">+919187398489</p>
                   </div>
                 </div>
 

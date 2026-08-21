@@ -99,7 +99,7 @@ const policyContent = {
       ['Appointments', 'Appointment requests are subject to confirmation by the clinic. Please contact us as early as possible if you need to reschedule or cancel.'],
       ['Cancellations', 'Cancellations made before the confirmed appointment time may be rescheduled subject to availability. Late cancellations and missed appointments may not be eligible for a refund.'],
       ['Product orders', 'Product orders are confirmed through WhatsApp. Any refund or replacement request will be reviewed based on product condition, delivery status, and applicable law.'],
-      ['Contact', 'For cancellation or refund support, contact us at sriayurveda23@gmail.com or +91 8113452402.'],
+      ['Contact', 'For cancellation or refund support, contact us at sriayurveda23@gmail.com or +919187398489.'],
     ],
   },
   '/shipping-delivery-policy': {
@@ -110,7 +110,7 @@ const policyContent = {
       ['Order confirmation', 'Orders are reviewed and confirmed through WhatsApp before payment or dispatch.'],
       ['Delivery', 'Delivery timelines depend on destination, courier availability, and product stock. The clinic will share available delivery details during order confirmation.'],
       ['Address accuracy', 'Customers are responsible for providing a complete and accurate delivery address and reachable phone number.'],
-      ['Support', 'For delivery questions, contact us at sriayurveda23@gmail.com or +91 8113452402.'],
+      ['Support', 'For delivery questions, contact us at sriayurveda23@gmail.com or +919187398489.'],
     ],
   },
   '/disclaimer-policy': {
@@ -132,7 +132,7 @@ const policyContent = {
       ['How to contact us', 'Send your concern with your name, contact details, and relevant order or appointment information to sriayurveda23@gmail.com.'],
       ['Review process', 'We will acknowledge your concern and review it with the appropriate clinic representative. Please do not send unnecessary medical information by email.'],
       ['Response', 'We aim to respond within a reasonable period based on the nature and complexity of the concern.'],
-      ['Phone support', 'You can also contact the clinic at +91 8113452402 during working hours.'],
+      ['Phone support', 'You can also contact the clinic at +919187398489 during working hours.'],
     ],
   },
 };

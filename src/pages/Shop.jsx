@@ -5,22 +5,28 @@ import './TreatmentsPage.css';
 
 const products = [
   {
-    name: 'Herbal Digestive Care Kit',
-    price: '₹1,250',
-    amount: 1250,
-    description: 'A curated blend of teas, powders, and guidance for gentle daily digestion support.',
+    name: 'Facial Kit',
+    price: '₹700',
+    amount: 700,
+    description: 'A nourishing Ayurvedic skincare set for a simple, calming facial care ritual at home.',
   },
   {
-    name: 'Ayurvedic Massage Oil',
-    price: '₹950',
-    amount: 950,
-    description: 'Classic herbal oil crafted for soothing muscle relief and nourishing self-care.',
+    name: 'Pottali with Oil',
+    price: '₹1,000',
+    amount: 1000,
+    description: 'A traditional herbal bundle with nourishing oil to support soothing, restorative self-care.',
   },
   {
-    name: 'Daily Wellness Bundle',
-    price: '₹2,400',
-    amount: 2400,
-    description: 'A balanced starter pack of wellness essentials, perfect for home rituals.',
+    name: 'Massage Oil (200 ml)',
+    price: '₹300',
+    amount: 300,
+    description: 'A soothing Ayurvedic oil for relaxing massages and everyday body nourishment. Each bottle contains 200 ml.',
+  },
+  {
+    name: 'Swarnabindu Prashana (15 ml bottle)',
+    price: '₹1,700',
+    amount: 1700,
+    description: 'A traditional Ayurvedic wellness preparation offered in a convenient 15 ml bottle for regular use.',
   },
 ];
 
