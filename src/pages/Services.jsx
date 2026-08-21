@@ -1,8 +1,11 @@
+import { useState } from 'react';
 import { Sparkles, Droplets, Wind, Leaf, Heart, Brain } from 'lucide-react';
 import panchakarmaImg from '../images/IMG_1860.jpg';
 import './Services.css';
 
 const Services = () => {
+  const [expandedService, setExpandedService] = useState(null);
+
   const services = [
     {
       name: 'Panchakarma',
@@ -10,6 +13,7 @@ const Services = () => {
       icon: Droplets,
       color: 'from-blue-500 to-cyan-600',
       benefits: ['Deep Detox', 'Rejuvenation', 'Immune Boost'],
+      details: 'A guided program combining preparatory therapies, cleansing procedures, and rejuvenation care based on your constitution and health goals.',
       image: panchakarmaImg
     },
     {
@@ -18,6 +22,7 @@ const Services = () => {
       icon: Wind,
       color: 'from-amber-500 to-orange-600',
       benefits: ['Flexibility', 'Mental Clarity', 'Inner Peace'],
+      details: 'Personalized yoga practices help improve mobility, breathing, focus, and daily energy at a pace suited to your experience level.',
     },
     {
       name: 'Herbal Treatments',
@@ -25,6 +30,7 @@ const Services = () => {
       icon: Leaf,
       color: 'from-green-500 to-emerald-600',
       benefits: ['Natural Healing', 'Personalized', 'Holistic'],
+      details: 'Receive practitioner-guided herbal support selected around your constitution, lifestyle, and individual wellness needs.',
     },
     {
       name: 'Meditation & Mindfulness',
@@ -32,6 +38,7 @@ const Services = () => {
       icon: Brain,
       color: 'from-purple-500 to-pink-600',
       benefits: ['Stress Relief', 'Mental Health', 'Spiritual Growth'],
+      details: 'Learn calming breathwork and meditation techniques that can support steadier attention, restful sleep, and emotional balance.',
     },
     {
       name: 'Lifestyle Counseling',
@@ -39,6 +46,7 @@ const Services = () => {
       icon: Heart,
       color: 'from-red-500 to-rose-600',
       benefits: ['Diet Plans', 'Routine Design', 'Long-term Health'],
+      details: 'Build practical routines for food, sleep, movement, and self-care that fit your constitution and can be sustained at home.',
     },
     {
       name: 'Specialized Therapies',
@@ -46,6 +54,7 @@ const Services = () => {
       icon: Sparkles,
       color: 'from-indigo-500 to-purple-600',
       benefits: ['Pain Relief', 'Deep Relaxation', 'Renewal'],
+      details: 'Explore traditional therapies such as Abhyanga and Shirodhara, selected after a consultation to support relaxation and recovery.',
     }
   ];
 
@@ -92,9 +101,20 @@ const Services = () => {
                       ))}
                     </div>
 
-                    <button className="btn btn-sm btn-ghost">
-                      Learn More →
+                    <button
+                      type="button"
+                      className="btn btn-sm btn-ghost"
+                      aria-expanded={expandedService === service.name}
+                      aria-controls={`service-details-${index}`}
+                      onClick={() => setExpandedService((current) => current === service.name ? null : service.name)}
+                    >
+                      {expandedService === service.name ? 'Show Less ↑' : 'Learn More →'}
                     </button>
+                    {expandedService === service.name && (
+                      <div id={`service-details-${index}`} className="mt-5 border-t border-white border-opacity-30 pt-5">
+                        <p className="text-white text-opacity-90 leading-relaxed">{service.details}</p>
+                      </div>
+                    )}
                   </div>
                 </div>
               </div>

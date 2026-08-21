@@ -1,5 +1,5 @@
-import React, { useState } from 'react'
-import { createBrowserRouter, RouterProvider, Link, Outlet } from 'react-router-dom'
+import React, { useEffect, useState } from 'react'
+import { createBrowserRouter, RouterProvider, Link, Outlet, useLocation } from 'react-router-dom'
 import Home from './pages/Home'
 import About from './pages/About'
 import Panchakarma from './pages/Panchakarma'
@@ -211,9 +211,30 @@ function MenuNav() {
   )
 }
 
+function ScrollToTop() {
+  const { pathname, search, hash } = useLocation()
+
+  useEffect(() => {
+    const frame = window.requestAnimationFrame(() => {
+      if (hash) {
+        const target = document.getElementById(decodeURIComponent(hash.slice(1)))
+        target?.scrollIntoView()
+        return
+      }
+
+      window.scrollTo(0, 0)
+    })
+
+    return () => window.cancelAnimationFrame(frame)
+  }, [pathname, search, hash])
+
+  return null
+}
+
 function Layout() {
   return (
     <>
+      <ScrollToTop />
       <Header />
       <main className="container site-main">
         <MenuNav />

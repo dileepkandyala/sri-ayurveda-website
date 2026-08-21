@@ -18,13 +18,13 @@ export default function Footer() {
     },
     {
       name: 'Facebook',
-      url: 'https://facebook.com',
+      url: 'https://www.facebook.com/share/19L4zHtL8Y/?mibextid=wwXIfr',
       icon: Facebook,
       color: 'hover:text-blue-400',
     },
     {
       name: 'YouTube',
-      url: 'https://youtube.com',
+      url: 'https://youtube.com/@sriayurvedaclinic?si=EJIkVXXwI9cUkYA6',
       icon: Youtube,
       color: 'hover:text-red-400',
     },
@@ -84,7 +84,7 @@ export default function Footer() {
                 to="/terms-of-service"
                 className="footer-link"
               >
-                <span>Terms & Conditions</span><ChevronRight aria-hidden="true" />
+                <span>Terms of Service</span><ChevronRight aria-hidden="true" />
               </Link>
               <Link
                 to="/privacy-policy"
@@ -92,8 +92,8 @@ export default function Footer() {
               >
                 <span>Privacy Policy</span><ChevronRight aria-hidden="true" />
               </Link>
-              <Link to="/refund-cancellation-policy" className="footer-link"><span>Refund & Cancellation</span><ChevronRight aria-hidden="true" /></Link>
-              <Link to="/shipping-delivery-policy" className="footer-link"><span>Shipping & Delivery</span><ChevronRight aria-hidden="true" /></Link>
+              <Link to="/refund-cancellation-policy" className="footer-link"><span>Refund &amp; Cancellation Policy</span><ChevronRight aria-hidden="true" /></Link>
+              <Link to="/shipping-delivery-policy" className="footer-link"><span>Shipping &amp; Delivery Policy</span><ChevronRight aria-hidden="true" /></Link>
               <Link to="/disclaimer-policy" className="footer-link"><span>Disclaimer Policy</span><ChevronRight aria-hidden="true" /></Link>
               <Link to="/grievance-redressal" className="footer-link"><span>Grievance Redressal</span><ChevronRight aria-hidden="true" /></Link>
               <Link to="/cookie-policy" className="footer-link"><span>Cookie Policy</span><ChevronRight aria-hidden="true" /></Link>
@@ -104,11 +104,11 @@ export default function Footer() {
             <h4 className="footer-heading">Connect With Us</h4>
             <div className="footer-contact-list">
               <a
-                href="tel:8113452402"
+                href="tel:+919187398489"
                 className="footer-contact-link"
               >
                 <Phone aria-hidden="true" />
-                <span>8113452402</span>
+                <span>+919187398489</span>
               </a>
               <a
                 href="mailto:sriayurveda23@gmail.com"

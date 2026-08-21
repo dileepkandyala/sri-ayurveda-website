@@ -89,9 +89,9 @@ export const SEO_CONFIG = {
       postalCode: '562159',
       addressCountry: 'IN'
     },
-    telephone: '+91-8113452402',
+    telephone: '+919187398489',
     contactPoint: {
-      telephone: '+91-8113452402',
+      telephone: '+919187398489',
       contactType: 'Customer Support'
     },
     sameAs: [

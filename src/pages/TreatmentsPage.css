@@ -19,7 +19,9 @@
 }
 
 .page-header h1 {
-  color: white;
+  color: #f1f3ed;
+  -webkit-text-fill-color: #f1c95b;
+  background: none;
 }
 
 .page-header p {
