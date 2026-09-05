@@ -1,4 +1,4 @@
-import { ArrowRight, Stethoscope, ClipboardList, FlaskConical, HeartPulse, Sunrise, Flag, Footprints } from 'lucide-react';
+import { ArrowRight, Stethoscope, ClipboardList, FlaskConical, HeartPulse, Sunrise, Flag } from 'lucide-react';
 import './WellnessPath.css';
 
 const WellnessPath = () => {
@@ -51,46 +51,51 @@ const WellnessPath = () => {
         </div>
 
         {/* Timeline Desktop */}
-        <div className="hidden md:block wellness-timeline-desktop">
+        <div className="wellness-timeline-desktop">
           <div className="relative">
-            {/* Curved route */}
-            <svg
-              className="wellness-route"
-              viewBox="0 0 600 100"
-              preserveAspectRatio="none"
-              aria-hidden="true"
-            >
-              <path
-                d="M50,25 C150,25 150,75 250,75 C350,75 350,25 450,25 C500,25 500,75 550,75"
-                fill="none"
-                stroke="#2f8b57"
-                strokeWidth="3"
-                strokeDasharray="10 9"
-                strokeLinecap="round"
-                opacity="0.55"
-              />
-            </svg>
-
-            {/* Hurdles along the way */}
-            <div className="wellness-hurdles" aria-hidden="true">
-              {[0, 1, 2, 3, 4].map((hurdle) => (
-                <span key={hurdle} className="wellness-hurdle" style={{ left: `${(hurdle + 1) * (100 / 6)}%` }}>
-                  <Footprints />
-                </span>
-              ))}
-            </div>
-
-            {/* Steps */}
-            <div className="grid grid-cols-6 gap-8 relative z-10 wellness-steps-grid">
+            {/* Milestones */}
+            <div className="grid grid-cols-2 gap-8 relative z-10 wellness-steps-grid">
               {steps.map((step, index) => {
                 const MarkerIcon = step.icon;
                 return (
                   <div key={index} className="wellness-step group">
-                    <div className={`mb-12 wellness-marker-wrap ${index % 2 === 1 ? 'wellness-marker-wrap--down' : 'wellness-marker-wrap--up'}`}>
+                    <div className="mb-12">
                       <div className="wellness-marker">
                         <MarkerIcon aria-hidden="true" />
                       </div>
                     </div>
+
+                    {index < 5 && (
+                      <svg
+                        className={`wellness-card-connector ${index % 2 === 1 ? 'wellness-card-connector--s' : 'wellness-card-connector--straight'}`}
+                        viewBox="0 0 100 100"
+                        preserveAspectRatio="none"
+                        aria-hidden="true"
+                      >
+                        <defs>
+                          <marker
+                            id={`wellness-arrow-${index}`}
+                            markerWidth="5"
+                            markerHeight="5"
+                            refX="4"
+                            refY="2.5"
+                            orient="auto"
+                            markerUnits="userSpaceOnUse"
+                          >
+                            <path d="M0,0 L5,2.5 L0,5 Z" fill="#b7791f" />
+                          </marker>
+                        </defs>
+                        <path
+                          d={index % 2 === 1 ? 'M75,0 C98,20 98,80 25,100' : 'M0,50 C25,20 75,80 100,50'}
+                          fill="none"
+                          stroke="#2f8b57"
+                          strokeWidth="1.5"
+                          strokeDasharray="3 5"
+                          strokeLinecap="round"
+                          markerEnd={`url(#wellness-arrow-${index})`}
+                        />
+                      </svg>
+                    )}
 
                     {/* Card */}
                     <div className="wellness-card bg-white rounded-xl shadow-lg p-6 group-hover:shadow-2xl transition-all duration-300 transform group-hover:-translate-y-2">
@@ -114,23 +119,17 @@ const WellnessPath = () => {
         </div>
 
         {/* Timeline Mobile */}
-        <div className="md:hidden space-y-8">
+        <div className="wellness-timeline-mobile space-y-8">
           {steps.map((step, index) => {
             const MarkerIcon = step.icon;
             return (
               <div key={index} className="wellness-step-mobile">
                 <div className="flex gap-10">
-                  {/* Left side - pins and route */}
+                  {/* Left side - milestone icon */}
                   <div className="flex flex-col items-center">
                     <div className="wellness-marker wellness-marker-mobile">
                       <MarkerIcon aria-hidden="true" />
                     </div>
-                    {index < steps.length - 1 && (
-                      <div className="wellness-route-mobile-wrap">
-                        <div className="wellness-route-mobile mt-2"></div>
-                        <Footprints className="wellness-hurdle-mobile" aria-hidden="true" />
-                      </div>
-                    )}
                   </div>
 
                   {/* Right side - card */}

@@ -29,6 +29,15 @@
   background: linear-gradient(90deg, #2f8b57, #d4af37);
 }
 
+.service-tile:nth-child(even) {
+  background: linear-gradient(160deg, #fffdf7 0%, #fbf4df 55%, #f4ead0 100%);
+  border-color: rgba(183, 121, 31, 0.2);
+}
+
+.service-tile:nth-child(even)::before {
+  background: linear-gradient(90deg, #b7791f, #2f8b57);
+}
+
 .service-tile:nth-child(1) { animation-delay: 0.05s; }
 .service-tile:nth-child(2) { animation-delay: 0.1s; }
 .service-tile:nth-child(3) { animation-delay: 0.15s; }

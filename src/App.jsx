@@ -135,6 +135,8 @@ function Header() {
           </div>
         </Link>
 
+        <div className="header-gstin">GSTIN: 29KJDPS2127E1Z1</div>
+
         <button
           type="button"
           className="music-toggle"

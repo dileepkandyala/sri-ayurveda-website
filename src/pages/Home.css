@@ -629,3 +629,106 @@
     box-shadow: 0 25px 70px rgba(11,79,59,0.25);
   }
 }
+
+.home-contact-section {
+  box-sizing: border-box;
+  display: block;
+  width: 100%;
+  padding: 4rem clamp(1rem, 4vw, 3rem) !important;
+  border-radius: 28px;
+  overflow: hidden;
+  background: linear-gradient(145deg, #fbf7ef 0%, #ffffff 48%, #edf6ee 100%);
+  border: 1px solid rgba(47, 139, 87, 0.12);
+}
+
+.home-contact-section h2 {
+  color: #0b4f3b;
+}
+
+.home-contact-grid {
+  width: 100%;
+  align-items: stretch;
+  gap: clamp(1.5rem, 4vw, 3rem) !important;
+}
+
+.home-contact-panel {
+  min-width: 0;
+  padding-left: clamp(2rem, 4vw, 3.5rem) !important;
+  border-radius: 22px !important;
+  border: 1px solid rgba(47, 139, 87, 0.14);
+  box-shadow: 0 18px 45px rgba(11, 79, 59, 0.1);
+  transition: transform 220ms ease, box-shadow 220ms ease;
+}
+
+.home-contact-panel:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 24px 55px rgba(11, 79, 59, 0.15);
+}
+
+.home-contact-info {
+  background: linear-gradient(155deg, #0b4f3b 0%, #17684b 58%, #2f8b57 100%) !important;
+}
+
+.home-contact-info h3 {
+  color: #fffdf3 !important;
+}
+
+.home-contact-list {
+  display: grid;
+  gap: 0.9rem;
+}
+
+.home-contact-list p {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.35rem;
+  margin: 0;
+  padding: 0.85rem 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.16);
+  color: #e5f1e5 !important;
+}
+
+.home-contact-list p:last-child {
+  border-bottom: 0;
+}
+
+.home-contact-list .font-semibold {
+  color: #fffdf3 !important;
+}
+
+.home-contact-list a {
+  color: #f1c95b !important;
+}
+
+.home-contact-list a:hover {
+  color: #fffdf3;
+}
+
+.home-contact-location {
+  background: linear-gradient(160deg, #fffdf7 0%, #fbf4df 55%, #f4ead0 100%) !important;
+}
+
+.home-contact-location h3 {
+  color: #0b4f3b;
+}
+
+.home-contact-location .location-map {
+  overflow: hidden;
+  border: 1px solid rgba(183, 121, 31, 0.24);
+  border-radius: 16px;
+  box-shadow: 0 12px 28px rgba(11, 79, 59, 0.12);
+}
+
+@media (max-width: 767px) {
+  .home-contact-section {
+    padding: 3rem 0.75rem !important;
+    border-radius: 18px;
+  }
+
+  .home-contact-panel {
+    padding: 1.5rem !important;
+    padding-left: 2rem !important;
+    border-radius: 18px;
+  }
+}

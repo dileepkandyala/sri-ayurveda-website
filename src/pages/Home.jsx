@@ -136,28 +136,24 @@ const Home = () => {
         <h2 className="text-4xl font-bold text-deep-green mb-8 text-center">Why Choose Sri Ayurveda</h2>
         <div className="grid md:grid-cols-2 gap-8">
           <div className="flex items-start gap-4">
-            <div className="flex-shrink-0 w-12 h-12 bg-gold rounded-full flex items-center justify-center text-white font-bold">✓</div>
             <div>
               <h3 className="text-xl font-bold text-deep-green mb-2">Authentic Ayurvedic Care</h3>
               <p className="text-gray-700">Treatments grounded in 5,000 years of Ayurvedic wisdom and modern understanding.</p>
             </div>
           </div>
           <div className="flex items-start gap-4">
-            <div className="flex-shrink-0 w-12 h-12 bg-gold rounded-full flex items-center justify-center text-white font-bold">✓</div>
             <div>
               <h3 className="text-xl font-bold text-deep-green mb-2">Personalized Programs</h3>
               <p className="text-gray-700">Each treatment plan is customized to your unique constitution and health needs.</p>
             </div>
           </div>
           <div className="flex items-start gap-4">
-            <div className="flex-shrink-0 w-12 h-12 bg-gold rounded-full flex items-center justify-center text-white font-bold">✓</div>
             <div>
               <h3 className="text-xl font-bold text-deep-green mb-2">Holistic Wellness</h3>
               <p className="text-gray-700">We address root causes, not just symptoms, for lasting health and vitality.</p>
             </div>
           </div>
           <div className="flex items-start gap-4">
-            <div className="flex-shrink-0 w-12 h-12 bg-gold rounded-full flex items-center justify-center text-white font-bold">✓</div>
             <div>
               <h3 className="text-xl font-bold text-deep-green mb-2">Safe & Professional</h3>
               <p className="text-gray-700">All therapies administered by qualified, certified Ayurvedic practitioners.</p>
@@ -167,12 +163,12 @@ const Home = () => {
       </section>
 
       {/* Contact Info Section */}
-      <section id="section-contact" className="scroll-reveal home-section py-20 mb-20">
+      <section id="section-contact" className="scroll-reveal home-section home-contact-section py-20 mb-20">
         <h2 className="text-4xl font-bold text-deep-green mb-12 text-center">Get In Touch</h2>
-        <div className="grid md:grid-cols-2 gap-12">
-          <div className="bg-gradient-to-br from-green-50 to-white p-10 rounded-2xl shadow-lg">
+        <div className="home-contact-grid grid md:grid-cols-2 gap-12">
+          <div className="home-contact-panel home-contact-info bg-gradient-to-br from-green-50 to-white p-10 rounded-2xl shadow-lg">
             <h3 className="text-2xl font-bold text-deep-green mb-8">Contact Information</h3>
-            <div className="space-y-6">
+            <div className="home-contact-list space-y-6">
               <p className="text-lg">
                 <span className="font-semibold text-deep-green">WhatsApp:</span>
                 <a href="https://wa.me/917619529616" target="_blank" rel="noopener noreferrer" className="text-gold hover:text-amber ml-2 transition">
@@ -205,7 +201,7 @@ const Home = () => {
               </p>
             </div>
           </div>
-          <div className="bg-gradient-to-br from-amber-50 to-white p-10 rounded-2xl shadow-lg">
+          <div className="home-contact-panel home-contact-location bg-gradient-to-br from-amber-50 to-white p-10 rounded-2xl shadow-lg">
             <h3 className="text-2xl font-bold text-deep-green mb-8">Location</h3>
             <p className="text-lg text-gray-700 leading-relaxed mb-8">
               #Hamsa complex, Magadi main road,
