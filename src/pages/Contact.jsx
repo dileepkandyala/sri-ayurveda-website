@@ -200,7 +200,7 @@ export default function Contact() {
   };
 
   return (
-    <section id="contact" className="py-14 bg-white">
+    <section id="contact" className="contact-page py-14 bg-white">
       <Seo
         title={SEO_CONFIG.pages.contact.title}
         description={SEO_CONFIG.pages.contact.description}
@@ -214,18 +214,18 @@ export default function Contact() {
         }}
       />
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-10">
+        <div className="contact-heading text-center mb-10">
           <h2 className="text-4xl font-bold text-green-900 mb-6">Get In Touch</h2>
           <p className="text-xl text-gray-700 mb-8">Book a consultation at Sri Ayurveda Clinic & Panchakarma Center in Ramanagara for authentic Ayurvedic care.</p>
           <div className="w-24 h-1 bg-green-700 mx-auto"></div>
         </div>
 
-        <div className="grid md:grid-cols-2 gap-16">
-          <div className="space-y-10">
+        <div className="contact-layout grid md:grid-cols-2 gap-16">
+          <div className="contact-details space-y-10">
             <div>
               <h3 className="text-2xl font-bold text-green-900 mb-8">Contact Information</h3>
 
-              <div className="space-y-8">
+              <div className="contact-info-list space-y-8">
                 <div className="flex items-start space-x-5">
                   <div className="bg-gradient-to-br from-green-100 to-green-50 p-4 rounded-lg flex-shrink-0">
                     <MapPin className="h-6 w-6 text-green-700" />
@@ -302,8 +302,8 @@ export default function Contact() {
             </div>
           </div>
 
-          <div>
-            <div className="bg-gradient-to-br from-green-50 to-white p-10 rounded-2xl shadow-xl">
+          <div className="contact-form-column">
+            <div className="contact-form-panel bg-gradient-to-br from-green-50 to-white p-10 rounded-2xl shadow-xl">
               <h3 className="text-2xl font-bold text-green-900 mb-8">Send Us a Message</h3>
 
               <form onSubmit={handleSubmit} className="space-y-8">
