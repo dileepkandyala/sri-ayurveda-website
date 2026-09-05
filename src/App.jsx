@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { createBrowserRouter, RouterProvider, Link, Outlet, useLocation } from 'react-router-dom'
 import Home from './pages/Home'
 import About from './pages/About'
@@ -181,11 +181,30 @@ function Header() {
 
 function MenuNav() {
   const [open, setOpen] = useState(false)
+  const menuRef = useRef(null)
+
+  useEffect(() => {
+    if (!open) return undefined
+
+    const handleOutsideClick = (event) => {
+      if (menuRef.current && !menuRef.current.contains(event.target)) {
+        setOpen(false)
+      }
+    }
+
+    document.addEventListener('mousedown', handleOutsideClick)
+    document.addEventListener('touchstart', handleOutsideClick)
+
+    return () => {
+      document.removeEventListener('mousedown', handleOutsideClick)
+      document.removeEventListener('touchstart', handleOutsideClick)
+    }
+  }, [open])
 
   return (
     <div className="menu-shell">
       <div className="container">
-        <div className="menu-trigger-wrap">
+        <div className="menu-trigger-wrap" ref={menuRef}>
           <button
             className="menu-button"
             aria-label="Toggle navigation"

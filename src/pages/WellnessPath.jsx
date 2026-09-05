@@ -1,40 +1,40 @@
-import { CheckCircle, ArrowRight } from 'lucide-react';
+import { ArrowRight, Stethoscope, ClipboardList, FlaskConical, HeartPulse, Sunrise, Flag, Footprints } from 'lucide-react';
 import './WellnessPath.css';
 
 const WellnessPath = () => {
   const steps = [
     {
-      number: 1,
+      icon: Stethoscope,
       title: 'Consultation',
       description: 'Meet with Dr. Shreelakshmi for a personalized assessment',
       benefits: ['Constitution analysis', 'Health history review', 'Custom plan']
     },
     {
-      number: 2,
+      icon: ClipboardList,
       title: 'Assessment',
       description: 'Detailed evaluation of your dosha and imbalances',
       benefits: ['Pulse examination', 'Lifestyle analysis', 'Treatment plan']
     },
     {
-      number: 3,
+      icon: FlaskConical,
       title: 'Preparation',
       description: 'Pre-treatment therapies to prepare your body',
       benefits: ['Herbal therapy', 'Dietary guidance', 'Lifestyle changes']
     },
     {
-      number: 4,
+      icon: HeartPulse,
       title: 'Treatment',
       description: 'Personalized therapies tailored to your needs',
       benefits: ['Panchakarma', 'Massage therapy', 'Herbal remedies']
     },
     {
-      number: 5,
+      icon: Sunrise,
       title: 'Recovery',
       description: 'Post-treatment rejuvenation and integration',
       benefits: ['Rasayana therapy', 'Nutrition plan', 'Follow-up care']
     },
     {
-      number: 6,
+      icon: Flag,
       title: 'Wellness',
       description: 'Long-term health maintenance and prevention',
       benefits: ['Routine guidance', 'Seasonal care', 'Preventive measures']
@@ -51,72 +51,105 @@ const WellnessPath = () => {
         </div>
 
         {/* Timeline Desktop */}
-        <div className="hidden md:block">
+        <div className="hidden md:block wellness-timeline-desktop">
           <div className="relative">
-            {/* Connecting line */}
-            <div className="absolute top-1/3 left-0 right-0 h-1 bg-gradient-to-r from-green-300 via-amber-400 to-green-300 transform -translate-y-1/2"></div>
+            {/* Curved route */}
+            <svg
+              className="wellness-route"
+              viewBox="0 0 600 100"
+              preserveAspectRatio="none"
+              aria-hidden="true"
+            >
+              <path
+                d="M50,25 C150,25 150,75 250,75 C350,75 350,25 450,25 C500,25 500,75 550,75"
+                fill="none"
+                stroke="#2f8b57"
+                strokeWidth="3"
+                strokeDasharray="10 9"
+                strokeLinecap="round"
+                opacity="0.55"
+              />
+            </svg>
+
+            {/* Hurdles along the way */}
+            <div className="wellness-hurdles" aria-hidden="true">
+              {[0, 1, 2, 3, 4].map((hurdle) => (
+                <span key={hurdle} className="wellness-hurdle" style={{ left: `${(hurdle + 1) * (100 / 6)}%` }}>
+                  <Footprints />
+                </span>
+              ))}
+            </div>
 
             {/* Steps */}
-            <div className="grid grid-cols-6 gap-4 relative z-10">
-              {steps.map((step, index) => (
-                <div key={index} className="wellness-step group">
-                  <div className="mb-8">
-                    <div className="wellness-marker">
-                      <CheckCircle aria-hidden="true" />
+            <div className="grid grid-cols-6 gap-8 relative z-10 wellness-steps-grid">
+              {steps.map((step, index) => {
+                const MarkerIcon = step.icon;
+                return (
+                  <div key={index} className="wellness-step group">
+                    <div className={`mb-12 wellness-marker-wrap ${index % 2 === 1 ? 'wellness-marker-wrap--down' : 'wellness-marker-wrap--up'}`}>
+                      <div className="wellness-marker">
+                        <MarkerIcon aria-hidden="true" />
+                      </div>
+                    </div>
+
+                    {/* Card */}
+                    <div className="wellness-card bg-white rounded-xl shadow-lg p-6 group-hover:shadow-2xl transition-all duration-300 transform group-hover:-translate-y-2">
+                      <h3 className="text-xl font-bold text-green-900 mb-3">{step.title}</h3>
+                      <p className="text-gray-700 mb-4 text-sm leading-relaxed">{step.description}</p>
+
+                      <div className="space-y-2">
+                        {step.benefits.map((benefit, idx) => (
+                          <div key={idx} className="flex items-center gap-3 text-sm">
+                            <span className="wellness-bullet" aria-hidden="true"></span>
+                            <span className="text-gray-700">{benefit}</span>
+                          </div>
+                        ))}
+                      </div>
                     </div>
                   </div>
+                );
+              })}
+            </div>
+          </div>
+        </div>
 
-                  {/* Card */}
-                  <div className="wellness-card bg-white rounded-xl shadow-lg p-6 group-hover:shadow-2xl transition-all duration-300 transform group-hover:-translate-y-2">
-                    <h3 className="text-xl font-bold text-green-900 mb-3">{step.title}</h3>
-                    <p className="text-gray-700 mb-4 text-sm leading-relaxed">{step.description}</p>
+        {/* Timeline Mobile */}
+        <div className="md:hidden space-y-8">
+          {steps.map((step, index) => {
+            const MarkerIcon = step.icon;
+            return (
+              <div key={index} className="wellness-step-mobile">
+                <div className="flex gap-10">
+                  {/* Left side - pins and route */}
+                  <div className="flex flex-col items-center">
+                    <div className="wellness-marker wellness-marker-mobile">
+                      <MarkerIcon aria-hidden="true" />
+                    </div>
+                    {index < steps.length - 1 && (
+                      <div className="wellness-route-mobile-wrap">
+                        <div className="wellness-route-mobile mt-2"></div>
+                        <Footprints className="wellness-hurdle-mobile" aria-hidden="true" />
+                      </div>
+                    )}
+                  </div>
 
+                  {/* Right side - card */}
+                  <div className="wellness-card bg-white rounded-2xl shadow-lg p-6 flex-1 mb-8">
+                    <h3 className="text-lg font-bold text-green-900 mb-2">{step.title}</h3>
+                    <p className="text-gray-700 mb-3 text-sm">{step.description}</p>
                     <div className="space-y-2">
                       {step.benefits.map((benefit, idx) => (
-                        <div key={idx} className="flex items-start gap-2 text-sm">
-                          <CheckCircle className="w-4 h-4 text-green-600 flex-shrink-0 mt-0.5" />
+                        <div key={idx} className="flex items-center gap-3 text-xs">
+                          <span className="wellness-bullet" aria-hidden="true"></span>
                           <span className="text-gray-700">{benefit}</span>
                         </div>
                       ))}
                     </div>
                   </div>
                 </div>
-              ))}
-            </div>
-          </div>
-        </div>
-
-        {/* Timeline Mobile */}
-        <div className="md:hidden space-y-6">
-          {steps.map((step, index) => (
-            <div key={index} className="wellness-step-mobile">
-              <div className="flex gap-6">
-                {/* Left side - circles and line */}
-                <div className="flex flex-col items-center">
-                  <div className="wellness-marker wellness-marker-mobile">
-                    <CheckCircle aria-hidden="true" />
-                  </div>
-                  {index < steps.length - 1 && (
-                    <div className="w-1 h-12 bg-gradient-to-b from-green-400 to-amber-400 mt-2"></div>
-                  )}
-                </div>
-
-                {/* Right side - card */}
-                <div className="wellness-card bg-white rounded-xl shadow-lg p-6 flex-1 mb-4">
-                  <h3 className="text-lg font-bold text-green-900 mb-2">{step.title}</h3>
-                  <p className="text-gray-700 mb-3 text-sm">{step.description}</p>
-                  <div className="space-y-2">
-                    {step.benefits.map((benefit, idx) => (
-                      <div key={idx} className="flex items-center gap-2 text-xs">
-                        <CheckCircle className="w-3 h-3 text-green-600 flex-shrink-0" />
-                        <span className="text-gray-700">{benefit}</span>
-                      </div>
-                    ))}
-                  </div>
-                </div>
               </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
 
         {/* CTA */}
