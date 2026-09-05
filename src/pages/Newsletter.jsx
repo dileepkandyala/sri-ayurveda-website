@@ -96,7 +96,7 @@ const Newsletter = () => {
             <button
               type="submit"
               disabled={status === 'loading'}
-              className="px-8 py-3 bg-gradient-to-r from-amber-500 to-orange-600 text-white font-bold rounded-lg hover:shadow-lg transition transform hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed"
+              className="btn btn-primary btn-lg newsletter-submit-btn"
             >
               {status === 'loading' ? 'Subscribing...' : 'Subscribe'}
             </button>

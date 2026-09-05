@@ -142,15 +142,13 @@ export default function Contact() {
     setStatus('loading');
 
     try {
-      const whatsappResult = await sendWhatsAppMessage(formData);
-      console.log('WhatsApp message opened:', whatsappResult);
+      await sendWhatsAppMessage(formData);
 
       // Send to backend to save to Excel file
       const data = await fetchApi('/contact-submit', {
         method: 'POST',
         body: JSON.stringify(formData),
       });
-      console.log('Form submitted successfully:', data);
       setEmailInfo(data.email || null);
       setStatus('success');
       setFormData({

@@ -274,18 +274,6 @@
 
 /* Extra small screens (320px - 479px) */
 @media (max-width: 479px) {
-  .gallery-item {
-    border-radius: 8px;
-  }
-
-  .gallery-item .overlay {
-    padding: 0.75rem;
-  }
-
-  .gallery-item h3 {
-    font-size: 0.95rem;
-  }
-
   .lightbox-overlay {
     z-index: 1000;
   }
@@ -342,18 +330,6 @@
 
 /* Small screens (480px - 767px) */
 @media (max-width: 767px) {
-  .gallery-item {
-    border-radius: 10px;
-  }
-
-  .gallery-item .overlay {
-    padding: 0.85rem;
-  }
-
-  .gallery-item h3 {
-    font-size: 1rem;
-  }
-
   .lightbox-content {
     max-width: 92vw;
     max-height: 92vh;
@@ -398,11 +374,6 @@
 
 /* Medium screens (768px - 1023px) */
 @media (min-width: 768px) and (max-width: 1023px) {
-  .gallery-item {
-    border-radius: 12px;
-    height: 280px;
-  }
-
   .lightbox-nav {
     padding: 0.875rem;
   }
@@ -415,15 +386,6 @@
 
 /* Large screens (1024px+) */
 @media (min-width: 1024px) {
-  .gallery-item {
-    height: 320px;
-  }
-
-  .gallery-item:hover {
-    transform: translateY(-8px);
-    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.15);
-  }
-
   .lightbox-nav {
     padding: 1rem;
   }
@@ -435,10 +397,6 @@
 
 /* Touch device optimizations */
 @media (hover: none) and (pointer: coarse) {
-  .gallery-item:hover .overlay {
-    background-color: rgba(0, 0, 0, 0.3);
-  }
-
   .lightbox-nav,
   .lightbox-close {
     min-height: 48px;

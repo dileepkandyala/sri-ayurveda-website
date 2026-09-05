@@ -1,10 +1,10 @@
-import { useState } from 'react';
-import { Sparkles, Droplets, Wind, Leaf, Heart, Brain } from 'lucide-react';
+import { useEffect, useState } from 'react';
+import { Sparkles, Droplets, Wind, Leaf, Heart, Brain, X } from 'lucide-react';
 import panchakarmaImg from '../images/IMG_1860.jpg';
 import './Services.css';
 
 const Services = () => {
-  const [expandedService, setExpandedService] = useState(null);
+  const [activeService, setActiveService] = useState(null);
 
   const services = [
     {
@@ -58,6 +58,15 @@ const Services = () => {
     }
   ];
 
+  useEffect(() => {
+    if (!activeService) return undefined;
+    const handleKeyDown = (event) => {
+      if (event.key === 'Escape') setActiveService(null);
+    };
+    document.addEventListener('keydown', handleKeyDown);
+    return () => document.removeEventListener('keydown', handleKeyDown);
+  }, [activeService]);
+
   return (
     <section id="services" className="py-14 bg-gradient-to-b from-white via-green-50 to-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -68,56 +77,29 @@ const Services = () => {
         </div>
 
         {/* Services Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+        <div className="grid grid-cols-2 gap-8 services-tile-grid">
           {services.map((service, index) => {
-            const Icon = service.icon;
             return (
-              <div
+              <button
                 key={index}
-                className="service-card group"
+                type="button"
+                className="service-tile group text-left"
+                onClick={() => setActiveService(service)}
+                aria-haspopup="dialog"
               >
-                <div className={`bg-gradient-to-br ${service.color} rounded-2xl p-8 h-full shadow-lg group-hover:shadow-2xl transition-all duration-300 transform group-hover:-translate-y-2 text-white relative overflow-hidden`}>
-                  {/* Background decoration */}
-                  <div className="absolute -right-10 -top-10 w-32 h-32 bg-white opacity-10 rounded-full group-hover:opacity-20 transition"></div>
-                  
-                  <div className="relative z-10">
-                    <div className="mb-6 flex items-center gap-3">
-                      <Icon className="w-8 h-8" />
-                      <h3 className="text-2xl font-bold">{service.name}</h3>
-                    </div>
+                <h3 className="service-tile-title">{service.name}</h3>
+                <p className="service-tile-description">{service.description}</p>
 
-                    <p className="text-white text-opacity-90 mb-8 leading-relaxed">
-                      {service.description}
-                    </p>
-
-                    <div className="flex flex-wrap gap-3 mb-8">
-                      {service.benefits.map((benefit, idx) => (
-                        <span
-                          key={idx}
-                          className="text-xs font-semibold bg-white bg-opacity-20 px-3 py-2 rounded-full"
-                        >
-                          {benefit}
-                        </span>
-                      ))}
-                    </div>
-
-                    <button
-                      type="button"
-                      className="btn btn-sm btn-ghost"
-                      aria-expanded={expandedService === service.name}
-                      aria-controls={`service-details-${index}`}
-                      onClick={() => setExpandedService((current) => current === service.name ? null : service.name)}
-                    >
-                      {expandedService === service.name ? 'Show Less ↑' : 'Learn More →'}
-                    </button>
-                    {expandedService === service.name && (
-                      <div id={`service-details-${index}`} className="mt-5 border-t border-white border-opacity-30 pt-5">
-                        <p className="text-white text-opacity-90 leading-relaxed">{service.details}</p>
-                      </div>
-                    )}
-                  </div>
+                <div className="service-tile-benefits">
+                  {service.benefits.map((benefit, idx) => (
+                    <span key={idx} className="service-tile-chip">
+                      {benefit}
+                    </span>
+                  ))}
                 </div>
-              </div>
+
+                <span className="service-tile-cta">View Details <span className="service-tile-cta-arrow">→</span></span>
+              </button>
             );
           })}
         </div>
@@ -138,8 +120,63 @@ const Services = () => {
           </div>
         </div>
       </div>
+
+      {activeService && (
+        <div
+          className="service-modal-overlay"
+          role="presentation"
+          onClick={() => setActiveService(null)}
+        >
+          <div
+            className="service-modal"
+            role="dialog"
+            aria-modal="true"
+            aria-label={activeService.name}
+            onClick={(event) => event.stopPropagation()}
+          >
+            <button
+              type="button"
+              className="service-modal-close"
+              aria-label="Close"
+              onClick={() => setActiveService(null)}
+            >
+              <X className="w-5 h-5" aria-hidden="true" />
+            </button>
+
+            {activeService.image && (
+              <img src={activeService.image} alt={activeService.name} className="service-modal-image" />
+            )}
+
+            <div className="service-modal-body">
+              <div className={`service-modal-icon bg-gradient-to-br ${activeService.color}`}>
+                {(() => {
+                  const Icon = activeService.icon;
+                  return <Icon className="w-7 h-7" aria-hidden="true" />;
+                })()}
+              </div>
+              <h3 className="service-modal-title">{activeService.name}</h3>
+              <p className="service-modal-description">{activeService.description}</p>
+
+              <div className="service-tile-benefits mb-5">
+                {activeService.benefits.map((benefit, idx) => (
+                  <span key={idx} className="service-tile-chip service-tile-chip--solid">
+                    {benefit}
+                  </span>
+                ))}
+              </div>
+
+              <p className="service-modal-details">{activeService.details}</p>
+
+              <a href="/contact#contact" className="btn btn-primary mt-6">
+                Book This Service
+              </a>
+            </div>
+          </div>
+        </div>
+      )}
     </section>
   );
 };
 
 export default Services;
+
