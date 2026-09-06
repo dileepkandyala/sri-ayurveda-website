@@ -1,12 +1,10 @@
 import { useState, useEffect } from 'react';
 import { ChevronLeft, ChevronRight, X } from 'lucide-react';
-import img1 from '../images/IMG_1858.jpg';
 import img2 from '../images/IMG_1859.jpg';
 import img3 from '../images/IMG_1860.jpg';
 import img4 from '../images/IMG_1861.jpg';
 import img5 from '../images/IMG_0485.jpg';
 import img6 from '../images/SreeLakshmi.jpg';
-import img7 from '../images/IMG_1863.jpg';
 import ayurvedicImg from '../images/ayurvedic.jpg';
 import video1 from '../images/WhatsApp Video 2026-07-03 at 12.37.52 PM.mp4';
 import video2 from '../images/WhatsApp Video 2026-07-03 at 12.37.53 PM.mp4';
@@ -20,14 +18,12 @@ const Gallery = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
 
   const galleryItems = [
-    { type: 'image', src: img1, alt: 'Clinic Interior - Treatment Room', category: 'Clinic' },
     { type: 'image', src: img2, alt: 'Wellness Treatment Session', category: 'Treatment' },
     { type: 'image', src: img3, alt: 'Professional Setup', category: 'Facility' },
     { type: 'image', src: img4, alt: 'Healing Ambiance', category: 'Treatment' },
     { type: 'image', src: ayurvedicImg, alt: 'Ayurvedic Remedies', category: 'Remedies' },
     { type: 'image', src: img5, alt: 'Ayurvedic Therapy Setup', category: 'Clinic' },
     { type: 'image', src: img6, alt: 'Care and Comfort Environment', category: 'Environment' },
-    { type: 'image', src: img7, alt: 'Certificate / Therapy Documentation', category: 'Certification' },
     { type: 'video', src: video1, alt: 'Treatment Video 1', category: 'Video' },
     { type: 'video', src: video2, alt: 'Treatment Video 2', category: 'Video' },
     { type: 'video', src: video3, alt: 'Treatment Video 3', category: 'Video' },
@@ -142,22 +138,6 @@ const Gallery = () => {
           </div>
         )}
 
-        {/* Certification Section */}
-        <div className="mt-14 pt-10 border-t-2 border-green-200">
-          <div className="text-center mb-8">
-            <h2 className="text-4xl font-bold text-green-900 mb-4">Certification</h2>
-            <div className="w-24 h-1 bg-gradient-to-r from-green-700 to-amber-600 mx-auto"></div>
-          </div>
-          <div className="flex justify-center">
-            <div className="rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transition-shadow duration-300 max-w-md">
-              <img 
-                src={img7} 
-                alt="Ayurvedic Therapy" 
-                className="lightbox-image w-full h-auto"
-              />
-            </div>
-          </div>
-        </div>
       </div>
     </section>
   );

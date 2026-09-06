@@ -1,23 +1,15 @@
 import { useEffect, useState } from 'react';
-import { Heart, Users, Leaf, Trophy } from 'lucide-react';
+import { Users, Leaf, Trophy } from 'lucide-react';
 import './Stats.css';
 
 const Stats = () => {
   const [counts, setCounts] = useState({
-    patients: 0,
     treatments: 0,
     experience: 0,
     satisfaction: 0
   });
 
   const stats = [
-    {
-      label: 'Happy Patients',
-      target: 500,
-      icon: Heart,
-      color: 'from-red-500 to-pink-600',
-      suffix: '+'
-    },
     {
       label: 'Treatments Given',
       target: 7000,
@@ -27,7 +19,7 @@ const Stats = () => {
     },
     {
       label: 'Years of Expertise',
-      target: 5,
+      target: 3,
       icon: Trophy,
       color: 'from-yellow-500 to-orange-600',
       suffix: '+'
@@ -50,9 +42,8 @@ const Stats = () => {
       const progress = Math.min(elapsed / animationDuration, 1);
 
       setCounts({
-        patients: Math.floor(500 * progress),
         treatments: Math.floor(7000 * progress),
-        experience: Math.floor(5 * progress),
+        experience: Math.floor(3 * progress),
         satisfaction: Math.floor(98 * progress)
       });
 
@@ -74,7 +65,7 @@ const Stats = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           {stats.map((stat, index) => {
             const Icon = stat.icon;
-            const statValues = [counts.patients, counts.treatments, counts.experience, counts.satisfaction];
+            const statValues = [counts.treatments, counts.experience, counts.satisfaction];
 
             return (
               <div

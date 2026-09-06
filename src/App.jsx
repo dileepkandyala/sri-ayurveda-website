@@ -6,6 +6,7 @@ import Panchakarma from './pages/Panchakarma'
 import Contact from './pages/Contact'
 import GalleryPage from './pages/GalleryPage'
 import TreatmentsPage from './pages/TreatmentsPage'
+import SpecialtiesPage from './pages/SpecialtiesPage'
 import Shop from './pages/Shop'
 import TermsOfService from './pages/TermsOfService'
 import PrivacyPolicy from './pages/PrivacyPolicy'
@@ -17,6 +18,11 @@ import { AmbientMusicProvider, useAmbientMusic } from './lib/ambientMusic'
 import { useCart, formatPrice, CartProvider } from './lib/cart'
 import { fetchApi } from './lib/api'
 import { sendShopWhatsAppMessage } from './lib/whatsapp'
+import MedicalDisclaimer from './pages/MedicalDisclaimer'
+import TelemedicinePolicy from './pages/TelemedicinePolicy'
+import CookiePolicy from './pages/CookiePolicy'
+import GrievanceRedressal from './pages/GrievanceRedressal'
+import DataRetentionSecurity from './pages/DataRetentionSecurity'
 import { ShoppingBag, Plus, Minus, X, Check, ArrowRight } from 'lucide-react'
 
 function CartPanel({ onClose }) {
@@ -219,6 +225,7 @@ function MenuNav() {
           <nav className={`site-nav ${open ? 'open' : ''}`}>
             <Link to="/" onClick={() => setOpen(false)}>Home</Link>
             <Link to="/treatments" onClick={() => setOpen(false)}>Treatments</Link>
+            <Link to="/specialties" onClick={() => setOpen(false)}>Specialties</Link>
             <Link to="/shop" onClick={() => setOpen(false)}>Shop</Link>
             <Link to="/gallery" onClick={() => setOpen(false)}>Gallery</Link>
             <a href="/#dosha-quiz" onClick={() => setOpen(false)}>Dosha Quiz</a>
@@ -275,6 +282,7 @@ const router = createBrowserRouter(
       children: [
         { index: true, element: <Home /> },
         { path: 'treatments', element: <TreatmentsPage /> },
+        { path: 'specialties', element: <SpecialtiesPage /> },
         { path: 'shop', element: <Shop /> },
         { path: 'gallery', element: <GalleryPage /> },
         { path: 'about', element: <About /> },
@@ -290,6 +298,11 @@ const router = createBrowserRouter(
         { path: 'telemedicine-policy', element: <CommercePolicies path="/telemedicine-policy" /> },
         { path: 'cookie-policy', element: <CommercePolicies path="/cookie-policy" /> },
         { path: 'data-retention-security-policy', element: <CommercePolicies path="/data-retention-security-policy" /> },
+        { path: 'medical-disclaimer', element: <MedicalDisclaimer /> },
+        { path: 'telemedicine-policy', element: <TelemedicinePolicy /> },
+        { path: 'cookie-policy', element: <CookiePolicy /> },
+        { path: 'grievance-redressal', element: <GrievanceRedressal /> },
+        { path: 'data-retention-security-policy', element: <DataRetentionSecurity /> },
         { path: 'patient-rights-responsibilities', element: <CommercePolicies path="/patient-rights-responsibilities" /> },
         { path: 'patient-confidentiality-policy', element: <CommercePolicies path="/patient-confidentiality-policy" /> },
         { path: 'emergency-clinical-limitations', element: <CommercePolicies path="/emergency-clinical-limitations" /> },
