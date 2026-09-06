@@ -5,28 +5,28 @@ import './TreatmentsPage.css';
 
 const products = [
   {
-    name: 'Facial Kit',
+    name: 'Sri Ayurveda Navara Facial Kit',
     price: '₹700',
     amount: 700,
-    description: 'A nourishing Ayurvedic skincare set for a simple, calming facial care ritual at home.',
+    description: 'A traditional Ayurvedic facial care kit with Face Pack, Kumkumadi Lepa, and Navara Pottali to cleanse, nourish, and support soft, smooth, naturally radiant-looking skin.',
   },
   {
-    name: 'Pottali with Oil',
+    name: 'Pain Relief Pottali',
     price: '₹1,000',
     amount: 1000,
-    description: 'A traditional herbal bundle with nourishing oil to support soothing, restorative self-care.',
+    description: 'A traditional Ayurvedic herbal pottali for muscle and joint comfort. Used with Sri Ayurveda Mardana Massage Oil, it may help ease everyday stiffness, soreness, and restricted mobility.',
   },
   {
-    name: 'Massage Oil (200 ml)',
+    name: 'Mardana Massage Oil (200 ml)',
     price: '₹300',
     amount: 300,
-    description: 'A soothing Ayurvedic oil for relaxing massages and everyday body nourishment. Each bottle contains 200 ml.',
+    description: 'A traditional Ayurvedic herbal oil for regular Abhyanga and gentle massage, formulated to nourish the skin, relax muscles, and support everyday body comfort. Each bottle contains 200 ml.',
   },
   {
     name: 'Swarnabindu Prashana (15 ml bottle)',
     price: '₹1,700',
     amount: 1700,
-    description: 'A traditional Ayurvedic wellness preparation offered in a convenient 15 ml bottle for regular use.',
+    description: 'A traditional Ayurvedic preparation containing purified gold (Swarna) and selected herbs, customarily administered to children on Pushya Nakshatra days under qualified practitioner guidance to support general well-being.',
   },
 ];
 

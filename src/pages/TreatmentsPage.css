@@ -5,6 +5,12 @@
   padding: 3rem 1rem;
 }
 
+.specialties-page .page-header > div,
+.specialties-page .treatment-specialties > div {
+  padding-right: clamp(1.5rem, 4vw, 3.5rem);
+  padding-left: clamp(1.5rem, 4vw, 3.5rem);
+}
+
 @media (max-width: 640px) {
   .page-header {
     padding: 2rem 0.75rem;
@@ -36,4 +42,58 @@
   .page-header h1 {
     font-size: 2.5rem;
   }
+
+}
+
+.treatment-specialties {
+  background: linear-gradient(145deg, #fbf7ef 0%, #ffffff 50%, #edf6ee 100%);
+}
+
+.treatment-specialty-card {
+  min-height: 11rem;
+  padding: 1.75rem;
+  border: 1px solid rgba(47, 139, 87, 0.14);
+  border-radius: 16px;
+  background: #fff;
+  box-shadow: 0 10px 26px rgba(11, 79, 59, 0.07);
+}
+
+.treatment-specialty-card:nth-child(even) {
+  background: #fffaf0;
+  border-color: rgba(183, 121, 31, 0.18);
+}
+
+.treatment-specialty-card h3 {
+  margin-bottom: 0.75rem;
+  color: #0b4f3b;
+  font-size: 1.2rem;
+}
+
+.treatment-specialty-card p {
+  color: #4a5b50;
+  line-height: 1.65;
+}
+
+.treatment-personalized-care {
+  max-width: 56rem;
+  margin-right: auto;
+  margin-left: auto;
+  padding: clamp(1.5rem, 4vw, 2.5rem);
+  border-radius: 18px;
+  color: #fffdf3;
+  background: linear-gradient(135deg, #0b4f3b, #2f8b57);
+  box-shadow: 0 18px 42px rgba(11, 79, 59, 0.18);
+}
+
+.treatment-personalized-care h2 {
+  margin-bottom: 1rem;
+  color: #fffdf3;
+  font-size: 1.6rem;
+}
+
+.treatment-personalized-care p {
+  margin-top: 0.85rem;
+  color: #fffdf3;
+  font-weight: 500;
+  line-height: 1.75;
 }

@@ -42,6 +42,11 @@ export const SEO_CONFIG = {
       description: 'Explore authentic Ayurvedic treatments: Panchakarma detox, yoga, herbal remedies, Abhyanga, Shirodhara. Personalized for your health.',
       keywords: 'Ayurvedic treatments, Panchakarma therapy, Abhyanga, Shirodhara, Herbal remedies'
     },
+    specialties: {
+      title: 'Ayurvedic Specialties | Sri Ayurveda Clinic',
+      description: 'Explore the health conditions and wellness concerns managed at Sri Ayurveda through personalized Ayurvedic care.',
+      keywords: 'Ayurvedic specialties, Kaya Chikitsa, women health, skin care, joint disorders, lifestyle disorders'
+    },
     contact: {
       title: 'Contact Sri Ayurveda | Book Your Consultation Today',
       description: 'Get in touch with Sri Ayurveda clinic. Location in Ramanagara, Karnataka. Call, email, or WhatsApp to book your wellness consultation.',

@@ -47,7 +47,7 @@ export default function Footer() {
             </p>
           </div>
 
-          <div>
+          <div className="footer-explore-column">
             <h4 className="footer-heading">Explore</h4>
             <div className="footer-link-list">
               <Link
@@ -78,7 +78,7 @@ export default function Footer() {
           </div>
 
           <div className="footer-policy-column">
-            <h4 className="footer-heading">Policies</h4>
+            <h4 className="footer-heading">Policies &amp; Compliance</h4>
             <div className="footer-link-list">
               <Link
                 to="/terms-of-service"
@@ -97,11 +97,14 @@ export default function Footer() {
               <Link to="/disclaimer-policy" className="footer-link"><span>Disclaimer Policy</span><ChevronRight aria-hidden="true" /></Link>
               <Link to="/grievance-redressal" className="footer-link"><span>Grievance Redressal</span><ChevronRight aria-hidden="true" /></Link>
               <Link to="/cookie-policy" className="footer-link"><span>Cookie Policy</span><ChevronRight aria-hidden="true" /></Link>
+              <Link to="/medical-disclaimer" className="footer-link"><span>Medical Disclaimer</span><ChevronRight aria-hidden="true" /></Link>
+              <Link to="/telemedicine-policy" className="footer-link"><span>Telemedicine Policy</span><ChevronRight aria-hidden="true" /></Link>
+              <Link to="/data-retention-security-policy" className="footer-link"><span>Data Security &amp; Retention</span><ChevronRight aria-hidden="true" /></Link>
             </div>
           </div>
 
           <div className="footer-contact-column">
-            <h4 className="footer-heading">Connect With Us</h4>
+            <h4 className="footer-heading">Clinic Details</h4>
             <div className="footer-contact-list">
               <a
                 href="tel:+919187398489"
@@ -117,6 +120,11 @@ export default function Footer() {
                 <Mail aria-hidden="true" />
                 <span>sriayurveda23@gmail.com</span>
               </a>
+            </div>
+            <div className="footer-compliance-details">
+              <span>Reg. No. 47019</span>
+              <span>GSTIN: 29KJDPS2127E1Z1</span>
+              <span>Grievance: Dr. Shreelakshmi M.V., BAMS</span>
             </div>
           </div>
         </div>
