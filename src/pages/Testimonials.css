@@ -1,8 +1,7 @@
 .testimonial-container {
   position: relative;
-  min-height: 450px;
-  perspective: 1200px;
-  animation: fadeInUp 0.9s ease-out;
+  min-height: 330px;
+  animation: fadeInUp 0.5s ease-out;
 }
 
 .testimonial-card {
@@ -10,8 +9,8 @@
   width: 100%;
   height: auto;
   opacity: 0;
-  transition: all 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
-  transform: translateX(100%) rotateY(25deg) scale(0.9);
+  transition: opacity 0.45s ease-in-out, transform 0.55s cubic-bezier(0.22, 1, 0.36, 1);
+  transform: translateX(2rem) scale(0.98);
   pointer-events: none;
   background: linear-gradient(135deg, rgba(255,255,255,0.95) 0%, rgba(251,247,240,0.97) 100%);
   padding: 2.75rem;
@@ -58,7 +57,7 @@
 
 .testimonial-card.active {
   opacity: 1;
-  transform: translateX(0) rotateY(0) scale(1);
+  transform: translateX(0) scale(1);
   pointer-events: auto;
   z-index: 10;
   box-shadow: 
@@ -101,7 +100,7 @@
 /* Responsive */
 @media (max-width: 768px) {
   .testimonial-container {
-    min-height: 400px;
+    min-height: 360px;
   }
 
   .testimonial-card {
@@ -118,7 +117,7 @@
 
 @media (max-width: 479px) {
   .testimonial-container {
-    min-height: 350px;
+    min-height: 380px;
   }
 
   .testimonial-card {
@@ -178,7 +177,7 @@
 /* Medium screens (768px - 1023px) */
 @media (min-width: 768px) and (max-width: 1023px) {
   .testimonial-container {
-    height: 380px;
+    height: 350px;
   }
 
   .testimonial-nav {
@@ -197,7 +196,7 @@
 /* Large screens (1024px+) */
 @media (min-width: 1024px) {
   .testimonial-container {
-    height: 420px;
+    height: 340px;
   }
 
   .testimonial-nav {

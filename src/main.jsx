@@ -38,7 +38,7 @@ const structuredData = {
   "image": "https://www.sriayurvedawellness.com/logo.png",
   "url": "https://www.sriayurvedawellness.com",
   "telephone": "+919187398489",
-  "email": "sriayurveda23@gmail.com",
+  "email": "lakshmi@sriayurvedawellness.com",
   "areaServed": ["Ramanagara", "Bengaluru", "Karnataka"],
   "priceRange": "₹₹₹",
   "address": {

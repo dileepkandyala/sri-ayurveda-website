@@ -264,8 +264,8 @@ export default function Contact() {
                   </div>
                   <div>
                     <h4 className="font-semibold text-green-900 mb-2 text-lg">Email</h4>
-                    <a href="mailto:sriayurveda23@gmail.com" className="text-gold hover:text-amber font-semibold transition">
-                      sriayurveda23@gmail.com
+                    <a href="mailto:lakshmi@sriayurvedawellness.com" className="text-gold hover:text-amber font-semibold transition">
+                      lakshmi@sriayurvedawellness.com
                     </a>
                   </div>
                 </div>
@@ -500,7 +500,7 @@ export default function Contact() {
                   <div className="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded-lg">
                     <p>Thank you! Your consultation request is received.</p>
                     {emailInfo && emailInfo.sent === false && (
-                      <p className="text-sm text-yellow-800 mt-2">Notification email was not sent: {emailInfo.error || 'unknown reason'}. Please contact us directly at sriayurveda25@gmail.com.</p>
+                      <p className="text-sm text-yellow-800 mt-2">Notification email was not sent: {emailInfo.error || 'unknown reason'}. Please contact us directly at lakshmi@sriayurvedawellness.com.</p>
                     )}
                     {emailInfo && emailInfo.sent === true && (
                       <p className="text-sm text-green-800 mt-2">Notification email sent successfully.</p>

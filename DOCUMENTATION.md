@@ -168,7 +168,7 @@ SMTP_HOST=smtp.gmail.com
 SMTP_PORT=587
 SMTP_USER=your-email@example.com
 SMTP_PASS=your-email-app-password
-NOTIFY_EMAIL=sriayurveda25@gmail.com
+NOTIFY_EMAIL=lakshmi@sriayurvedawellness.com
 SMTP_FROM="Sri Ayurveda" <your-email@example.com>
 ```
 
@@ -217,10 +217,10 @@ NODE_ENV=development
 VITE_API_URL=http://localhost:5000/api
 
 # Optional: Email Configuration
-SMTP_HOST=smtp.gmail.com
+SMTP_HOST=smtp.titlesecure.com # or GoDaddy SMTP host
 SMTP_PORT=587
-SMTP_USER=sriayurveda23@gmail.com
-SMTP_PASS=xxxx xxxx xxxx xxxx  # 16-char app password for Gmail
+SMTP_USER=lakshmi@sriayurvedawellness.com
+SMTP_PASS=your-email-password
 ```
 
 ### Production (.env.example template)
@@ -240,18 +240,22 @@ VITE_API_URL=https://www.sriayurvedawellness.com/api
 
 If you want contact form to send emails:
 
-#### Using Gmail
-1. Go to myaccount.google.com
-2. Security → 2-Step Verification → Enable if needed
-3. Security → App passwords
-4. Select "Mail" and "Windows Computer"
-5. Copy generated 16-character password
-6. Add to .env:
+#### Using GoDaddy / Professional Domain Email (Microsoft 365 or cPanel)
+If using GoDaddy Professional Email (Microsoft 365 or cPanel Webmail):
 ```env
-SMTP_HOST=smtp.gmail.com
+# For GoDaddy Microsoft 365 Email:
+SMTP_HOST=smtp.office365.com
 SMTP_PORT=587
-SMTP_USER=sriayurveda23@gmail.com
-SMTP_PASS=xxxx xxxx xxxx xxxx
+SMTP_USER=lakshmi@sriayurvedawellness.com
+SMTP_PASS=your-godaddy-email-password
+SMTP_FROM="Sri Ayurveda" <lakshmi@sriayurvedawellness.com>
+
+# For GoDaddy cPanel Webmail:
+SMTP_HOST=smtpout.secureserver.net  # or mail.sriayurvedawellness.com
+SMTP_PORT=465 (secure) or 587
+SMTP_USER=lakshmi@sriayurvedawellness.com
+SMTP_PASS=your-godaddy-email-password
+SMTP_FROM="Sri Ayurveda" <lakshmi@sriayurvedawellness.com>
 ```
 
 #### Using Outlook/Office365
@@ -752,7 +756,7 @@ npm run dev
 
 - **Phone:** +91-8113452402
 - **WhatsApp:** +91-7619529616
-- **Email:** sriayurveda23@gmail.com
+- **Email:** lakshmi@sriayurvedawellness.com
 - **Location:** Ramanagara, Karnataka, India
 - **Website:** https://www.sriayurvedawellness.com
 - **Instagram:** @sri_ayurveda_clinic

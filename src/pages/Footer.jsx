@@ -114,11 +114,11 @@ export default function Footer() {
                 <span>+919187398489</span>
               </a>
               <a
-                href="mailto:sriayurveda23@gmail.com"
+                href="mailto:lakshmi@sriayurvedawellness.com"
                 className="footer-contact-link"
               >
                 <Mail aria-hidden="true" />
-                <span>sriayurveda23@gmail.com</span>
+                <span>lakshmi@sriayurvedawellness.com</span>
               </a>
             </div>
             <div className="footer-compliance-details">

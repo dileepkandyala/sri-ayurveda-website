@@ -163,7 +163,7 @@ export default function CookiePolicy() {
           <h2 className="mb-4">14. Contact & Questions</h2>
           <p>For questions about our cookie practices or to exercise your data rights, contact:</p>
           <div style={{padding: '1rem', backgroundColor: '#f3f4f6', borderRadius: '6px', marginTop: '1rem'}}>
-            <p><strong>Email:</strong> sriayurveda23@gmail.com</p>
+            <p><strong>Email:</strong> lakshmi@sriayurvedawellness.com</p>
             <p><strong>Phone:</strong> +91-7619529616</p>
             <p><strong>Grievance Officer:</strong> Dr. Shreelakshmi.M.V, BAMS</p>
           </div>

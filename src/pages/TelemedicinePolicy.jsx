@@ -157,7 +157,7 @@ export default function TelemedicinePolicy() {
           <p>For telemedicine-related grievances or concerns, contact:</p>
           <div style={{padding: '1rem', backgroundColor: '#f3f4f6', borderRadius: '6px', marginTop: '1rem'}}>
             <p><strong>Grievance Officer:</strong> Dr. Shreelakshmi.M.V, BAMS</p>
-            <p><strong>Email:</strong> sriayurveda23@gmail.com</p>
+            <p><strong>Email:</strong> lakshmi@sriayurvedawellness.com</p>
             <p><strong>Phone:</strong> +91-7619529616</p>
             <p><strong>Response Time:</strong> Acknowledgment within 48 hours, resolution within 15 business days</p>
           </div>

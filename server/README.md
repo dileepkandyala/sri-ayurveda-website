@@ -24,7 +24,7 @@ SMTP_HOST=smtp.gmail.com
 SMTP_PORT=587
 SMTP_USER=your-email@example.com
 SMTP_PASS=your-email-app-password
-NOTIFY_EMAIL=sriayurveda25@gmail.com
+NOTIFY_EMAIL=lakshmi@sriayurvedawellness.com
 SMTP_FROM="Sri Ayurveda" <your-email@example.com>
 ```
 
@@ -79,7 +79,7 @@ For safe local testing without a real SMTP account, enable Ethereal preview by c
 ```
 DEV_EMAIL_PREVIEW=ethereal
 # Optional: override recipient/sender
-NOTIFY_EMAIL=sriayurveda25@gmail.com
+NOTIFY_EMAIL=lakshmi@sriayurvedawellness.com
 SMTP_FROM="Sri Ayurveda" <no-reply@example.com>
 ```
 

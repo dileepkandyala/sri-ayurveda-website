@@ -113,7 +113,7 @@ export default function MedicalDisclaimer() {
           <p>If you have health concerns or questions about this disclaimer, please contact:</p>
           <div style={{padding: '1rem', backgroundColor: '#f3f4f6', borderRadius: '6px', marginTop: '1rem'}}>
             <p><strong>Dr. Shreelakshmi.M.V, BAMS</strong></p>
-            <p><strong>Email:</strong> sriayurveda23@gmail.com</p>
+            <p><strong>Email:</strong> lakshmi@sriayurvedawellness.com</p>
             <p><strong>Phone:</strong> +91-7619529616</p>
           </div>
 

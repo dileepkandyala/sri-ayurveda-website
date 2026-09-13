@@ -87,7 +87,7 @@ export default function TermsOfService() {
           <p>We may update these Terms and Conditions at any time. Continued use of our services after changes constitutes your acceptance of the updated terms. The updated version will be posted on this page with a revised "Last Updated" date.</p>
 
           <h2 className="mb-4">12. Contact & Grievance</h2>
-          <p>For questions or grievances regarding these terms, contact: Dr. Shreelakshmi.M.V, sriayurveda23@gmail.com, +91-7619529616</p>
+          <p>For questions or grievances regarding these terms, contact: Dr. Shreelakshmi.M.V, lakshmi@sriayurvedawellness.com, +91-7619529616</p>
         </div>
       </section>
     </div>

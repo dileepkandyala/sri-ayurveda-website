@@ -159,7 +159,7 @@ export default function DataRetentionSecurity() {
             <li><strong>Grievance Redressal:</strong> File a complaint regarding data handling practices</li>
           </ul>
 
-          <p style={{marginTop: '1rem'}}>To exercise these rights, contact the Grievance Officer: sriayurveda23@gmail.com, +91-7619529616</p>
+          <p style={{marginTop: '1rem'}}>To exercise these rights, contact the Grievance Officer: lakshmi@sriayurvedawellness.com, +91-7619529616</p>
 
           <h2 className="mb-4">11. Compliance & Audits</h2>
           <p>Data security practices are regularly reviewed through:</p>
@@ -174,7 +174,7 @@ export default function DataRetentionSecurity() {
           <p>If you have concerns about data security practices or suspect a breach:</p>
           <div style={{padding: '1rem', backgroundColor: '#f3f4f6', borderRadius: '6px', marginTop: '1rem'}}>
             <p><strong>Data Protection Officer / Grievance Officer:</strong> Dr. Shreelakshmi.M.V, BAMS</p>
-            <p><strong>Email:</strong> sriayurveda23@gmail.com</p>
+            <p><strong>Email:</strong> lakshmi@sriayurvedawellness.com</p>
             <p><strong>Phone:</strong> +91-7619529616 (Urgent: +91-9187398489)</p>
             <p><strong>Emergency Response:</strong> Immediate investigation and notification</p>
           </div>
