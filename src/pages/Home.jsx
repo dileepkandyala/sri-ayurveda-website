@@ -1,17 +1,47 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import ayurvedicImg from '../images/ayurvedic.jpg';
 import sreeLakshmiImg from '../images/SreeLakshmi.jpg';
+import galleryImg1 from '../images/IMG_1858.jpg';
+import galleryImg2 from '../images/IMG_1859.jpg';
+import galleryImg3 from '../images/IMG_1860.jpg';
+import galleryImg4 from '../images/IMG_1861.jpg';
+import galleryImg5 from '../images/IMG_0485.jpg';
+import galleryImg6 from '../images/treatment room.jpg';
+import galleryImg7 from '../images/janu basti.jpg';
+import galleryImg8 from '../images/kati basti.jpg';
+import galleryImg9 from '../images/nasya.jpg';
+import galleryImg10 from '../images/shirobasti.jpg';
+import galleryImg11 from '../images/abhyanga.jpg';
+import galleryImg12 from '../images/yoga hd.jpg';
 import Seo from '../components/Seo';
 import { SEO_CONFIG } from '../lib/seo';
 import DoshaQuiz from './DoshaQuiz';
 import Stats from './Stats';
 import Services from './Services';
-import HeroCarousel from './HeroCarousel';
 import WellnessPath from './WellnessPath';
 import Newsletter from './Newsletter';
+import Testimonials from './Testimonials';
 import './Home.css';
 
 const Home = () => {
+  const [welcomeSlideIndex, setWelcomeSlideIndex] = useState(0);
+  const welcomeGalleryImages = [
+    { src: galleryImg1, alt: 'Personalized Ayurvedic consultation' },
+    { src: galleryImg2, alt: 'Therapy session in progress' },
+    { src: galleryImg3, alt: 'Healing ambience in the clinic' },
+    { src: galleryImg4, alt: 'Therapeutic treatment setup' },
+    { src: galleryImg5, alt: 'Wellness therapy setup' },
+    { src: sreeLakshmiImg, alt: 'Doctor consultation and guidance' },
+    { src: galleryImg6, alt: 'Treatment room and wellness atmosphere' },
+    { src: galleryImg7, alt: 'Janu Basti therapy' },
+    { src: galleryImg8, alt: 'Kati Basti therapy' },
+    { src: galleryImg9, alt: 'Nasya therapy' },
+    { src: galleryImg10, alt: 'Shiro Basti therapy' },
+    { src: galleryImg11, alt: 'Abhyanga therapy' },
+    { src: galleryImg12, alt: 'Yoga and wellness practice' },
+    { src: ayurvedicImg, alt: 'Ayurvedic remedies and herbal care' },
+  ];
+
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
@@ -37,6 +67,14 @@ const Home = () => {
     return () => observer.disconnect();
   }, []);
 
+  useEffect(() => {
+    const timer = window.setInterval(() => {
+      setWelcomeSlideIndex((currentIndex) => (currentIndex + 1) % welcomeGalleryImages.length);
+    }, 4500);
+
+    return () => window.clearInterval(timer);
+  }, [welcomeGalleryImages.length]);
+
   return (
     <main className="container">
       <Seo
@@ -58,7 +96,7 @@ const Home = () => {
             Sri Ayurveda Clinic & Panchakarma Center
           </h1>
           <p className="text-xl md:text-2xl text-muted-olive font-semibold mb-6">
-            Restore health, renew vitality, and live in harmony with personalized Ayurvedic care by Dr. Shreelakshmi M.V., BAMS.
+            Personalized Ayurvedic care for balanced living, guided by Dr. Shreelakshmi M.V., BAMS.
           </p>
           <div className="flex gap-6 mb-8 flex-wrap">
             <a href="#section-contact" className="btn-primary">
@@ -78,16 +116,19 @@ const Home = () => {
         <div>
           <h2 className="text-4xl font-bold text-deep-green mb-8">YOUR HEALTH IS OUR PRIORITY</h2>
           <p className="text-lg text-gray-700 mb-6 leading-relaxed">
-            Welcome to Sri Ayurveda Clinic & Panchakarma Center, where ancient Ayurvedic wisdom meets thoughtful modern care.
-            We believe true health comes from balance—of body, mind, and spirit. Rooted in the science of Ayurveda, our clinic supports natural healing and lasting vitality through personalized Panchakarma therapies.
+            Welcome to Sri Ayurveda Clinic & Panchakarma Center, where Ayurvedic principles and patient-focused care come together.
+            We support wellness through personalized consultations, supportive therapies, and care plans tailored to the individual.
           </p>
         </div>
-        <div className="ayurveda-image">
-          <img 
-            src={ayurvedicImg}
-            alt="Ayurvedic treatment"
-            style={{ minHeight: '300px', objectFit: 'cover' }}
-          />
+        <div className="ayurveda-image welcome-gallery-slider" aria-label="Sri Ayurveda photo gallery">
+          {welcomeGalleryImages.map((image, index) => (
+            <img
+              key={image.src}
+              src={image.src}
+              alt={image.alt}
+              className={index === welcomeSlideIndex ? 'welcome-gallery-slide is-active' : 'welcome-gallery-slide'}
+            />
+          ))}
         </div>
       </section>
 
@@ -138,7 +179,7 @@ const Home = () => {
           <div className="flex items-start gap-4">
             <div>
               <h3 className="text-xl font-bold text-deep-green mb-2">Authentic Ayurvedic Care</h3>
-              <p className="text-gray-700">Treatments grounded in 5,000 years of Ayurvedic wisdom and modern understanding.</p>
+              <p className="text-gray-700">Care rooted in Ayurvedic principles, with treatments tailored to individual needs and constitution.</p>
             </div>
           </div>
           <div className="flex items-start gap-4">
@@ -150,7 +191,7 @@ const Home = () => {
           <div className="flex items-start gap-4">
             <div>
               <h3 className="text-xl font-bold text-deep-green mb-2">Holistic Wellness</h3>
-              <p className="text-gray-700">We address root causes, not just symptoms, for lasting health and vitality.</p>
+              <p className="text-gray-700">We focus on identifying habits, imbalances, and root causes to support long-term well-being.</p>
             </div>
           </div>
           <div className="flex items-start gap-4">
@@ -183,8 +224,8 @@ const Home = () => {
               </p>
               <p className="text-lg">
                 <span className="font-semibold text-deep-green">Email:</span>
-                <a href="mailto:sriayurveda23@gmail.com" className="text-gold hover:text-amber ml-2 transition">
-                  sriayurveda23@gmail.com
+                <a href="mailto:lakshmi@sriayurvedawellness.com" className="text-gold hover:text-amber ml-2 transition">
+                  lakshmi@sriayurvedawellness.com
                 </a>
               </p>
               <p className="text-lg">
@@ -236,8 +277,8 @@ const Home = () => {
       {/* Stats Section */}
       <Stats />
 
-      {/* Hero Carousel */}
-      <HeroCarousel />
+      {/* Patient Reviews */}
+      <Testimonials />
 
       {/* Newsletter Section */}
       <Newsletter />

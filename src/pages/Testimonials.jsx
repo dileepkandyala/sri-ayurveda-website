@@ -43,33 +43,34 @@ const Testimonials = () => {
       image: '👩‍⚕️'
     }
   ];
+  const featuredTestimonials = testimonials.filter(({ rating }) => rating > 4);
 
   useEffect(() => {
     if (!autoPlay) return;
     const timer = setInterval(() => {
-      setCurrentIndex((prev) => (prev + 1) % testimonials.length);
+      setCurrentIndex((prev) => (prev + 1) % featuredTestimonials.length);
     }, 5000);
     return () => clearInterval(timer);
-  }, [autoPlay, testimonials.length]);
+  }, [autoPlay, featuredTestimonials.length]);
 
   const handleNext = () => {
-    setCurrentIndex((prev) => (prev + 1) % testimonials.length);
+    setCurrentIndex((prev) => (prev + 1) % featuredTestimonials.length);
     setAutoPlay(false);
   };
 
   const handlePrevious = () => {
-    setCurrentIndex((prev) => (prev - 1 + testimonials.length) % testimonials.length);
+    setCurrentIndex((prev) => (prev - 1 + featuredTestimonials.length) % featuredTestimonials.length);
     setAutoPlay(false);
   };
 
   return (
-    <section id="testimonials" className="py-20 bg-gradient-to-br from-emerald-900 via-green-800 to-amber-900 text-white relative overflow-hidden">
+    <section id="testimonials" className="py-12 md:py-14 bg-gradient-to-br from-emerald-900 via-green-800 to-amber-900 text-white relative overflow-hidden">
       {/* Decorative elements */}
       <div className="absolute top-0 right-0 w-96 h-96 bg-white opacity-5 rounded-full -mr-48 -mt-48"></div>
       <div className="absolute bottom-0 left-0 w-96 h-96 bg-white opacity-5 rounded-full -ml-48 -mb-48"></div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        <div className="text-center mb-16">
+        <div className="text-center mb-8">
           <h2 className="text-4xl font-bold mb-4">What Our Patients Say</h2>
           <p className="text-xl text-green-100">Real stories of transformation and healing</p>
           <div className="w-24 h-1 bg-gradient-to-r from-amber-400 to-amber-600 mx-auto mt-4"></div>
@@ -78,14 +79,14 @@ const Testimonials = () => {
         {/* Testimonial Carousel */}
         <div className="relative">
           <div className="testimonial-container">
-            {testimonials.map((testimonial, index) => (
+            {featuredTestimonials.map((testimonial, index) => (
               <div
                 key={index}
                 className={`testimonial-card ${index === currentIndex ? 'active' : ''}`}
               >
-                <div className="bg-white bg-opacity-10 backdrop-blur-sm rounded-2xl p-8 md:p-12 border border-white border-opacity-20 hover:border-opacity-40 transition">
+                <div className="bg-white bg-opacity-10 backdrop-blur-sm rounded-2xl p-6 md:p-8 border border-white border-opacity-20 hover:border-opacity-40 transition">
                   {/* Stars */}
-                  <div className="flex gap-1 mb-6">
+                  <div className="flex gap-1 mb-4">
                     {[...Array(testimonial.rating)].map((_, i) => (
                       <Star
                         key={i}
@@ -95,7 +96,7 @@ const Testimonials = () => {
                   </div>
 
                   {/* Testimonial Text */}
-                  <p className="text-lg mb-8 leading-relaxed text-green-50 italic">
+                  <p className="text-lg mb-6 leading-relaxed text-green-50 italic">
                     "{testimonial.text}"
                   </p>
 
@@ -129,8 +130,8 @@ const Testimonials = () => {
           </button>
 
           {/* Dots */}
-          <div className="flex justify-center gap-2 mt-8">
-            {testimonials.map((_, index) => (
+          <div className="flex justify-center gap-2 mt-6">
+            {featuredTestimonials.map((_, index) => (
               <button
                 key={index}
                 onClick={() => {
@@ -146,11 +147,6 @@ const Testimonials = () => {
               />
             ))}
           </div>
-        </div>
-
-        {/* Mouse over to pause info */}
-        <div className="text-center mt-12 text-green-100 text-sm">
-          {autoPlay ? '✓ Auto-playing' : '⏸ Paused'}
         </div>
       </div>
     </section>

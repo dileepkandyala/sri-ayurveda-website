@@ -11,7 +11,7 @@ const policyContent = {
       ['Acceptable use', 'Use this website lawfully and respectfully. Do not attempt to disrupt, scrape, misuse, or gain unauthorized access to the website or its systems.'],
       ['Website content', 'Website content is provided for general information and may change without notice. It does not create a doctor-patient relationship until a consultation is formally accepted.'],
       ['External services', 'Links to WhatsApp, social platforms, payment services, couriers, or other third parties are governed by their own terms and privacy policies.'],
-      ['Contact', 'Questions about website use may be sent to sriayurveda23@gmail.com.'],
+      ['Contact', 'Questions about website use may be sent to lakshmi@sriayurvedawellness.com.'],
     ],
   },
   '/telemedicine-policy': {
@@ -33,7 +33,7 @@ const policyContent = {
       ['Essential storage', 'The site may use browser storage to remember your cookie-consent choice and support user-facing preferences such as a shopping cart.'],
       ['Analytics', 'Non-essential analytics should only be enabled after consent. You can clear browser storage or withdraw consent through your browser settings.'],
       ['Third parties', 'Embedded or linked services such as WhatsApp, Google, social media, and hosting providers may use their own technologies under their own policies.'],
-      ['Questions', 'For privacy questions, contact sriayurveda23@gmail.com.'],
+      ['Questions', 'For privacy questions, contact lakshmi@sriayurvedawellness.com.'],
     ],
   },
   '/data-retention-security-policy': {
@@ -66,7 +66,7 @@ const policyContent = {
       ['Confidential information', 'Health history, contact details, appointment information, consultation notes, messages, and order details are treated as confidential information.'],
       ['Permitted access', 'Access is limited to authorized staff and service providers who require it for care, operations, safety, or legal compliance.'],
       ['Images and testimonials', 'Patient photographs, testimonials, or identifying stories must not be published without written consent that explains the intended use.'],
-      ['Reporting concerns', 'Report suspected disclosure or misuse to the clinic promptly at sriayurveda23@gmail.com.'],
+      ['Reporting concerns', 'Report suspected disclosure or misuse to the clinic promptly at lakshmi@sriayurvedawellness.com.'],
     ],
   },
   '/emergency-clinical-limitations': {
@@ -99,7 +99,7 @@ const policyContent = {
       ['Appointments', 'Appointment requests are subject to confirmation by the clinic. Please contact us as early as possible if you need to reschedule or cancel.'],
       ['Cancellations', 'Cancellations made before the confirmed appointment time may be rescheduled subject to availability. Late cancellations and missed appointments may not be eligible for a refund.'],
       ['Product orders', 'Product orders are confirmed through WhatsApp. Any refund or replacement request will be reviewed based on product condition, delivery status, and applicable law.'],
-      ['Contact', 'For cancellation or refund support, contact us at sriayurveda23@gmail.com or +919187398489.'],
+      ['Contact', 'For cancellation or refund support, contact us at lakshmi@sriayurvedawellness.com or +919187398489.'],
     ],
   },
   '/shipping-delivery-policy': {
@@ -110,7 +110,7 @@ const policyContent = {
       ['Order confirmation', 'Orders are reviewed and confirmed through WhatsApp before payment or dispatch.'],
       ['Delivery', 'Delivery timelines depend on destination, courier availability, and product stock. The clinic will share available delivery details during order confirmation.'],
       ['Address accuracy', 'Customers are responsible for providing a complete and accurate delivery address and reachable phone number.'],
-      ['Support', 'For delivery questions, contact us at sriayurveda23@gmail.com or +919187398489.'],
+      ['Support', 'For delivery questions, contact us at lakshmi@sriayurvedawellness.com or +919187398489.'],
     ],
   },
   '/disclaimer-policy': {
@@ -129,7 +129,7 @@ const policyContent = {
     description: 'Grievance redressal contact for Sri Ayurveda Clinic.',
     intro: 'We welcome concerns about our services, privacy practices, orders, or website experience.',
     sections: [
-      ['How to contact us', 'Send your concern with your name, contact details, and relevant order or appointment information to sriayurveda23@gmail.com.'],
+      ['How to contact us', 'Send your concern with your name, contact details, and relevant order or appointment information to lakshmi@sriayurvedawellness.com.'],
       ['Review process', 'We will acknowledge your concern and review it with the appropriate clinic representative. Please do not send unnecessary medical information by email.'],
       ['Response', 'We aim to respond within a reasonable period based on the nature and complexity of the concern.'],
       ['Phone support', 'You can also contact the clinic at +919187398489 during working hours.'],

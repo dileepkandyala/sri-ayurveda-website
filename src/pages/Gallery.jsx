@@ -1,10 +1,19 @@
 import { useState, useEffect } from 'react';
 import { ChevronLeft, ChevronRight, X } from 'lucide-react';
+import img1 from '../images/IMG_1858.jpg';
 import img2 from '../images/IMG_1859.jpg';
 import img3 from '../images/IMG_1860.jpg';
 import img4 from '../images/IMG_1861.jpg';
-import img5 from '../images/IMG_0485.jpg';
-import img6 from '../images/SreeLakshmi.jpg';
+import img5 from '../images/IMG_1863.jpg';
+import img6 from '../images/IMG_0485.jpg';
+import img7 from '../images/SreeLakshmi.jpg';
+import img8 from '../images/treatment room.jpg';
+import img9 from '../images/janu basti.jpg';
+import img10 from '../images/kati basti.jpg';
+import img11 from '../images/nasya.jpg';
+import img12 from '../images/shirobasti.jpg';
+import img13 from '../images/abhyanga.jpg';
+import img14 from '../images/yoga hd.jpg';
 import ayurvedicImg from '../images/ayurvedic.jpg';
 import video1 from '../images/WhatsApp Video 2026-07-03 at 12.37.52 PM.mp4';
 import video2 from '../images/WhatsApp Video 2026-07-03 at 12.37.53 PM.mp4';
@@ -18,17 +27,25 @@ const Gallery = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
 
   const galleryItems = [
-    { type: 'image', src: img2, alt: 'Wellness Treatment Session', category: 'Treatment' },
-    { type: 'image', src: img3, alt: 'Professional Setup', category: 'Facility' },
-    { type: 'image', src: img4, alt: 'Healing Ambiance', category: 'Treatment' },
-    { type: 'image', src: ayurvedicImg, alt: 'Ayurvedic Remedies', category: 'Remedies' },
-    { type: 'image', src: img5, alt: 'Ayurvedic Therapy Setup', category: 'Clinic' },
-    { type: 'image', src: img6, alt: 'Care and Comfort Environment', category: 'Environment' },
-    { type: 'video', src: video1, alt: 'Treatment Video 1', category: 'Video' },
-    { type: 'video', src: video2, alt: 'Treatment Video 2', category: 'Video' },
-    { type: 'video', src: video3, alt: 'Treatment Video 3', category: 'Video' },
-    { type: 'video', src: video4, alt: 'Treatment Video 4', category: 'Video' },
-    { type: 'video', src: video5, alt: 'Treatment Video 5', category: 'Video' },
+    { type: 'image', src: img1, alt: 'Personalized Ayurvedic consultation', category: 'Consultation' },
+    { type: 'image', src: img2, alt: 'Therapy session in progress', category: 'Treatment' },
+    { type: 'image', src: img3, alt: 'Healing ambience in the clinic', category: 'Facility' },
+    { type: 'image', src: img4, alt: 'Therapeutic treatment setup', category: 'Treatment' },
+    { type: 'image', src: img6, alt: 'Wellness therapy setup', category: 'Clinic' },
+    { type: 'image', src: img7, alt: 'Doctor consultation and guidance', category: 'Doctor' },
+    { type: 'image', src: img8, alt: 'Treatment room and wellness atmosphere', category: 'Facility' },
+    { type: 'image', src: img9, alt: 'Janu Basti therapy', category: 'Therapy' },
+    { type: 'image', src: img10, alt: 'Kati Basti therapy', category: 'Therapy' },
+    { type: 'image', src: img11, alt: 'Nasya therapy', category: 'Therapy' },
+    { type: 'image', src: img12, alt: 'Shiro Basti therapy', category: 'Therapy' },
+    { type: 'image', src: img13, alt: 'Abhyanga therapy', category: 'Therapy' },
+    { type: 'image', src: img14, alt: 'Yoga and wellness practice', category: 'Wellness' },
+    { type: 'image', src: ayurvedicImg, alt: 'Ayurvedic remedies and herbal care', category: 'Remedies' },
+    { type: 'video', src: video1, alt: 'Treatment video 1', category: 'Video' },
+    { type: 'video', src: video2, alt: 'Treatment video 2', category: 'Video' },
+    { type: 'video', src: video3, alt: 'Treatment video 3', category: 'Video' },
+    { type: 'video', src: video4, alt: 'Treatment video 4', category: 'Video' },
+    { type: 'video', src: video5, alt: 'Treatment video 5', category: 'Video' },
   ];
 
   useEffect(() => {
