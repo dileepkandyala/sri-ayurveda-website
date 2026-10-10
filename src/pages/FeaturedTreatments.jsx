@@ -1,55 +1,72 @@
-import { Zap, Clock, Users, BarChart3 } from 'lucide-react';
+import { useEffect, useState } from 'react';
+import { Zap, Clock, X } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 import img1 from '../images/IMG_1858.jpg';
 import img2 from '../images/IMG_1859.jpg';
 import img3 from '../images/IMG_1861.jpg';
 import './FeaturedTreatments.css';
 
 const FeaturedTreatments = () => {
+  const navigate = useNavigate();
+  const [activeTreatment, setActiveTreatment] = useState(null);
   const treatments = [
     {
       name: 'Panchakarma Detox Program',
-      description: 'Complete body detoxification and rejuvenation',
-      duration: '7-21 days',
-      participants: '50+ completed',
-      effectiveness: '95%',
+      description: 'An individualized Panchakarma program considered after an Ayurvedic assessment.',
+      duration: 'As assessed',
+      approach: 'Personalized',
       image: img1,
+      details: 'Panchakarma procedures are selected after assessing factors such as Prakriti, Vikriti, Agni, strength, age, season, and health condition. A suitable plan may include preparation, a selected procedure, and individualized aftercare. The clinic will discuss suitability and availability with you.',
       benefits: [
-        'Eliminates deep toxins',
-        'Restores digestion',
-        'Enhances immunity',
-        'Mental clarity'
+        'Practitioner-led assessment',
+        'Individualized procedure selection',
+        'Preparation and aftercare guidance',
+        'Qualified supervision'
       ],
       featured: true
     },
     {
       name: 'Abhyanga Therapy',
-      description: 'Therapeutic full-body oil massage',
+      description: 'Traditional Ayurvedic oil massage, selected according to individual needs.',
       duration: '60 mins',
-      participants: '200+ clients',
-      effectiveness: '98%',
+      approach: 'Assessment guided',
       image: img2,
+      details: 'Abhyanga is a traditional Ayurvedic oil massage. The oil and approach can be discussed with the practitioner and selected according to your needs and suitability. Contact the clinic to ask about available sessions.',
       benefits: [
-        'Deep relaxation',
-        'Improved circulation',
-        'Skin nourishment',
-        'Pain relief'
+        'Traditional oil massage',
+        'Practitioner-guided approach',
+        'Oil selected for the session',
+        'Availability confirmed by clinic'
       ]
     },
     {
       name: 'Shirodhara Treatment',
-      description: 'Warm oil therapy for mind-body harmony',
+      description: 'A traditional therapy involving a steady stream of warm liquid, offered after assessment.',
       duration: '45 mins',
-      participants: '150+ clients',
-      effectiveness: '96%',
+      approach: 'Assessment guided',
       image: img3,
+      details: 'Shirodhara is a traditional Ayurvedic therapy in which a steady stream of warm liquid is poured over the forehead. The clinic can discuss suitability, the session approach, and availability after understanding your needs.',
       benefits: [
-        'Mental clarity',
-        'Stress relief',
-        'Sleep improvement',
-        'Nervous system balance'
+        'Traditional Ayurvedic procedure',
+        'Session guided by a practitioner',
+        'Individual suitability assessment',
+        'Availability confirmed by clinic'
       ]
     }
   ];
+
+  const startTreatmentBooking = (treatment) => {
+    navigate('/contact', { state: { inquiry: { type: 'treatment', treatment: treatment.name } } });
+  };
+
+  useEffect(() => {
+    if (!activeTreatment) return undefined;
+    const handleKeyDown = (event) => {
+      if (event.key === 'Escape') setActiveTreatment(null);
+    };
+    document.addEventListener('keydown', handleKeyDown);
+    return () => document.removeEventListener('keydown', handleKeyDown);
+  }, [activeTreatment]);
 
   return (
     <section id="featured-treatments" className="py-14 bg-gradient-to-br from-white via-emerald-50 to-white">
@@ -77,27 +94,20 @@ const FeaturedTreatments = () => {
               <h3 className="text-3xl md:text-4xl font-bold mb-4">{treatments[0].name}</h3>
               <p className="text-lg text-green-100 mb-8">{treatments[0].description}</p>
 
-              <div className="grid grid-cols-3 gap-4 mb-8">
+              <div className="grid grid-cols-2 gap-4 mb-8">
                 <div>
                   <div className="flex items-center gap-2 mb-2">
                     <Clock className="w-5 h-5 text-amber-400" />
-                    <p className="text-sm text-green-200">Duration</p>
+                    <p className="text-sm text-green-200">Program</p>
                   </div>
                   <p className="text-xl font-bold">{treatments[0].duration}</p>
                 </div>
                 <div>
                   <div className="flex items-center gap-2 mb-2">
-                    <Users className="w-5 h-5 text-amber-400" />
-                    <p className="text-sm text-green-200">Clients</p>
+                    <Zap className="w-5 h-5 text-amber-400" />
+                    <p className="text-sm text-green-200">Care</p>
                   </div>
-                  <p className="text-xl font-bold">{treatments[0].participants}</p>
-                </div>
-                <div>
-                  <div className="flex items-center gap-2 mb-2">
-                    <BarChart3 className="w-5 h-5 text-amber-400" />
-                    <p className="text-sm text-green-200">Success</p>
-                  </div>
-                  <p className="text-xl font-bold">{treatments[0].effectiveness}</p>
+                  <p className="text-xl font-bold">{treatments[0].approach}</p>
                 </div>
               </div>
 
@@ -113,7 +123,7 @@ const FeaturedTreatments = () => {
                 </div>
               </div>
 
-              <button className="btn btn-amber btn-lg">
+              <button type="button" className="btn btn-amber btn-lg" onClick={() => startTreatmentBooking(treatments[0])}>
                 Book Now
               </button>
             </div>
@@ -140,18 +150,14 @@ const FeaturedTreatments = () => {
                 <h3 className="text-2xl font-bold text-green-900 mb-3">{treatment.name}</h3>
                 <p className="text-gray-700 mb-6">{treatment.description}</p>
 
-                <div className="grid grid-cols-3 gap-4 mb-6 py-4 border-t border-b border-gray-200">
+                <div className="grid grid-cols-2 gap-4 mb-6 py-4 border-t border-b border-gray-200">
                   <div className="text-center">
-                    <p className="text-sm text-gray-600 mb-1">Duration</p>
+                    <p className="text-sm text-gray-600 mb-1">Typical duration</p>
                     <p className="font-bold text-green-700">{treatment.duration}</p>
                   </div>
                   <div className="text-center">
-                    <p className="text-sm text-gray-600 mb-1">Success Rate</p>
-                    <p className="font-bold text-green-700">{treatment.effectiveness}</p>
-                  </div>
-                  <div className="text-center">
-                    <p className="text-sm text-gray-600 mb-1">Clients</p>
-                    <p className="font-bold text-green-700 text-sm">{treatment.participants}</p>
+                    <p className="text-sm text-gray-600 mb-1">Approach</p>
+                    <p className="font-bold text-green-700">{treatment.approach}</p>
                   </div>
                 </div>
 
@@ -164,14 +170,43 @@ const FeaturedTreatments = () => {
                   ))}
                 </div>
 
-                <button className="btn btn-sm btn-primary">
-                  Learn More
-                </button>
+                <div className="flex flex-wrap items-center gap-3">
+                  <button type="button" className="btn btn-sm btn-primary" onClick={() => setActiveTreatment(treatment)}>
+                    Learn More
+                  </button>
+                  <button type="button" className="btn btn-sm btn-primary" onClick={() => startTreatmentBooking(treatment)}>
+                    Book Now
+                  </button>
+                </div>
               </div>
             </div>
           ))}
         </div>
       </div>
+      {activeTreatment && (
+        <div className="service-modal-overlay" role="presentation" onClick={() => setActiveTreatment(null)}>
+          <div
+            className="service-modal"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="featured-treatment-title"
+            onClick={(event) => event.stopPropagation()}
+          >
+            <button type="button" className="service-modal-close" aria-label="Close" onClick={() => setActiveTreatment(null)}>
+              <X className="w-5 h-5" aria-hidden="true" />
+            </button>
+            <img src={activeTreatment.image} alt="" className="service-modal-image" />
+            <div className="service-modal-body">
+              <h3 id="featured-treatment-title" className="service-modal-title">{activeTreatment.name}</h3>
+              <p className="service-modal-description">{activeTreatment.details}</p>
+              <p className="text-sm text-gray-600">Treatment suitability and scheduling are confirmed by the clinic after discussion.</p>
+              <button type="button" onClick={() => startTreatmentBooking(activeTreatment)} className="btn btn-primary mt-6">
+                Book Now
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </section>
   );
 };

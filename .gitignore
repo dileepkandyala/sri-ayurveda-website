@@ -9,6 +9,8 @@ pnpm-debug.log*
 .env
 .env.local
 .env.*.local
+!.env.example
+!.env.production.example
 
 # Build outputs
 dist/
@@ -112,6 +114,7 @@ web_modules/
 .env
 .env.*
 !.env.example
+!.env.production.example
 
 # parcel-bundler cache (https://parceljs.org/)
 .cache

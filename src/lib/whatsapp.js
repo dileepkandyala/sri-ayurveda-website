@@ -1,10 +1,45 @@
 // Build and open a WhatsApp message with the contact form details.
 export function buildWhatsAppMessage(formData) {
+  if (formData.requestType === 'shop') {
+    const itemLines = (formData.items || []).map(
+      (item) => `- ${item.name} x${item.quantity}: ₹${(item.amount * item.quantity).toLocaleString('en-IN')}`,
+    );
+    return [
+      'New Shop Order Request',
+      `Name: ${formData.name || 'N/A'}`,
+      `Email: ${formData.email || 'N/A'}`,
+      `Verified Phone: ${formData.phone || 'N/A'}`,
+      '',
+      'Delivery address:',
+      formData.deliveryAddress?.addressLine1 || formData.addressLine1 || 'N/A',
+      ...(formData.deliveryAddress?.landmark || formData.landmark
+        ? [`Landmark: ${formData.deliveryAddress?.landmark || formData.landmark}`]
+        : []),
+      [
+        formData.deliveryAddress?.city || formData.city,
+        formData.deliveryAddress?.state || formData.state,
+        formData.deliveryAddress?.postalCode || formData.postalCode,
+      ].filter(Boolean).join(', '),
+      ...(formData.deliveryLocation
+        ? [`Map pin: https://www.google.com/maps?q=${formData.deliveryLocation.latitude},${formData.deliveryLocation.longitude}`]
+        : []),
+      '',
+      'Selected products:',
+      ...itemLines,
+      '',
+      `Estimated total: ₹${Number(formData.total || 0).toLocaleString('en-IN')}`,
+      formData.message || 'Please confirm availability, delivery details, and payment options.',
+    ].join('\n');
+  }
+
   return [
-    'New Contact Submission',
+    formData.requestType === 'treatment'
+      ? 'New Treatment Booking Request'
+      : 'New Consultation Request',
     `Name: ${formData.name || 'N/A'}`,
     `Email: ${formData.email || 'N/A'}`,
-    `Phone: ${formData.phone || 'N/A'}`,
+    `Verified Phone: ${formData.phone || 'N/A'}`,
+    ...(formData.treatment ? [`Treatment: ${formData.treatment}`] : []),
     `Preferred Date: ${formData.appointmentDate || 'N/A'}`,
     `Preferred Time: ${formData.appointmentTime || 'N/A'}`,
     `Consultation Type: ${formData.consultationType || 'N/A'}`,
@@ -12,51 +47,8 @@ export function buildWhatsAppMessage(formData) {
   ].join('\n');
 }
 
-export function buildShopWhatsAppMessage(items, total, phone) {
-  const lines = items.map((item) => `- ${item.name} x${item.quantity}: ₹${(item.amount * item.quantity).toLocaleString('en-IN')}`);
-  return [
-    'New Shop Order',
-    `Phone: ${phone}`,
-    '',
-    'Selected packages:',
-    ...lines,
-    '',
-    `Total: ₹${total.toLocaleString('en-IN')}`,
-    'Please share availability and payment details.',
-  ].join('\n');
-}
-
-export function createShopWhatsAppUrl(items, total, phone, phoneNumber = '917619529616') {
-  const cleanNumber = phoneNumber.replace(/[^\d]/g, '');
-  const message = encodeURIComponent(buildShopWhatsAppMessage(items, total, phone));
-  return `https://wa.me/${cleanNumber}?text=${message}`;
-}
-
-export function sendShopWhatsAppMessage(items, total, phone, phoneNumber = '917619529616') {
-  const url = createShopWhatsAppUrl(items, total, phone, phoneNumber);
-  if (typeof window !== 'undefined') {
-    window.open(url, '_blank', 'noopener,noreferrer');
-  }
-  return { success: true, message: 'WhatsApp order opened', url };
-}
-
 export function createWhatsAppUrl(formData, phoneNumber = '917619529616') {
   const cleanNumber = phoneNumber.replace(/[^\d]/g, '');
   const message = encodeURIComponent(buildWhatsAppMessage(formData));
   return `https://wa.me/${cleanNumber}?text=${message}`;
-}
-
-export async function sendWhatsAppMessage(formData, phoneNumber = '917619529616') {
-  try {
-    const url = createWhatsAppUrl(formData, phoneNumber);
-
-    if (typeof window !== 'undefined') {
-      window.open(url, '_blank', 'noopener,noreferrer');
-    }
-
-    return { success: true, message: 'WhatsApp message opened', url };
-  } catch (error) {
-    console.error('Error opening WhatsApp message:', error);
-    throw error;
-  }
 }

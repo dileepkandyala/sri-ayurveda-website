@@ -70,7 +70,39 @@
   color: #4a5b50;
 }
 
+.panchakarma-book-link {
+  display: inline-flex;
+  min-height: 2.75rem;
+  align-items: center;
+  justify-content: center;
+  align-self: flex-start;
+  margin-top: auto;
+  padding: 0.65rem 1rem;
+  border: 1px solid #17684b;
+  border-radius: 10px;
+  color: #fff;
+  background: #17684b;
+  font-size: 0.9rem;
+  font-weight: 700;
+  text-decoration: none;
+  transition: background-color 180ms ease, border-color 180ms ease, transform 180ms ease;
+}
+
+.panchakarma-book-link:hover {
+  transform: translateY(-1px);
+  border-color: #0b4f3b;
+  color: #fff;
+  background: #0b4f3b;
+}
+
+.panchakarma-book-link:focus-visible {
+  outline: 3px solid rgba(212, 175, 55, 0.75);
+  outline-offset: 3px;
+}
+
 .panchakarma-care-card {
+  display: flex;
+  flex-direction: column;
   padding: 2rem;
   border: 1px solid rgba(47, 139, 87, 0.15);
   border-radius: 18px;

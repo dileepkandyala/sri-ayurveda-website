@@ -1,20 +1,43 @@
 import { useState } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { MapPin, Phone, Mail, MessageCircle, Instagram, Send } from 'lucide-react';
+import { useCart, formatPrice } from '../lib/cart';
 import { fetchApi } from '../lib/api';
 import Seo from '../components/Seo';
 import { SEO_CONFIG } from '../lib/seo';
-import { sendWhatsAppMessage } from '../lib/whatsapp';
+import { createWhatsAppUrl } from '../lib/whatsapp';
+import PhoneEmailWidget from '../components/PhoneEmailWidget';
 import './Contact.css';
 
+const PHONE_CLIENT_ID = import.meta.env.PHONE_EMAIL_PHONE_CLIENT_ID;
+const EMAIL_CLIENT_ID = import.meta.env.PHONE_EMAIL_EMAIL_CLIENT_ID;
+
 export default function Contact() {
+  const location = useLocation();
+  const navigate = useNavigate();
+  const { clearCart } = useCart();
+  const inquiry = location.state?.inquiry;
+  const isShopInquiry = inquiry?.type === 'shop' && Array.isArray(inquiry.items) && inquiry.items.length > 0;
+  const isTreatmentInquiry = inquiry?.type === 'treatment' && Boolean(inquiry.treatment);
+  const initialMessage = isShopInquiry
+    ? 'Please contact me about availability, delivery, and payment for these items.'
+    : isTreatmentInquiry
+      ? `I would like to book ${inquiry.treatment}. Please confirm suitability and availability.`
+      : '';
   const [formData, setFormData] = useState({
     name: '',
     email: '',
     phone: '',
     appointmentDate: '',
     appointmentTime: '',
-    consultationType: 'In-person',
-    message: '',
+    consultationType: isShopInquiry ? 'Shop order' : 'In-person',
+    message: initialMessage,
+    addressLine1: '',
+    landmark: '',
+    city: '',
+    postalCode: '',
+    state: '',
+    deliveryLocation: null,
   });
 
   const availableTimes = [
@@ -28,151 +51,149 @@ export default function Contact() {
 
   const consultationTypes = ['In-person', 'Online', 'Phone'];
   const [status, setStatus] = useState('idle');
-  const [emailInfo, setEmailInfo] = useState(null);
-  const [phoneOtpSent, setPhoneOtpSent] = useState(false);
-  const [emailOtpSent, setEmailOtpSent] = useState(false);
-  const [phoneOtpVerified, setPhoneOtpVerified] = useState(false);
-  const [emailOtpVerified, setEmailOtpVerified] = useState(false);
-  const [phoneOtpInput, setPhoneOtpInput] = useState('');
-  const [emailOtpInput, setEmailOtpInput] = useState('');
-  const [otpNotice, setOtpNotice] = useState('');
-  const [otpError, setOtpError] = useState('');
-  const [otpSending, setOtpSending] = useState(false);
+  const [phoneVerified, setPhoneVerified] = useState(false);
+  const [emailVerified, setEmailVerified] = useState(false);
+  const [verificationError, setVerificationError] = useState('');
   const [privacyConsent, setPrivacyConsent] = useState(false);
   const [communicationConsent, setCommunicationConsent] = useState(false);
   const [teleconsultationConsent, setTeleconsultationConsent] = useState(false);
+  const [shippingConsent, setShippingConsent] = useState(false);
+  const [locationStatus, setLocationStatus] = useState('idle');
+  const [locationError, setLocationError] = useState('');
 
-  const validatePhone = (value) => /^\+?[0-9\s-]{10,15}$/.test(value);
-  const validateEmail = (value) => /\S+@\S+\.\S+/.test(value);
-
-  const handleSendOtp = async (type) => {
-    const value = type === 'phone' ? formData.phone : formData.email;
-
-    if (type === 'phone') {
-      if (!validatePhone(value)) {
-        setOtpError('Please enter a valid phone number before requesting an OTP.');
-        setOtpNotice('');
-        return;
-      }
-    } else if (!validateEmail(value)) {
-      setOtpError('Please enter a valid email address before requesting an OTP.');
-      setOtpNotice('');
+  const handleGetDeliveryLocation = () => {
+    if (!navigator.geolocation) {
+      setLocationError('Location sharing is not supported by this browser. You can still enter your address manually.');
+      setLocationStatus('error');
       return;
     }
 
-    setOtpSending(true);
-    setOtpError('');
-
-    try {
-      const response = await fetchApi('/send-otp', {
-        method: 'POST',
-        body: JSON.stringify({ type, contact: value }),
-      });
-
-      if (response.success) {
-        if (type === 'phone') {
-          setPhoneOtpSent(true);
-          setPhoneOtpVerified(false);
-          setPhoneOtpInput('');
-        } else {
-          setEmailOtpSent(true);
-          setEmailOtpVerified(false);
-          setEmailOtpInput('');
-        }
-        setOtpNotice(response.message || `OTP sent to your ${type === 'email' ? 'email' : 'phone'}.`);
-      } else {
-        setOtpError(response.error || 'Unable to send OTP.');
-        setOtpNotice('');
-      }
-    } catch (error) {
-      setOtpError(error.message || 'Unable to send OTP right now.');
-      setOtpNotice('');
-    } finally {
-      setOtpSending(false);
-    }
+    setLocationStatus('loading');
+    setLocationError('');
+    navigator.geolocation.getCurrentPosition(
+      ({ coords }) => {
+        setFormData((prev) => ({
+          ...prev,
+          deliveryLocation: {
+            latitude: coords.latitude,
+            longitude: coords.longitude,
+            accuracy: coords.accuracy,
+          },
+        }));
+        setLocationStatus('success');
+      },
+      (error) => {
+        const message = error.code === error.PERMISSION_DENIED
+          ? 'Location permission was declined. You can still enter your delivery address manually.'
+          : error.code === error.TIMEOUT
+            ? 'Location lookup timed out. Please try again or enter your address manually.'
+            : 'Unable to get your location. Please try again or enter your address manually.';
+        setLocationError(message);
+        setLocationStatus('error');
+      },
+      { enableHighAccuracy: true, timeout: 15000, maximumAge: 60000 },
+    );
   };
 
-  const handleVerifyOtp = async (type) => {
-    const value = type === 'phone' ? formData.phone : formData.email;
-    const otpValue = type === 'phone' ? phoneOtpInput : emailOtpInput;
+  const handleClearDeliveryLocation = () => {
+    setFormData((prev) => ({ ...prev, deliveryLocation: null }));
+    setLocationStatus('idle');
+    setLocationError('');
+  };
 
-    if (!otpValue) {
-      setOtpError(`Please enter the OTP sent to your ${type === 'email' ? 'email' : 'phone'}.`);
-      return;
-    }
+  // phone.email widgets verify the contact independently in their own popup, so the
+  // value they confirm (not necessarily what's currently typed) becomes the source of truth.
+  const handlePhoneVerified = (contact) => {
+    setFormData((prev) => ({ ...prev, phone: contact }));
+    setPhoneVerified(true);
+    setVerificationError('');
+  };
 
-    try {
-      const response = await fetchApi('/verify-otp', {
-        method: 'POST',
-        body: JSON.stringify({ type, contact: value, otp: otpValue }),
-      });
+  const handleEmailVerified = (contact) => {
+    setFormData((prev) => ({ ...prev, email: contact }));
+    setEmailVerified(true);
+    setVerificationError('');
+  };
 
-      if (response.success) {
-        if (type === 'phone') {
-          setPhoneOtpVerified(true);
-        } else {
-          setEmailOtpVerified(true);
-        }
-        setOtpError('');
-        setOtpNotice(response.message || 'OTP verified successfully.');
-      } else {
-        setOtpError(response.error || 'Unable to verify OTP.');
-        setOtpNotice('');
-      }
-    } catch (error) {
-      setOtpError(error.message || 'Unable to verify OTP.');
-      setOtpNotice('');
-    }
+  const handleChangeVerifiedContact = (type) => {
+    const isPhone = type === 'phone';
+    setFormData((prev) => ({ ...prev, [type]: '' }));
+    (isPhone ? setPhoneVerified : setEmailVerified)(false);
+    setVerificationError('');
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     const hasVerifiedContacts = Boolean(
-      formData.phone && phoneOtpVerified && formData.email && emailOtpVerified,
+      formData.phone && phoneVerified && formData.email && emailVerified,
     );
 
-    if (!hasVerifiedContacts || !privacyConsent || !communicationConsent || (formData.consultationType === 'Online' && !teleconsultationConsent)) {
-      setOtpError('Please verify both your phone number and email before scheduling an appointment.');
-      setOtpNotice('');
+    if (
+      !hasVerifiedContacts ||
+      !privacyConsent ||
+      !communicationConsent ||
+      (isShopInquiry && !shippingConsent) ||
+      (isShopInquiry && (!formData.addressLine1 || !formData.city || !formData.postalCode || !formData.state)) ||
+      (!isShopInquiry && (!formData.appointmentDate || !formData.appointmentTime)) ||
+      (!isShopInquiry && formData.consultationType === 'Online' && !teleconsultationConsent)
+    ) {
+      setVerificationError('Please complete the required contact verification and consent fields before continuing.');
       setStatus('error');
       setTimeout(() => setStatus('idle'), 4000);
       return;
     }
 
     setStatus('loading');
+    const whatsappWindow = window.open('', '_blank');
 
     try {
-      await sendWhatsAppMessage(formData);
-
-      // Send to backend to save to Excel file
-      const data = await fetchApi('/contact-submit', {
+      const bookingRequest = {
+        ...formData,
+        requestType: isShopInquiry ? 'shop' : isTreatmentInquiry ? 'treatment' : 'consultation',
+        ...(isTreatmentInquiry ? { treatment: inquiry.treatment } : {}),
+        ...(isShopInquiry
+          ? {
+              items: inquiry.items,
+              total: inquiry.total,
+              deliveryAddress: {
+                addressLine1: formData.addressLine1,
+                landmark: formData.landmark,
+                city: formData.city,
+                postalCode: formData.postalCode,
+                state: formData.state,
+              },
+              deliveryLocation: formData.deliveryLocation,
+              orderDetails: [
+                'Selected products:',
+                ...inquiry.items.map((item) => `- ${item.name} x${item.quantity}: ${formatPrice(item.amount * item.quantity)}`),
+                `Estimated total: ${formatPrice(inquiry.total)}`,
+                '',
+                'Delivery address:',
+                formData.addressLine1,
+                ...(formData.landmark ? [`Landmark: ${formData.landmark}`] : []),
+                `${formData.city}, ${formData.state} - ${formData.postalCode}`,
+                ...(formData.deliveryLocation
+                  ? [`Delivery location: https://www.google.com/maps?q=${formData.deliveryLocation.latitude},${formData.deliveryLocation.longitude}`]
+                  : []),
+              ].join('\n'),
+            }
+          : {}),
+      };
+      await fetchApi('/contact-submit', {
         method: 'POST',
-        body: JSON.stringify(formData),
+        body: JSON.stringify(bookingRequest),
       });
-      setEmailInfo(data.email || null);
-      setStatus('success');
-      setFormData({
-        name: '',
-        email: '',
-        phone: '',
-        appointmentDate: '',
-        appointmentTime: '',
-        consultationType: 'In-person',
-        message: '',
-      });
-      setPhoneOtpSent(false);
-      setEmailOtpSent(false);
-      setPhoneOtpVerified(false);
-      setEmailOtpVerified(false);
-      setPhoneOtpInput('');
-      setEmailOtpInput('');
-      setOtpNotice('');
-      setOtpError('');
-      setPrivacyConsent(false);
-      setCommunicationConsent(false);
-      setTeleconsultationConsent(false);
-      setTimeout(() => setStatus('idle'), 5000);
+      if (whatsappWindow && !whatsappWindow.closed) {
+        whatsappWindow.location.href = createWhatsAppUrl(bookingRequest);
+      }
+      if (isShopInquiry) {
+        clearCart();
+      }
+      navigate('/booking-confirmation', { state: { booking: bookingRequest } });
     } catch (error) {
+      if (whatsappWindow && !whatsappWindow.closed) {
+        whatsappWindow.close();
+      }
       console.error('Error submitting form:', error);
       setStatus('error');
       setTimeout(() => setStatus('idle'), 5000);
@@ -183,20 +204,17 @@ export default function Contact() {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
 
+    // Editing a verified field after the fact invalidates that verification,
+    // since the value no longer matches what phone.email confirmed.
     if (name === 'phone') {
-      setPhoneOtpSent(false);
-      setPhoneOtpVerified(false);
-      setPhoneOtpInput('');
+      setPhoneVerified(false);
     }
 
     if (name === 'email') {
-      setEmailOtpSent(false);
-      setEmailOtpVerified(false);
-      setEmailOtpInput('');
+      setEmailVerified(false);
     }
 
-    setOtpNotice('');
-    setOtpError('');
+    setVerificationError('');
   };
 
   return (
@@ -303,230 +321,286 @@ export default function Contact() {
           </div>
 
           <div className="contact-form-column">
-            <div className="contact-form-panel bg-gradient-to-br from-green-50 to-white p-10 rounded-2xl shadow-xl">
-              <h3 className="text-2xl font-bold text-green-900 mb-8">Send Us a Message</h3>
+            <div className="contact-form-panel">
+              <div className="contact-form-heading">
+                <span className="contact-form-eyebrow">SRI AYURVEDA CLINIC</span>
+                <h3>{isShopInquiry ? 'Continue your order request' : isTreatmentInquiry ? 'Book a treatment' : 'Request a Consultation'}</h3>
+                <p>
+                  {isShopInquiry
+                    ? 'Confirm the selected items and share your contact details. We’ll prepare a WhatsApp order request for the clinic.'
+                    : 'Share your details and preferred appointment time. We’ll contact you to confirm availability.'}
+                </p>
+              </div>
 
-              <form onSubmit={handleSubmit} className="space-y-8">
-                <div>
-                  <label htmlFor="name" className="block text-sm font-semibold text-gray-700 mb-3">
-                    Your Name
-                  </label>
-                  <input
-                    type="text"
-                    id="name"
-                    name="name"
-                    autoComplete="name"
-                    required
-                    value={formData.name}
-                    onChange={handleChange}
-                    className="w-full px-4 py-3 rounded-lg border-2 border-gray-200 focus:ring-2 focus:ring-green-500 focus:border-green-500 transition bg-white"
-                    placeholder="Enter your name"
-                  />
-                </div>
-
-                <div className="grid sm:grid-cols-2 gap-6">
-                  <div>
-                    <label htmlFor="email" className="block text-sm font-semibold text-gray-700 mb-3">
-                      Email Address
-                    </label>
-                    <input
-                      type="email"
-                      id="email"
-                      name="email"
-                      autoComplete="email"
-                      required
-                      value={formData.email}
-                      onChange={handleChange}
-                      className="w-full px-4 py-3 rounded-lg border-2 border-gray-200 focus:ring-2 focus:ring-green-500 focus:border-green-500 transition bg-white"
-                      placeholder="your.email@example.com"
-                    />
-                    <div className="otp-actions">
-                      <button type="button" className="otp-btn" disabled={otpSending} onClick={() => handleSendOtp('email')}>
-                        {otpSending ? 'Sending...' : 'Send OTP'}
-                      </button>
-                    </div>
-                    {emailOtpSent && !emailOtpVerified && (
-                      <div className="otp-step">
-                        <input
-                          type="text"
-                          inputMode="numeric"
-                          maxLength={6}
-                          pattern="[0-9]{6}"
-                          value={emailOtpInput}
-                          onChange={(e) => setEmailOtpInput(e.target.value)}
-                          className="otp-input"
-                          placeholder="Enter OTP"
-                        />
-                        <button type="button" className="otp-verify-btn" onClick={() => handleVerifyOtp('email')}>
-                          Verify
-                        </button>
+              <form onSubmit={handleSubmit} className="contact-request-form">
+                {isShopInquiry && (
+                  <section className="contact-form-section" aria-labelledby="shop-items-heading">
+                    <div className="contact-section-heading">
+                      <span className="contact-section-number">01</span>
+                      <div>
+                        <h4 id="shop-items-heading">Your selected items</h4>
+                        <p>These items and the estimated total will be included in the WhatsApp request.</p>
                       </div>
-                    )}
-                    {emailOtpVerified && <p className="otp-success">Email verified</p>}
-                  </div>
-
-                  <div>
-                    <label htmlFor="phone" className="block text-sm font-semibold text-gray-700 mb-3">
-                      Phone Number
-                    </label>
-                    <input
-                      type="tel"
-                      id="phone"
-                      name="phone"
-                      autoComplete="tel"
-                      required
-                      value={formData.phone}
-                      onChange={handleChange}
-                      className="w-full px-4 py-3 rounded-lg border-2 border-gray-200 focus:ring-2 focus:ring-green-500 focus:border-green-500 transition bg-white"
-                      placeholder="+91 XXXXXXXXXX"
-                    />
-                    <div className="otp-actions">
-                      <button type="button" className="otp-btn" disabled={otpSending} onClick={() => handleSendOtp('phone')}>
-                        {otpSending ? 'Sending...' : 'Send OTP'}
-                      </button>
                     </div>
-                    {phoneOtpSent && !phoneOtpVerified && (
-                      <div className="otp-step">
-                        <input
-                          type="text"
-                          inputMode="numeric"
-                          maxLength={6}
-                          pattern="[0-9]{6}"
-                          value={phoneOtpInput}
-                          onChange={(e) => setPhoneOtpInput(e.target.value)}
-                          className="otp-input"
-                          placeholder="Enter OTP"
-                        />
-                        <button type="button" className="otp-verify-btn" onClick={() => handleVerifyOtp('phone')}>
-                          Verify
-                        </button>
-                      </div>
-                    )}
-                    {phoneOtpVerified && <p className="otp-success">Phone verified</p>}
-                  </div>
-                </div>
-
-                <div className="grid sm:grid-cols-2 gap-6">
-                  <div>
-                    <label htmlFor="appointmentDate" className="block text-sm font-semibold text-gray-700 mb-3">
-                      Preferred Consultation Date
-                    </label>
-                    <input
-                      type="date"
-                      id="appointmentDate"
-                      name="appointmentDate"
-                      required
-                      min={new Date().toISOString().split('T')[0]}
-                      value={formData.appointmentDate}
-                      onChange={handleChange}
-                      className="w-full px-4 py-3 rounded-lg border-2 border-gray-200 focus:ring-2 focus:ring-green-500 focus:border-green-500 transition bg-white"
-                    />
-                  </div>
-
-                  <div>
-                    <label htmlFor="appointmentTime" className="block text-sm font-semibold text-gray-700 mb-3">
-                      Preferred Time Slot
-                    </label>
-                    <select
-                      id="appointmentTime"
-                      name="appointmentTime"
-                      required
-                      value={formData.appointmentTime}
-                      onChange={handleChange}
-                      className="w-full px-4 py-3 rounded-lg border-2 border-gray-200 focus:ring-2 focus:ring-green-500 focus:border-green-500 transition bg-white"
-                    >
-                      <option value="" disabled>
-                        Select a time
-                      </option>
-                      {availableTimes.map((time) => (
-                        <option key={time} value={time}>
-                          {time}
-                        </option>
+                    <div className="contact-order-summary">
+                      {inquiry.items.map((item) => (
+                        <div className="contact-order-item" key={item.name}>
+                          <span>{item.name} × {item.quantity}</span>
+                          <strong>{formatPrice(item.amount * item.quantity)}</strong>
+                        </div>
                       ))}
-                    </select>
-                  </div>
-                </div>
-
-                {otpNotice && <p className="otp-success">{otpNotice}</p>}
-                {otpError && <p className="otp-error">{otpError}</p>}
-
-                <div>
-                  <label htmlFor="consultationType" className="block text-sm font-semibold text-gray-700 mb-3">
-                    Consultation Type
-                  </label>
-                  <select
-                    id="consultationType"
-                    name="consultationType"
-                    value={formData.consultationType}
-                    onChange={(event) => { handleChange(event); if (event.target.value !== 'Online') setTeleconsultationConsent(false); }}
-                    className="w-full px-4 py-3 rounded-lg border-2 border-gray-200 focus:ring-2 focus:ring-green-500 focus:border-green-500 transition bg-white"
-                  >
-                    {consultationTypes.map((type) => (
-                      <option key={type} value={type}>
-                        {type}
-                      </option>
-                    ))}
-                  </select>
-                </div>
-
-                {formData.consultationType === 'Online' && <div className="consent-group"><label><input type="checkbox" checked={teleconsultationConsent} onChange={(event) => setTeleconsultationConsent(event.target.checked)} required /> <span>I consent to the <a href="/terms-of-service">online consultation terms</a>.</span></label></div>}
-
-                <div>
-                  <label htmlFor="message" className="block text-sm font-semibold text-gray-700 mb-3">
-                    Tell Us About Your Concern
-                  </label>
-                  <textarea
-                    id="message"
-                    name="message"
-                    autoComplete="off"
-                    required
-                    value={formData.message}
-                    onChange={handleChange}
-                    rows={5}
-                    className="w-full px-4 py-3 rounded-lg border-2 border-gray-200 focus:ring-2 focus:ring-green-500 focus:border-green-500 transition resize-none bg-white"
-                    placeholder="Share your symptoms, goals, or any Ayurveda questions..."
-                  ></textarea>
-                </div>
-
-                <div className="rounded-3xl border border-green-200 bg-green-50 p-5 text-sm text-green-900">
-                  <p className="font-semibold mb-2">Quick booking note</p>
-                  <p>
-                    Choose a preferred date and time, and our Ayurveda wellness coordinator will confirm the final slot shortly.
-                    We prioritise appointments based on your selected consultation type and availability.
-                  </p>
-                </div>
-
-                {status === 'success' && (
-                  <div className="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded-lg">
-                    <p>Thank you! Your consultation request is received.</p>
-                    {emailInfo && emailInfo.sent === false && (
-                      <p className="text-sm text-yellow-800 mt-2">Notification email was not sent: {emailInfo.error || 'unknown reason'}. Please contact us directly at lakshmi@sriayurvedawellness.com.</p>
-                    )}
-                    {emailInfo && emailInfo.sent === true && (
-                      <p className="text-sm text-green-800 mt-2">Notification email sent successfully.</p>
-                    )}
-                  </div>
+                      <div className="contact-order-total">
+                        <span>Estimated total</span>
+                        <strong>{formatPrice(inquiry.total)}</strong>
+                      </div>
+                    </div>
+                  </section>
                 )}
 
-                {status === 'error' && (
-                  <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded-lg">
-                    Something went wrong. Please try again or contact us directly.
+                <section className="contact-form-section" aria-labelledby="contact-details-heading">
+                  <div className="contact-section-heading">
+                    <span className="contact-section-number">{isShopInquiry ? '02' : '01'}</span>
+                    <div>
+                      <h4 id="contact-details-heading">Your details</h4>
+                      <p>Verify your email and mobile number to continue.</p>
+                    </div>
                   </div>
+
+                  <div className="contact-form-grid">
+                    <div className="contact-field contact-field-full">
+                      <label htmlFor="name">Full name</label>
+                      <input
+                        type="text"
+                        id="name"
+                        name="name"
+                        autoComplete="name"
+                        required
+                        value={formData.name}
+                        onChange={handleChange}
+                        placeholder="Enter your name"
+                      />
+                    </div>
+
+                    <div className="contact-field">
+                      <span className="contact-field-label">Email address</span>
+                      <div className={`contact-verification-card${emailVerified ? ' is-verified' : ''}`}>
+                        {emailVerified ? (
+                          <>
+                            <p className="contact-verified-value">{formData.email}</p>
+                            <div className="contact-verification-result">
+                              <p className="verification-success"><span aria-hidden="true">✓</span> Email verified</p>
+                              <button type="button" className="contact-change-link" onClick={() => handleChangeVerifiedContact('email')}>Use a different email</button>
+                            </div>
+                          </>
+                        ) : (
+                          <>
+                            <p className="contact-verification-hint">Verify your email with the secure email button.</p>
+                            <PhoneEmailWidget type="email" clientId={EMAIL_CLIENT_ID} onVerified={handleEmailVerified} onError={setVerificationError} />
+                          </>
+                        )}
+                      </div>
+                    </div>
+
+                    <div className="contact-field">
+                      <span className="contact-field-label">Mobile number</span>
+                      <div className={`contact-verification-card${phoneVerified ? ' is-verified' : ''}`}>
+                        {phoneVerified ? (
+                          <>
+                            <p className="contact-verified-value">{formData.phone}</p>
+                            <div className="contact-verification-result">
+                              <p className="verification-success"><span aria-hidden="true">✓</span> Mobile number verified</p>
+                              <button type="button" className="contact-change-link" onClick={() => handleChangeVerifiedContact('phone')}>Use a different number</button>
+                            </div>
+                          </>
+                        ) : (
+                          <>
+                            <p className="contact-verification-hint">Verify your mobile number with the secure phone button.</p>
+                            <PhoneEmailWidget type="phone" clientId={PHONE_CLIENT_ID} onVerified={handlePhoneVerified} onError={setVerificationError} />
+                          </>
+                        )}
+                      </div>
+                    </div>
+                  </div>
+                </section>
+
+                {isShopInquiry && (
+                  <section className="contact-form-section" aria-labelledby="delivery-address-heading">
+                    <div className="contact-section-heading">
+                      <span className="contact-section-number">03</span>
+                      <div>
+                        <h4 id="delivery-address-heading">Delivery address</h4>
+                        <p>Enter the address for delivery. You can optionally share a map pin to help the clinic deliver to the location.</p>
+                      </div>
+                    </div>
+
+                    <div className="contact-form-grid">
+                      <div className="contact-field contact-field-full">
+                        <label htmlFor="addressLine1">House / building, street and area</label>
+                        <textarea
+                          id="addressLine1"
+                          name="addressLine1"
+                          autoComplete="street-address"
+                          required
+                          rows={2}
+                          value={formData.addressLine1}
+                          onChange={handleChange}
+                          placeholder="Enter house number, building, street and area"
+                        />
+                      </div>
+                      <div className="contact-field contact-field-full">
+                        <label htmlFor="landmark">Nearby landmark <span className="contact-optional-label">(optional)</span></label>
+                        <input
+                          type="text"
+                          id="landmark"
+                          name="landmark"
+                          autoComplete="off"
+                          value={formData.landmark}
+                          onChange={handleChange}
+                          placeholder="For example, near a school or temple"
+                        />
+                      </div>
+                      <div className="contact-field">
+                        <label htmlFor="city">City / town</label>
+                        <input type="text" id="city" name="city" autoComplete="address-level2" required value={formData.city} onChange={handleChange} placeholder="City or town" />
+                      </div>
+                      <div className="contact-field">
+                        <label htmlFor="postalCode">PIN code</label>
+                        <input type="text" id="postalCode" name="postalCode" autoComplete="postal-code" inputMode="numeric" pattern="[1-9][0-9]{5}" title="Enter a valid 6-digit Indian PIN code" required value={formData.postalCode} onChange={handleChange} placeholder="6-digit PIN code" />
+                      </div>
+                      <div className="contact-field contact-field-full">
+                        <label htmlFor="state">State</label>
+                        <input type="text" id="state" name="state" autoComplete="address-level1" required value={formData.state} onChange={handleChange} placeholder="State" />
+                      </div>
+                    </div>
+
+                    <div className="delivery-location-control">
+                      {formData.deliveryLocation ? (
+                        <div className="delivery-location-status" role="status">
+                          <MapPin aria-hidden="true" />
+                          <span>Map pin added to your delivery request.</span>
+                          <button type="button" onClick={handleClearDeliveryLocation}>Remove pin</button>
+                        </div>
+                      ) : (
+                        <button type="button" className="delivery-location-button" onClick={handleGetDeliveryLocation} disabled={locationStatus === 'loading'}>
+                          <MapPin aria-hidden="true" />
+                          {locationStatus === 'loading' ? 'Getting your location…' : 'Use my current location'}
+                        </button>
+                      )}
+                      <p className="contact-booking-note">Your browser will ask permission before sharing your location. If you allow it, a Google Maps pin link will be included with the delivery address in the order record and WhatsApp draft for the clinic. Location sharing is optional.</p>
+                      {locationError && <p className="verification-error" role="alert">{locationError}</p>}
+                    </div>
+                  </section>
                 )}
+
+                {!isShopInquiry && <section className="contact-form-section" aria-labelledby="appointment-details-heading">
+                  <div className="contact-section-heading">
+                    <span className="contact-section-number">{isTreatmentInquiry ? '02' : '02'}</span>
+                    <div>
+                      <h4 id="appointment-details-heading">Appointment preferences</h4>
+                      <p>Choose a preferred date, time and consultation type.</p>
+                    </div>
+                  </div>
+
+                  <div className="contact-form-grid">
+                    <div className="contact-field">
+                      <label htmlFor="appointmentDate">Preferred date</label>
+                      <input
+                        type="date"
+                        id="appointmentDate"
+                        name="appointmentDate"
+                        required
+                        min={new Date().toISOString().split('T')[0]}
+                        value={formData.appointmentDate}
+                        onChange={handleChange}
+                      />
+                    </div>
+
+                    <div className="contact-field">
+                      <label htmlFor="appointmentTime">Preferred time</label>
+                      <select
+                        id="appointmentTime"
+                        name="appointmentTime"
+                        required
+                        value={formData.appointmentTime}
+                        onChange={handleChange}
+                      >
+                        <option value="" disabled>Select a time</option>
+                        {availableTimes.map((time) => (
+                          <option key={time} value={time}>{time}</option>
+                        ))}
+                      </select>
+                    </div>
+
+                    <div className="contact-field contact-field-full">
+                      <label htmlFor="consultationType">Consultation type</label>
+                      <select
+                        id="consultationType"
+                        name="consultationType"
+                        value={formData.consultationType}
+                        onChange={(event) => { handleChange(event); if (event.target.value !== 'Online') setTeleconsultationConsent(false); }}
+                      >
+                        {consultationTypes.map((type) => (
+                          <option key={type} value={type}>{type}</option>
+                        ))}
+                      </select>
+                    </div>
+                  </div>
+
+                  {formData.consultationType === 'Online' && <div className="consent-group"><label><input type="checkbox" checked={teleconsultationConsent} onChange={(event) => setTeleconsultationConsent(event.target.checked)} required /> <span>I consent to the <a href="/terms-of-service">online consultation terms</a>.</span></label></div>}
+                </section>}
+
+                {!isShopInquiry && <section className="contact-form-section" aria-labelledby="message-heading">
+                  <div className="contact-section-heading">
+                    <span className="contact-section-number">03</span>
+                    <div>
+                      <h4 id="message-heading">How can we help?</h4>
+                      <p>Tell us a little about what you’d like support with.</p>
+                    </div>
+                  </div>
+                  <div className="contact-field">
+                    <label htmlFor="message">Your message</label>
+                    <textarea
+                      id="message"
+                      name="message"
+                      autoComplete="off"
+                      required
+                      value={formData.message}
+                      onChange={handleChange}
+                      rows={4}
+                      placeholder="Share your concerns or any questions for our clinic..."
+                    />
+                  </div>
+                  <p className="contact-booking-note">Your preferred date and time are requests; our team will confirm the final appointment.</p>
+                </section>}
+
+                {verificationError && <p className="verification-error" role="alert">{verificationError}</p>}
 
                 <div className="appointment-consent consent-group">
                   <p className="appointment-consent-title">Before you book</p>
                   <label><input type="checkbox" checked={privacyConsent} onChange={(event) => setPrivacyConsent(event.target.checked)} required /> <span>I agree to the <a href="/privacy-policy">Privacy Policy</a>.</span></label>
-                  <label><input type="checkbox" checked={communicationConsent} onChange={(event) => setCommunicationConsent(event.target.checked)} required /> <span>I consent to receive communication from the clinic about my appointment and care.</span></label>
+                  <label><input type="checkbox" checked={communicationConsent} onChange={(event) => setCommunicationConsent(event.target.checked)} required /> <span>{isShopInquiry ? 'I consent to receive communication from the clinic about my order request.' : 'I consent to receive communication from the clinic about my appointment and care.'}</span></label>
+                  {isShopInquiry && <label><input type="checkbox" checked={shippingConsent} onChange={(event) => setShippingConsent(event.target.checked)} required /> <span>I agree to the <a href="/shipping-delivery-policy">Shipping & Return Policy</a>.</span></label>}
                 </div>
+
+                {status === 'error' && (
+                  <div className="form-feedback form-feedback-error" role="alert">
+                    Something went wrong. Please try again or contact us directly.
+                  </div>
+                )}
 
                 <button
                   type="submit"
-                  disabled={status === 'loading' || !formData.phone || !formData.email || !phoneOtpVerified || !emailOtpVerified || !privacyConsent || !communicationConsent}
-                  className="btn btn-primary btn-lg btn-block"
+                  disabled={status === 'loading' || !formData.phone || !formData.email || !phoneVerified || !emailVerified || !privacyConsent || !communicationConsent || (isShopInquiry && !shippingConsent)}
+                  className="contact-submit-button"
                 >
-                  <span>{status === 'loading' ? 'Booking...' : 'Book Consultation'}</span>
-                  <Send className="h-5 w-5" />
+                  <span>
+                    {status === 'loading'
+                      ? 'Preparing WhatsApp request...'
+                      : isShopInquiry
+                        ? 'Continue to WhatsApp order request'
+                        : 'Continue to WhatsApp booking request'}
+                  </span>
+                  <Send aria-hidden="true" />
                 </button>
               </form>
             </div>
