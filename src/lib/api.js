@@ -31,13 +31,18 @@ export const fetchApi = async (endpoint, options = {}) => {
       },
     });
     
+    const data = await response.json().catch(() => ({}));
+
     if (!response.ok) {
-      throw new Error(`API Error: ${response.status} ${response.statusText}`);
+      throw new Error(data.error || `API Error: ${response.status} ${response.statusText}`);
     }
-    
-    return await response.json();
+
+    return data;
   } catch (error) {
     console.error(`API call failed: ${url}`, error);
+    if (error instanceof TypeError && error.message === 'Failed to fetch') {
+      throw new Error('Unable to reach the server. Start the backend with "npm start" from the server folder.');
+    }
     throw error;
   }
 };

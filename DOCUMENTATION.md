@@ -3,7 +3,7 @@
 Before production launch, the deployment owner must verify:
 
 - HTTPS is enforced with a valid SSL certificate and secure hosting configuration.
-- CAPTCHA is enabled on appointment, newsletter, and purchase-related forms using the configured provider.
+- CAPTCHA is not currently wired to server-side verification. Configure and test a provider before accepting production submissions.
 - Admin and data-storage access is restricted to authorized staff with strong credentials and least privilege.
 - Contact workbooks and backups are encrypted, access-controlled, and backed up on a tested schedule.
 - Patient information is never shown publicly. Patient photographs or testimonials require written consent before publication; the public testimonial section is disabled until consent records exist.
@@ -15,24 +15,25 @@ The site collects appointment, newsletter, and order consent in the UI. Provider
 # Sri Ayurveda Clinic & Panchakarma Center - Complete Documentation
 
 **Status:** ⚠️ **CODE-READY; DEPLOYMENT AND LEGAL REVIEW REQUIRED**  
-**Last Updated:** May 24, 2026  
+**Last Updated:** October 10, 2026
 **Live Site:** https://www.sriayurvedawellness.com
 
 ---
 
 ## 📋 Table of Contents
 
-1. [Quick Start](#quick-start)
-2. [Project Overview](#project-overview)
-3. [Setup & Development](#setup--development)
-4. [Environment Configuration](#environment-configuration)
-5. [API Endpoints](#api-endpoints)
-6. [Deployment Guide](#deployment-guide)
-7. [Post-Deployment Testing](#post-deployment-testing)
-8. [Recent Improvements](#recent-improvements)
+1. [Compliance Package](#compliance-package)
+2. [Quick Start](#quick-start)
+3. [Project Overview](#project-overview)
+4. [Setup & Development](#setup--development)
+5. [Environment Configuration](#environment-configuration)
+6. [API Endpoints](#api-endpoints)
+7. [Deployment Guide](#deployment-guide)
+8. [Post-Deployment Testing](#post-deployment-testing)
 9. [Verification Checklist](#verification-checklist)
 10. [Troubleshooting](#troubleshooting)
-11. [Compliance Package](#compliance-package)
+11. [Contact Information](#contact-information)
+12. [Summary](#summary)
 
 ---
 
@@ -89,9 +90,9 @@ npm start
 - **Modern Stack** - React 18 + Vite + Tailwind CSS
 - **Fast Performance** - Optimized bundle size, code splitting
 - **SEO Optimized** - Open Graph, JSON-LD structured data, meta tags
-- **Contact Forms** - Automated Excel data storage on backend
+- **Contact Forms** - Verified email/phone submissions saved to monthly Excel files
 - **Interactive Components** - Gallery lightbox, Dosha Quiz, carousel
-- **Production Ready** - Environment-based configuration, error handling
+- **Deployment-gated** - Production environment templates and error handling; verify deployment requirements before launch
 
 ### 📦 Project Structure
 
@@ -109,8 +110,6 @@ npm start
 │   │   └── [other components]
 │   ├── lib/               # Utilities
 │   │   ├── api.js         # API configuration
-│   │   ├── supabase.js    # Database integration
-│   │   ├── analytics.js   # Tracking
 │   │   ├── seo.js         # SEO helpers
 │   │   └── whatsapp.js    # WhatsApp integration
 │   ├── images/            # Clinic photos, logo, favicon
@@ -150,27 +149,18 @@ cd "c:\Users\dilee\OneDrive\Desktop\Sri Ayurveda\code"
 npm install
 ```
 
-3. **Install server dependencies:**
+3. **Install server dependencies** (for running the backend from `server/`):
 ```bash
 cd server && npm install && cd ..
 ```
 
-4. **Create `.env.local` file:**
+4. **Configure local phone.email widget IDs** in the root `.env` file (copy from `.env.example`):
 ```env
-PORT=5000
-NODE_ENV=development
-VITE_API_URL=http://localhost:5000/api
+PHONE_EMAIL_PHONE_CLIENT_ID=your_phone_widget_client_id
+PHONE_EMAIL_EMAIL_CLIENT_ID=your_email_widget_client_id
 ```
 
-> Optional: Email notifications (recommended for contact form alerts)
-```env
-SMTP_HOST=smtp.gmail.com
-SMTP_PORT=587
-SMTP_USER=your-email@example.com
-SMTP_PASS=your-email-app-password
-NOTIFY_EMAIL=lakshmi@sriayurvedawellness.com
-SMTP_FROM="Sri Ayurveda" <your-email@example.com>
-```
+No private phone.email server key is required. Phone.email client IDs are public widget identifiers. Email notifications from the backend are currently disabled.
 
 5. **Start development servers (open 2 terminals):**
 
@@ -206,65 +196,22 @@ npm run preview # Preview production build locally
 
 Environment variables allow different configurations for development and production without changing code.
 
-### Local Development (.env.local)
+### Frontend build configuration
 
 ```env
-# Server Configuration
-PORT=5000
-NODE_ENV=development
-
-# API Configuration
-VITE_API_URL=http://localhost:5000/api
-
-# Optional: Email Configuration
-SMTP_HOST=smtp.titlesecure.com # or GoDaddy SMTP host
-SMTP_PORT=587
-SMTP_USER=lakshmi@sriayurvedawellness.com
-SMTP_PASS=your-email-password
+PHONE_EMAIL_PHONE_CLIENT_ID=your_phone_widget_client_id
+PHONE_EMAIL_EMAIL_CLIENT_ID=your_email_widget_client_id
 ```
 
-### Production (.env.example template)
+The phone.email client IDs are public and embedded in the frontend bundle by the Vite configuration. Never put private credentials in frontend variables. For a single-origin deployment, the frontend uses the same-origin `/api` path and `VITE_API_URL` can remain unset. Set it only if the API is hosted on a separate origin.
 
+### Backend runtime configuration
 ```env
-# Server Configuration
-PORT=5000
 NODE_ENV=production
-
-# API Configuration (Update with your domain)
-VITE_API_URL=https://www.sriayurvedawellness.com/api
-
-# Optional: Analytics, Database, etc.
+PORT=5000
 ```
 
-### Setting Up Email Configuration
-
-If you want contact form to send emails:
-
-#### Using GoDaddy / Professional Domain Email (Microsoft 365 or cPanel)
-If using GoDaddy Professional Email (Microsoft 365 or cPanel Webmail):
-```env
-# For GoDaddy Microsoft 365 Email:
-SMTP_HOST=smtp.office365.com
-SMTP_PORT=587
-SMTP_USER=lakshmi@sriayurvedawellness.com
-SMTP_PASS=your-godaddy-email-password
-SMTP_FROM="Sri Ayurveda" <lakshmi@sriayurvedawellness.com>
-
-# For GoDaddy cPanel Webmail:
-SMTP_HOST=smtpout.secureserver.net  # or mail.sriayurvedawellness.com
-SMTP_PORT=465 (secure) or 587
-SMTP_USER=lakshmi@sriayurvedawellness.com
-SMTP_PASS=your-godaddy-email-password
-SMTP_FROM="Sri Ayurveda" <lakshmi@sriayurvedawellness.com>
-```
-
-#### Using Outlook/Office365
-```env
-SMTP_HOST=smtp.office365.com
-SMTP_PORT=587
-SMTP_USER=your-email@outlook.com
-SMTP_PASS=your-password
-```
+Set backend values through the hosting platform's environment settings in production. Contact submissions are saved to Excel; automated email notifications are disabled.
 
 ### Important Security Notes
 
@@ -273,8 +220,8 @@ SMTP_PASS=your-password
 - Verify with: `git status` (should NOT show `.env`)
 
 ✅ **Best Practice:**
-- Create `.env.local` locally (each developer)
-- Commit `.env.example` with placeholders
+- Create local `.env` files from the provided examples (each developer)
+- Commit only `.env.example` and `.env.production.example` placeholders
 - Set production variables in hosting dashboard
 
 ---
@@ -288,8 +235,11 @@ Submit contact form and save to Excel
 ```json
 {
   "name": "John Doe",
-  "email": "john@example.com",
-  "phone": "9876543210",
+  "email": "verified@example.com",
+  "phone": "+919876543210",
+  "appointmentDate": "2026-10-11",
+  "appointmentTime": "11:00 AM",
+  "consultationType": "Online",
   "message": "Inquiry about treatments"
 }
 ```
@@ -298,13 +248,16 @@ Submit contact form and save to Excel
 ```json
 {
   "success": true,
-  "message": "Contact submission saved successfully",
-  "filename": "2026-02.xlsx"
+  "success": true,
+  "message": "Contact submission saved successfully. Email notifications are disabled for now.",
+  "filename": "YYYY-MM.xlsx"
 }
 ```
 
 **Storage:**
 Data automatically saved to `/data/YYYY-MM.xlsx` (monthly files)
+
+Both email and phone must first be verified through the phone.email widgets. The browser then opens a prefilled WhatsApp request to the clinic; the user must press Send. A successful form submission confirms receipt of the request, not availability of the appointment slot.
 
 ### GET `/api/health`
 Check if server is running
@@ -508,84 +461,6 @@ curl https://your-domain.com/api/health
 
 ---
 
-## 🎯 Recent Improvements (May 24, 2026)
-
-### ✅ May 24, 2026 — Responsive layout & build verification
-
-- Updated global container and page-level CSS to improve responsive behavior and make content fit the screen across breakpoints. Adjusted `.container`, page paddings, and component margins to ensure mobile/tablet/desktop layouts render correctly.
-- Fixed several CSS parsing errors and removed stray rules that previously caused PostCSS build failures.
-- Enhanced form, hero, testimonial, gallery and carousel component styles for small screens (reduced padding, adjusted radii and margins).
-- Rebuilt production bundle and verified a successful `npm run build` with no errors (dist assets generated and validated).
-
-
-### ✅ Fixed Critical Issues
-
-#### 1. API Configuration (Critical Fix)
-**Problem:** Contact form used hardcoded `http://localhost:5000` - broken in production
-
-**Solution:**
-- Created `src/lib/api.js` - Centralized API configuration
-- Updated `src/pages/Contact.jsx` - Uses new API utility
-- Now uses environment variable `VITE_API_URL`
-
-**Benefits:**
-- Works in development AND production
-- Single source of truth for API configuration
-- Consistent error handling
-- Easy to switch URLs without code changes
-
-#### 2. Fixed Missing Favicon
-**Problem:** `index.html` had empty favicon href
-
-**Solution:** Updated to `/src/images/favicon.JPG`
-
-**Result:**
-- Sri Ayurveda logo now appears in browser tabs
-- Professional appearance
-- No console warnings
-
-#### 3. Enhanced SEO & Social Sharing
-**Added to index.html:**
-- ✅ Open Graph tags (Facebook, LinkedIn, WhatsApp)
-- ✅ Twitter Card tags (X/Twitter sharing)
-- ✅ Canonical URL (duplicate content prevention)
-- ✅ Mobile optimization tags
-
-**Result:**
-Beautiful previews when shared on social media
-
-#### 4. Added Structured Data (JSON-LD)
-**Added to src/main.jsx:**
-- Business type: LocalBusiness
-- Full address and postal code
-- Phone number
-- Social media links
-
-**Result:**
-- Better Google Search visibility
-- Rich snippets showing hours/location
-- Better voice search performance
-
-#### 5. Build Performance Optimizations
-**Enhanced vite.config.js:**
-- ✅ Dev server proxy for seamless development
-- ✅ Code splitting (React vendors, icons separate)
-- ✅ Production minification (Terser)
-- ✅ Disabled sourcemaps for smaller files
-
-**Result:**
-- Faster development
-- Smaller bundle sizes
-- Faster page loads
-
-#### 6. Improved Environment Configuration
-**Updated:**
-- `.env.local` - Clear development setup
-- `.env.example` - Production template
-- Complete documentation
-
----
-
 ## 📝 Verification Checklist
 
 ### Pre-Deployment
@@ -768,14 +643,14 @@ npm run dev
 | Item | Status |
 |------|--------|
 | **Frontend Build** | ✅ Optimized |
-| **Backend Server** | ✅ Production Ready |
-| **Environment Config** | ✅ Complete |
+| **Backend Server** | ⚠️ Requires deployment validation |
+| **Environment Config** | ✅ Templates available; provider values required |
 | **SEO & Meta Tags** | ✅ Implemented |
 | **API Configuration** | ✅ Environment-based |
-| **Security** | ✅ Secured |
-| **Deployment Ready** | ✅ YES |
+| **Security** | ⚠️ Production controls require configuration and review |
+| **Deployment Ready** | ⚠️ Verify deployment checklist before launch |
 
 ---
 
-**Status:** ✅ **PRODUCTION READY FOR DEPLOYMENT**  
-**Last Updated:** May 24, 2026
+**Status:** Requires deployment, provider, storage, privacy, security, and legal checks before production use.
+**Last Updated:** October 10, 2026

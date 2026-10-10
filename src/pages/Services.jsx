@@ -1,9 +1,11 @@
 import { useEffect, useState } from 'react';
 import { Sparkles, Droplets, Wind, Leaf, Heart, Brain, X } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 import panchakarmaImg from '../images/IMG_1860.jpg';
 import './Services.css';
 
 const Services = () => {
+  const navigate = useNavigate();
   const [activeService, setActiveService] = useState(null);
 
   const services = [
@@ -57,6 +59,10 @@ const Services = () => {
       details: 'Explore traditional therapies such as Abhyanga and Shirodhara, selected after a consultation to support relaxation and recovery.',
     }
   ];
+
+  const startServiceBooking = (service) => {
+    navigate('/contact', { state: { inquiry: { type: 'treatment', treatment: service.name } } });
+  };
 
   useEffect(() => {
     if (!activeService) return undefined;
@@ -167,9 +173,9 @@ const Services = () => {
 
               <p className="service-modal-details">{activeService.details}</p>
 
-              <a href="/contact#contact" className="btn btn-primary mt-6">
-                Book This Service
-              </a>
+              <button type="button" onClick={() => startServiceBooking(activeService)} className="btn btn-primary mt-6">
+                Book Now
+              </button>
             </div>
           </div>
         </div>
@@ -179,4 +185,3 @@ const Services = () => {
 };
 
 export default Services;
-

@@ -99,7 +99,7 @@ const Home = () => {
             Personalized Ayurvedic care for balanced living, guided by Dr. Shreelakshmi M.V., BAMS.
           </p>
           <div className="flex gap-6 mb-8 flex-wrap">
-            <a href="#section-contact" className="btn-primary">
+            <a href="/contact" className="btn-primary">
               Book Consultation
             </a>
             <a href="/treatments" className="btn-ghost">

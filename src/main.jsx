@@ -3,8 +3,6 @@ import { createRoot } from 'react-dom/client'
 import App from './App'
 import './index.css'
 import favicon from './images/favicon.JPG'
-import sreeLakshmiImg from './images/SreeLakshmi.jpg'
-import ayurvedicImg from './images/ayurvedic.jpg'
 
 // Set favicon dynamically
 const faviconLink = document.querySelector("link[rel='icon']")

@@ -6,12 +6,11 @@ Authentic Ayurvedic wellness center website with modern, responsive design and c
 
 ## 📚 Complete Documentation
 
-👉 **[DOCUMENTATION.md](DOCUMENTATION.md)** - Complete guide with all information consolidated in one file:
+👉 **[DOCUMENTATION.md](DOCUMENTATION.md)** - Setup, environment configuration, deployment, and troubleshooting:
 - Quick Start & Setup
 - Environment Configuration  
 - Deployment Guide (Railway, Render, Heroku)
 - Post-Deployment Testing
-- Recent Improvements & Fixes
 - Verification Checklist
 - Troubleshooting Guide
 
@@ -23,7 +22,7 @@ Authentic Ayurvedic wellness center website with modern, responsive design and c
 - **SEO Optimized** - Open Graph, JSON-LD structured data, meta tags
 - **Contact Forms** - Automated Excel data storage on backend
 - **Interactive Components** - Gallery lightbox, Dosha Quiz, carousel
-- **Production Ready** - Environment-based configuration, error handling
+- **Deployment-focused** - Environment-based configuration and error handling; production setup still requires verification
 
 ## 🚀 Getting Started
 
@@ -55,7 +54,7 @@ npm start
 ```
 ├── src/                    # React frontend
 │   ├── pages/             # Page components
-│   ├── lib/               # Utilities (api.js, supabase.js)
+│   ├── lib/               # API, analytics, SEO, cart, and WhatsApp utilities
 │   ├── images/            # Clinic photos, logo, favicon
 │   ├── App.jsx            # Main app with routing
 │   └── index.css           # Global styles (Tailwind)
@@ -71,37 +70,16 @@ npm start
 
 ```
 
-## 🔄 Recent Improvements (Feb 17, 2026)
-
-### ✅ Fixed Critical Issues
-1. **API Configuration** - Removed hardcoded localhost, now uses environment variables
-2. **Favicon** - Fixed empty href in index.html
-3. **SEO Enhancement** - Added Open Graph, Twitter cards, JSON-LD structured data
-4. **Build Optimization** - Added code splitting and minification
-5. **Dev Experience** - Added Vite proxy for seamless development
-
-👉 **See [IMPROVEMENTS.md](IMPROVEMENTS.md) for complete details**
-
 ## 🌍 Environment Variables
 
-Create `.env.local` for development:
+Copy `.env.example` to `.env` and provide the public phone.email widget client IDs:
 
 ```env
-# API Configuration
-VITE_API_URL=http://localhost:5000/api
-
-# Environment
-NODE_ENV=development
-PORT=5000
-
-# Optional: Contact info, analytics, etc.
+PHONE_EMAIL_PHONE_CLIENT_ID=
+PHONE_EMAIL_EMAIL_CLIENT_ID=
 ```
 
-For production, update to your domain:
-```env
-VITE_API_URL=https://www.sriayurvedawellness.com/api
-NODE_ENV=production
-```
+For production, use `.env.production.example` as a template and set private backend configuration in the hosting platform. Phone.email client IDs are public, not secrets. For a single-origin deployment, leave `VITE_API_URL` unset.
 
 ## 📝 API Endpoints
 
@@ -112,8 +90,11 @@ Submit contact form and save to Excel
 ```json
 {
   "name": "John Doe",
-  "email": "john@example.com",
-  "phone": "9876543210",
+  "email": "verified@example.com",
+  "phone": "+919876543210",
+  "appointmentDate": "2026-10-11",
+  "appointmentTime": "11:00 AM",
+  "consultationType": "Online",
   "message": "Inquiry about treatments"
 }
 ```
@@ -122,8 +103,8 @@ Submit contact form and save to Excel
 ```json
 {
   "success": true,
-  "message": "Contact submission saved successfully",
-  "filename": "2026-02.xlsx"
+  "message": "Contact submission saved successfully. Email notifications are disabled for now.",
+  "filename": "YYYY-MM.xlsx"
 }
 ```
 
@@ -165,5 +146,4 @@ Private - Sri Ayurveda Clinic
 
 ---
 
-**Last Updated:** February 17, 2026  
-**Status:** ✅ Production Ready
+**Status:** Requires deployment, provider, storage, privacy, and legal checks before production use.

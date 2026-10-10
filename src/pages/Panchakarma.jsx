@@ -1,4 +1,5 @@
 import { Droplets, Wind, Activity, FlaskConical, Shield } from 'lucide-react';
+import { Link } from 'react-router-dom';
 import Seo from '../components/Seo';
 import { SEO_CONFIG } from '../lib/seo';
 import './Panchakarma.css';
@@ -10,30 +11,40 @@ export default function Panchakarma() {
       subtitle: 'Therapeutic Emesis',
       icon: Wind,
       description: 'A medically supervised procedure in which therapeutic emesis is induced after appropriate preparation. It is traditionally considered for selected Kapha-dominant presentations, including recurrent congestion and certain respiratory, allergic, or skin concerns.',
+      consideredFor: ['Selected respiratory concerns', 'Allergic conditions', 'Some Kapha-dominant skin concerns', 'Recurrent congestion and excess mucus'],
+      safetyNote: 'Requires appropriate Purvakarma and qualified Ayurvedic physician supervision.',
     },
     {
       name: 'Virechana',
       subtitle: 'Therapeutic Purgation',
       icon: Droplets,
       description: 'A controlled therapeutic purgation using individually selected Ayurvedic medicines. It is traditionally associated with selected Pitta-related, digestive, skin, liver, and metabolic concerns after a practitioner assessment.',
+      consideredFor: ['Selected skin concerns', 'Certain digestive concerns', 'Pitta-related presentations', 'Some liver or metabolic conditions'],
+      safetyNote: 'Medicine and dosage are individualized according to the person’s condition.',
     },
     {
       name: 'Basti',
       subtitle: 'Medicated Enema Therapy',
       icon: Activity,
       description: 'A therapy using specially prepared Ayurvedic medicines through the rectal route. Classical Ayurveda considers Basti important in Vata management; protocols are selected for individual needs such as joint discomfort, stiffness, mobility concerns, and selected chronic conditions.',
+      consideredFor: ['Joint and musculoskeletal concerns', 'Low back discomfort', 'Selected neurological or Vata-related conditions', 'Stiffness and restricted mobility', 'Selected chronic conditions'],
+      safetyNote: 'Forms such as Niruha/Asthapana and Anuvasana are selected according to clinical needs.',
     },
     {
       name: 'Nasya',
       subtitle: 'Nasal Medication',
       icon: FlaskConical,
       description: 'Appropriately selected oils or herbal preparations are administered through the nasal passages after assessment and preparation. It is traditionally considered for selected head, neck, nasal, sinus, and ENT-related concerns.',
+      consideredFor: ['Certain nasal concerns', 'Headache', 'Sinus-related complaints', 'Neck or head-region stiffness', 'Selected ENT concerns'],
+      safetyNote: 'Performed after appropriate assessment and preparation.',
     },
     {
       name: 'Raktamokshana',
       subtitle: 'Bloodletting Therapy',
       icon: Shield,
       description: 'A classical Shodhana procedure traditionally considered for selected conditions associated with vitiated Rakta and Pitta. Methods such as Jalaukavacharana are chosen only after careful selection and performed with appropriate safety and hygiene protocols.',
+      consideredFor: ['Selected localized inflammatory concerns', 'Certain skin concerns', 'Selected conditions associated with Rakta'],
+      safetyNote: 'Requires careful patient selection and a trained practitioner following appropriate safety and hygiene protocols.',
     },
   ];
 
@@ -60,7 +71,7 @@ export default function Panchakarma() {
 
         <div className="panchakarma-intro max-w-4xl mx-auto mb-12">
           <p className="text-lg text-gray-700 leading-relaxed mb-5">
-            Panchakarma is a group of classical Ayurvedic Shodhana procedures traditionally used for therapeutic cleansing. The appropriate procedure is selected only after assessing an individual&apos;s Prakriti, Vikriti, Agni, strength, age, season, and health condition.
+            Panchakarma is a group of classical Ayurvedic procedures traditionally used for Shodhana (therapeutic cleansing). The appropriate procedure is selected only after assessing an individual&apos;s Prakriti, Vikriti, Agni, strength, age, season, and health condition.
           </p>
           <p className="text-lg text-gray-700 leading-relaxed">
             At Sri Ayurveda Clinic, Panchakarma is individualized after professional assessment rather than delivered through a one-size-fits-all protocol. All procedures require suitable preparation, clinical judgment, and qualified supervision.
@@ -78,6 +89,18 @@ export default function Panchakarma() {
                 <p className="text-sm font-semibold uppercase tracking-wide text-amber-700 mb-2">{therapy.subtitle}</p>
                 <h2 className="text-2xl font-bold text-green-900 mb-3">{therapy.name}</h2>
                 <p className="text-gray-700 leading-relaxed">{therapy.description}</p>
+                <h3 className="panchakarma-considered-title">Traditionally considered for</h3>
+                <ul className="panchakarma-considered-list">
+                  {therapy.consideredFor.map((item) => <li key={item}>{item}</li>)}
+                </ul>
+                <p className="panchakarma-safety-note">{therapy.safetyNote}</p>
+                <Link
+                  to="/contact"
+                  state={{ inquiry: { type: 'treatment', treatment: `${therapy.name} – ${therapy.subtitle}` } }}
+                  className="panchakarma-book-link"
+                >
+                  Book Now
+                </Link>
               </article>
             );
           })}
@@ -86,11 +109,24 @@ export default function Panchakarma() {
         <div className="panchakarma-care-grid grid md:grid-cols-2 gap-8 max-w-5xl mx-auto mt-12">
           <article className="panchakarma-care-card panchakarma-care-card--preparation">
             <h2 className="text-2xl font-bold text-green-900 mb-4">Purvakarma: Preparation</h2>
-            <p className="text-gray-700 leading-relaxed">Before a selected Shodhana procedure, preparation may include Snehapana (medicated ghee or oil), Abhyanga (therapeutic oil massage), and Swedana (therapeutic sudation or steam). These measures are prescribed according to individual suitability.</p>
+            <p className="text-gray-700 leading-relaxed">Before a selected Shodhana procedure, preparatory measures may be recommended according to individual suitability:</p>
+            <ul className="panchakarma-considered-list">
+              <li><strong>Snehapana:</strong> internal administration of medicated ghee or oil</li>
+              <li><strong>Abhyanga:</strong> therapeutic oil massage</li>
+              <li><strong>Swedana:</strong> therapeutic sudation or steam</li>
+            </ul>
+            <p className="text-gray-700 leading-relaxed">Preparation is selected and supervised by the practitioner before the planned procedure.</p>
+            <Link to="/contact" state={{ inquiry: { type: 'treatment', treatment: 'Purvakarma preparation' } }} className="panchakarma-book-link">
+              Book Now
+            </Link>
           </article>
           <article className="panchakarma-care-card panchakarma-care-card--aftercare">
             <h2 className="text-2xl font-bold text-green-900 mb-4">Paschatkarma: Aftercare</h2>
-            <p className="text-gray-700 leading-relaxed">Aftercare includes individualized dietary and lifestyle guidance. A gradual return to the regular diet, known as Samsarjana Krama when indicated, may be advised depending on the procedure and the patient&apos;s needs.</p>
+            <p className="text-gray-700 leading-relaxed">Aftercare includes individualized dietary and lifestyle guidance. A gradual return to the regular diet, known as Samsarjana Krama when indicated, may be advised depending on the procedure and the person&apos;s condition.</p>
+            <p className="text-gray-700 leading-relaxed">At Sri Ayurveda Clinic, care is individualized according to health condition and Ayurvedic assessment rather than a one-size-fits-all protocol.</p>
+            <Link to="/contact" state={{ inquiry: { type: 'treatment', treatment: 'Paschatkarma aftercare consultation' } }} className="panchakarma-book-link">
+              Book Now
+            </Link>
           </article>
         </div>
 

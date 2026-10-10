@@ -4,7 +4,6 @@ import cors from 'cors';
 import path from 'path';
 import fs from 'fs';
 import ExcelJS from 'exceljs';
-import nodemailer from 'nodemailer';
 import { fileURLToPath } from 'url';
 
 const __filename = fileURLToPath(import.meta.url);
@@ -12,8 +11,10 @@ const __dirname = path.dirname(__filename);
 
 const app = express();
 const DEFAULT_PORT = Number(process.env.PORT) || 5000;
-const otpStore = new Map();
 const verifiedContactStore = new Map();
+// Verified user_json_url values are hosted on phone.email's own domain.
+// Restricting fetches to this host prevents the backend being used as an SSRF proxy.
+const PHONE_EMAIL_HOST_SUFFIX = '.phone.email';
 
 // Middleware
 app.use(cors());
@@ -26,11 +27,7 @@ if (!fs.existsSync(dataDir)) {
   fs.mkdirSync(dataDir, { recursive: true });
 }
 
-function generateOtp() {
-  return Math.floor(100000 + Math.random() * 900000).toString();
-}
-
-function getOtpKey(type, contact) {
+function getContactKey(type, contact) {
   return `${type}:${normalizeContact(type, contact)}`;
 }
 
@@ -42,44 +39,19 @@ function normalizeContact(type, contact) {
   return contact.trim().toLowerCase();
 }
 
-function storeOtp(type, contact, otp) {
-  const expiresAt = Date.now() + 5 * 60 * 1000;
-  otpStore.set(getOtpKey(type, contact), { otp, expiresAt });
-}
-
-function getStoredOtp(type, contact) {
-  const key = getOtpKey(type, contact);
-  const otpEntry = otpStore.get(key);
-
-  if (!otpEntry) {
-    return null;
-  }
-
-  if (otpEntry.expiresAt < Date.now()) {
-    otpStore.delete(key);
-    return null;
-  }
-
-  return otpEntry;
-}
-
-function deleteStoredOtp(type, contact) {
-  otpStore.delete(getOtpKey(type, contact));
-}
-
 function storeVerifiedContact(type, contact) {
-  verifiedContactStore.set(getOtpKey(type, contact), Date.now() + 5 * 60 * 1000);
+  verifiedContactStore.set(getContactKey(type, contact), Date.now() + 5 * 60 * 1000);
 }
 
 function isVerifiedContact(type, contact) {
-  const expiresAt = verifiedContactStore.get(getOtpKey(type, contact));
+  const expiresAt = verifiedContactStore.get(getContactKey(type, contact));
 
   if (!expiresAt) {
     return false;
   }
 
   if (expiresAt < Date.now()) {
-    verifiedContactStore.delete(getOtpKey(type, contact));
+    verifiedContactStore.delete(getContactKey(type, contact));
     return false;
   }
 
@@ -87,7 +59,7 @@ function isVerifiedContact(type, contact) {
 }
 
 function deleteVerifiedContact(type, contact) {
-  verifiedContactStore.delete(getOtpKey(type, contact));
+  verifiedContactStore.delete(getContactKey(type, contact));
 }
 
 function normalizePhone(phone) {
@@ -95,49 +67,18 @@ function normalizePhone(phone) {
   return digits ? `+${digits}` : phone;
 }
 
-async function sendEmailOtp(email, otp) {
-  const host = process.env.SMTP_HOST;
-  const port = Number(process.env.SMTP_PORT || 587);
-  const user = process.env.SMTP_USER;
-  const pass = process.env.SMTP_PASS;
-  const from = process.env.SMTP_FROM || process.env.EMAIL_FROM || user;
-
-  if (!host || !user || !pass) {
-    throw new Error('Email delivery is not configured on this server.');
+// phone.email returns a one-time user_json_url after it verifies the OTP itself.
+// We only trust URLs hosted on their domain before fetching them server-side.
+function isAllowedPhoneEmailUrl(urlString) {
+  try {
+    const parsed = new URL(urlString);
+    return (
+      parsed.protocol === 'https:' &&
+      (parsed.hostname === 'phone.email' || parsed.hostname.endsWith(PHONE_EMAIL_HOST_SUFFIX))
+    );
+  } catch {
+    return false;
   }
-
-  const transporter = nodemailer.createTransport({
-    host,
-    port,
-    secure: port === 465,
-    auth: { user, pass },
-  });
-
-  await transporter.sendMail({
-    from,
-    to: email,
-    subject: 'Sri Ayurveda verification code',
-    text: `Your Sri Ayurveda verification code is ${otp}. It expires in 5 minutes.`,
-    html: `<p>Your Sri Ayurveda verification code is <strong>${otp}</strong>.</p><p>It expires in 5 minutes.</p>`,
-  });
-}
-
-async function sendSmsOtp(phone, otp) {
-  const accountSid = process.env.TWILIO_ACCOUNT_SID;
-  const authToken = process.env.TWILIO_AUTH_TOKEN;
-  const fromNumber = process.env.TWILIO_PHONE_NUMBER;
-
-  if (!accountSid || !authToken || !fromNumber) {
-    throw new Error('SMS delivery is not configured on this server.');
-  }
-
-  const { default: twilio } = await import('twilio');
-  const client = twilio(accountSid, authToken);
-  await client.messages.create({
-    body: `Your Sri Ayurveda verification code is ${otp}. It expires in 5 minutes.`,
-    from: fromNumber,
-    to: normalizePhone(phone),
-  });
 }
 
 // Get current month filename (YYYY-MM.xlsx)
@@ -183,88 +124,78 @@ async function getOrCreateWorkbook() {
   return { workbook, filepath };
 }
 
-app.post('/api/send-otp', async (req, res) => {
-  let otp;
-
+// Verifies an email/phone using a phone.email "user_json_url" produced by their
+// Sign-in-with-Phone / Verify-Email widgets after they have already confirmed the OTP.
+app.post('/api/verify-contact', async (req, res) => {
   try {
-    const { type, contact } = req.body;
+    const { type, user_json_url: userJsonUrl } = req.body;
 
-    if (!type || !contact) {
-      return res.status(400).json({ error: 'OTP type and contact are required.' });
+    if (type !== 'email' && type !== 'phone') {
+      return res.status(400).json({ error: 'Verification type must be email or phone.' });
     }
 
-    if (type === 'email') {
-      const emailRegex = /\S+@\S+\.\S+/;
-      if (!emailRegex.test(contact)) {
-        return res.status(400).json({ error: 'Please provide a valid email address.' });
-      }
-    } else if (type === 'phone') {
-      const phoneRegex = /^\+?[0-9\s-]{10,15}$/;
-      if (!phoneRegex.test(contact)) {
-        return res.status(400).json({ error: 'Please provide a valid phone number.' });
-      }
-    } else {
-      return res.status(400).json({ error: 'OTP type must be email or phone.' });
+    if (!userJsonUrl || !isAllowedPhoneEmailUrl(userJsonUrl)) {
+      return res.status(400).json({ error: 'Invalid verification link.' });
     }
 
-    otp = generateOtp();
-    storeOtp(type, contact, otp);
-
-    if (type === 'email') {
-      await sendEmailOtp(contact, otp);
-    } else {
-      await sendSmsOtp(contact, otp);
+    const phoneEmailResponse = await fetch(userJsonUrl);
+    if (!phoneEmailResponse.ok) {
+      throw new Error(`phone.email responded with status ${phoneEmailResponse.status}`);
     }
 
-    res.json({ success: true, message: `OTP sent to your ${type === 'email' ? 'email' : 'phone'}.` });
-  } catch (error) {
-    console.error('Error sending OTP:', error);
+    const data = await phoneEmailResponse.json();
+    const contact =
+      type === 'email'
+        ? data.user_email_id
+        : normalizePhone(`${data.user_country_code || ''}${data.user_phone_number || ''}`);
 
-    if (process.env.NODE_ENV !== 'production') {
-      return res.status(200).json({ success: true, message: 'OTP generated locally for development testing.', otp });
+    if (!contact) {
+      return res.status(502).json({ error: 'Verification data did not include the expected contact info.' });
     }
 
-    res.status(500).json({ error: error.message || 'Unable to send OTP right now.' });
-  }
-});
-
-app.post('/api/verify-otp', async (req, res) => {
-  try {
-    const { type, contact, otp } = req.body;
-
-    if (!type || !contact || !otp) {
-      return res.status(400).json({ error: 'OTP type, contact, and code are required.' });
-    }
-
-    const storedOtp = getStoredOtp(type, contact);
-    if (!storedOtp) {
-      return res.status(400).json({ error: 'No active OTP found for this contact.' });
-    }
-
-    if (storedOtp.otp !== otp) {
-      return res.status(400).json({ error: 'The OTP you entered is incorrect.' });
-    }
-
-    deleteStoredOtp(type, contact);
     storeVerifiedContact(type, contact);
-    res.json({ success: true, message: 'OTP verified successfully.' });
+    res.json({ success: true, type, contact });
   } catch (error) {
-    console.error('Error verifying OTP:', error);
-    res.status(500).json({ error: 'Unable to verify OTP.' });
+    console.error('Error verifying contact via phone.email:', error);
+    res.status(502).json({ error: 'Unable to verify contact right now.' });
   }
 });
 
 // Handle contact form submission
 app.post('/api/contact-submit', async (req, res) => {
   try {
-    const { name, email, phone, appointmentDate, appointmentTime, consultationType, message } = req.body;
+    const {
+      name, email, phone, appointmentDate, appointmentTime, consultationType,
+      message, requestType, orderDetails, deliveryAddress, deliveryLocation,
+    } = req.body;
+    const isShopOrder = requestType === 'shop';
     
-    if (!name || !email || !phone || !appointmentDate || !appointmentTime || !message) {
+    if (!name || !email || !phone || !message || (!isShopOrder && (!appointmentDate || !appointmentTime))) {
       return res.status(400).json({ error: 'Missing required fields' });
     }
 
+    if (isShopOrder && (
+      !deliveryAddress?.addressLine1 ||
+      !deliveryAddress?.city ||
+      !deliveryAddress?.postalCode ||
+      !deliveryAddress?.state
+    )) {
+      return res.status(400).json({ error: 'A complete delivery address is required for shop requests.' });
+    }
+
+    if (deliveryLocation && (
+      !Number.isFinite(deliveryLocation.latitude) ||
+      !Number.isFinite(deliveryLocation.longitude) ||
+      deliveryLocation.latitude < -90 ||
+      deliveryLocation.latitude > 90 ||
+      deliveryLocation.longitude < -180 ||
+      deliveryLocation.longitude > 180
+    )) {
+      return res.status(400).json({ error: 'Invalid delivery location.' });
+    }
+
     if (!isVerifiedContact('email', email) || !isVerifiedContact('phone', phone)) {
-      return res.status(403).json({ error: 'Please verify both your email and phone number before scheduling an appointment.' });
+      return res.status(403).json({ error: 'Please verify both your email and phone number before continuing.' });
     }
     
     const { workbook, filepath } = await getOrCreateWorkbook();
@@ -284,7 +215,7 @@ app.post('/api/contact-submit', async (req, res) => {
       name,
       email,
       phone,
-      message,
+      message: orderDetails ? `${message}\n\n${orderDetails}` : message,
     });
 
     // Save workbook

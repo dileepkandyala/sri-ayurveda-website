@@ -1,9 +1,10 @@
 import React, { useEffect, useRef, useState } from 'react'
-import { createBrowserRouter, RouterProvider, Link, Outlet, useLocation } from 'react-router-dom'
+import { createBrowserRouter, RouterProvider, Link, Outlet, useLocation, useNavigate } from 'react-router-dom'
 import Home from './pages/Home'
 import About from './pages/About'
 import Panchakarma from './pages/Panchakarma'
 import Contact from './pages/Contact'
+import BookingConfirmation from './pages/BookingConfirmation'
 import GalleryPage from './pages/GalleryPage'
 import TreatmentsPage from './pages/TreatmentsPage'
 import SpecialtiesPage from './pages/SpecialtiesPage'
@@ -16,8 +17,6 @@ import CookieConsent from './components/CookieConsent'
 import logo from './images/logo.jpg'
 import { AmbientMusicProvider, useAmbientMusic } from './lib/ambientMusic'
 import { useCart, formatPrice, CartProvider } from './lib/cart'
-import { fetchApi } from './lib/api'
-import { sendShopWhatsAppMessage } from './lib/whatsapp'
 import MedicalDisclaimer from './pages/MedicalDisclaimer'
 import TelemedicinePolicy from './pages/TelemedicinePolicy'
 import CookiePolicy from './pages/CookiePolicy'
@@ -25,67 +24,26 @@ import GrievanceRedressal from './pages/GrievanceRedressal'
 import DataRetentionSecurity from './pages/DataRetentionSecurity'
 import { ShoppingBag, Plus, Minus, X, Check, ArrowRight } from 'lucide-react'
 
-function CartPanel({ onClose }) {
-  const { items, itemCount, total, updateQuantity, clearCart } = useCart()
-  const [phone, setPhone] = useState('')
-  const [otp, setOtp] = useState('')
-  const [otpSent, setOtpSent] = useState(false)
-  const [verified, setVerified] = useState(false)
-  const [busy, setBusy] = useState(false)
-  const [message, setMessage] = useState('')
+function CartPanel({ onClose, panelRef }) {
+  const { items, itemCount, total, updateQuantity } = useCart()
+  const navigate = useNavigate()
   const [policyConsent, setPolicyConsent] = useState(false)
 
-  const sendOtp = async () => {
-    if (!/^\+?[0-9\s-]{10,15}$/.test(phone)) {
-      setMessage('Enter a valid phone number to continue.')
-      return
-    }
-    setBusy(true)
-    setMessage('')
-    try {
-      const response = await fetchApi('/send-otp', {
-        method: 'POST',
-        body: JSON.stringify({ type: 'phone', contact: phone }),
-      })
-      if (!response.success) throw new Error(response.error || 'Unable to send OTP.')
-      setOtpSent(true)
-      setMessage(response.message || 'OTP sent to your phone.')
-    } catch (error) {
-      setMessage(error.message || 'Unable to send OTP right now.')
-    } finally {
-      setBusy(false)
-    }
-  }
-
-  const verifyOtp = async () => {
-    if (!otp) {
-      setMessage('Enter the OTP sent to your phone.')
-      return
-    }
-    setBusy(true)
-    try {
-      const response = await fetchApi('/verify-otp', {
-        method: 'POST',
-        body: JSON.stringify({ type: 'phone', contact: phone, otp }),
-      })
-      if (!response.success) throw new Error(response.error || 'Unable to verify OTP.')
-      setVerified(true)
-      setMessage('Phone verified. You can now continue to WhatsApp.')
-    } catch (error) {
-      setMessage(error.message || 'Unable to verify OTP.')
-    } finally {
-      setBusy(false)
-    }
-  }
-
   const checkout = () => {
-    sendShopWhatsAppMessage(items, total, phone)
-    clearCart()
+    navigate('/contact', {
+      state: {
+        inquiry: {
+          type: 'shop',
+          items,
+          total,
+        },
+      },
+    })
     onClose()
   }
 
   return (
-    <div className="cart-panel" role="dialog" aria-label="Shopping cart">
+    <div className="cart-panel" ref={panelRef} role="dialog" aria-label="Shopping cart">
       <div className="cart-panel-header">
         <div><p className="cart-eyebrow">Your selection</p><h2>Wellness Cart</h2></div>
         <button type="button" className="cart-close" onClick={onClose} aria-label="Close cart"><X /></button>
@@ -107,16 +65,10 @@ function CartPanel({ onClose }) {
             ))}
           </div>
           <div className="cart-total"><span>Total</span><strong>{formatPrice(total)}</strong></div>
-          {!verified && <div className="cart-verification">
-            <label htmlFor="cart-phone">Verify phone for checkout</label>
-            <div className="cart-input-row"><input id="cart-phone" type="tel" value={phone} onChange={(event) => { setPhone(event.target.value); setVerified(false); }} placeholder="+91 XXXXXXXXXX" disabled={otpSent} /><button type="button" onClick={sendOtp} disabled={busy || otpSent}>{otpSent ? 'Sent' : 'Send OTP'}</button></div>
-            {otpSent && <div className="cart-input-row"><input type="text" inputMode="numeric" maxLength={6} value={otp} onChange={(event) => setOtp(event.target.value)} placeholder="6-digit OTP" /><button type="button" onClick={verifyOtp} disabled={busy}>Verify</button></div>}
-          </div>}
-          {message && <p className="cart-message">{message}</p>}
           <label className="cart-policy-consent"><input type="checkbox" checked={policyConsent} onChange={(event) => setPolicyConsent(event.target.checked)} /> <span>I agree to the <a href="/shipping-delivery-policy">Shipping & Return Policy</a>.</span></label>
           <div className="cart-actions">
             <a href="/shop" className="cart-add-more" onClick={onClose}>Add more</a>
-            <button type="button" className="cart-checkout" onClick={checkout} disabled={!verified || !policyConsent || busy}><Check /> Checkout on WhatsApp <ArrowRight /></button>
+            <button type="button" className="cart-checkout" onClick={checkout} disabled={!policyConsent}><Check /> Continue to contact details <ArrowRight /></button>
           </div>
           <p className="cart-count">{itemCount} item{itemCount === 1 ? '' : 's'} selected</p>
         </>
@@ -129,6 +81,28 @@ function Header() {
   const { isMusicPlaying, startAmbientMusic, stopAmbientMusic } = useAmbientMusic()
   const { itemCount } = useCart()
   const [cartOpen, setCartOpen] = useState(false)
+  const cartControlRef = useRef(null)
+  const cartPanelRef = useRef(null)
+
+  useEffect(() => {
+    if (!cartOpen) return undefined
+
+    const handleOutsidePointerDown = (event) => {
+      if (
+        !cartControlRef.current?.contains(event.target) &&
+        !cartPanelRef.current?.contains(event.target)
+      ) {
+        setCartOpen(false)
+      }
+    }
+
+    document.addEventListener('pointerdown', handleOutsidePointerDown)
+    return () => document.removeEventListener('pointerdown', handleOutsidePointerDown)
+  }, [cartOpen])
+
+  useEffect(() => {
+    if (itemCount === 0) setCartOpen(false)
+  }, [itemCount])
 
   return (
     <header className="site-header">
@@ -175,11 +149,13 @@ function Header() {
         </button>
         {itemCount > 0 && (
           <>
-            <button type="button" className="cart-toggle" onClick={() => setCartOpen((open) => !open)} aria-label={`Open cart with ${itemCount} items`} aria-expanded={cartOpen}>
-              <ShoppingBag aria-hidden="true" />
-              <span className="cart-badge">{itemCount}</span>
-            </button>
-            {cartOpen && <CartPanel onClose={() => setCartOpen(false)} />}
+            <div className="cart-control" ref={cartControlRef}>
+              <button type="button" className="cart-toggle" onClick={() => setCartOpen((open) => !open)} aria-label={`Open cart with ${itemCount} items`} aria-expanded={cartOpen}>
+                <ShoppingBag aria-hidden="true" />
+              </button>
+              <span className="cart-badge" aria-hidden="true">{itemCount}</span>
+            </div>
+            {cartOpen && <CartPanel onClose={() => setCartOpen(false)} panelRef={cartPanelRef} />}
           </>
         )}
       </div>
@@ -288,6 +264,7 @@ const router = createBrowserRouter(
         { path: 'about', element: <About /> },
         { path: 'panchakarma', element: <Panchakarma /> },
         { path: 'contact', element: <Contact /> },
+        { path: 'booking-confirmation', element: <BookingConfirmation /> },
         { path: 'terms-of-service', element: <TermsOfService /> },
         { path: 'privacy-policy', element: <PrivacyPolicy /> },
         { path: 'refund-cancellation-policy', element: <CommercePolicies path="/refund-cancellation-policy" /> },

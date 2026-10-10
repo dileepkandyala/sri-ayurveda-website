@@ -1,89 +1,35 @@
-# Sri Ayurveda Contact Form Backend
+# Sri Ayurveda Backend
 
-This backend server handles contact form submissions and saves them to monthly Excel files.
+The Express backend verifies phone.email contact data and saves appointment requests to monthly Excel files in `data/`.
 
-## Setup
+## Local development
 
-1. Install dependencies:
+Install server dependencies and start the API:
+
 ```bash
 cd server
 npm install
-```
-
-2. Start the server (run in a separate terminal):
-```bash
 npm start
 ```
 
-The server will run on `http://localhost:5000`
+The backend listens on port `5000` by default. Set `PORT` to override it. The root frontend dev server proxies `/api` requests to this port.
 
-> Email notifications: To enable email notifications on contact form submission, set the following environment variables in your `.env.local` or hosting dashboard:
+## Production configuration
 
-```
-SMTP_HOST=smtp.gmail.com
-SMTP_PORT=587
-SMTP_USER=your-email@example.com
-SMTP_PASS=your-email-app-password
-NOTIFY_EMAIL=lakshmi@sriayurvedawellness.com
-SMTP_FROM="Sri Ayurveda" <your-email@example.com>
-```
+Set `NODE_ENV=production` and optionally `PORT` in the hosting platform's environment settings. Do not commit `.env` files. The phone.email widget client IDs are public frontend configuration; no phone.email server secret is required.
 
-If SMTP variables are not provided, the server will still save submissions to Excel but will skip email notifications.
+## API
 
-## How it works
+### `POST /api/verify-contact`
 
-- When a user submits the contact form, data is sent to the backend
-- The backend automatically creates/updates an Excel file for the current month (format: `YYYY-MM.xlsx`)
-- Each submission is added as a row with: Date, Time, Name, Email, Phone, Message
-- Files are stored in the `/data` directory
+Accepts the phone.email verification type and one-time JSON URL. The server restricts the URL to HTTPS phone.email hosts, fetches the verification data, and temporarily records the verified email or phone for the contact submission.
 
-## Excel File Structure
+### `POST /api/contact-submit`
 
-Example: `2026-02.xlsx` for February 2026
+Accepts the appointment request after both email and phone have been verified. The request is stored in `data/YYYY-MM.xlsx`. Automated email notifications are currently disabled.
 
-| Date       | Time     | Name      | Email           | Phone      | Message             |
-|-----------|----------|-----------|-----------------|------------|---------------------|
-| 2026-02-04 | 12:07:21 | John Doe  | john@email.com  | 9876543210 | Inquiry about... |
+### `GET /api/health`
 
-## API Endpoints
+Returns `{ "status": "ok" }` when the server is running.
 
-### POST /api/contact-submit
-Accepts contact form data and saves to Excel
-
-**Request Body:**
-```json
-{
-  "name": "String",
-  "email": "String",
-  "phone": "String",
-  "message": "String"
-}
-```
-
-**Response:**
-```json
-{
-  "success": true,
-  "message": "Contact submission saved successfully",
-  "filename": "2026-02.xlsx"
-}
-```
-
-### GET /api/health
-Health check endpoint
-
-## Dev email preview (Ethereal)
-
-For safe local testing without a real SMTP account, enable Ethereal preview by creating a local `.env` with:
-
-```
-DEV_EMAIL_PREVIEW=ethereal
-# Optional: override recipient/sender
-NOTIFY_EMAIL=lakshmi@sriayurvedawellness.com
-SMTP_FROM="Sri Ayurveda" <no-reply@example.com>
-```
-
-Start the server and submit the contact form. The server log will print an `Ethereal preview URL:` which you can open in your browser to view the rendered email.
-
-## Files Location
-Excel files are saved in: `code/data/YYYY-MM.xlsx`
+WhatsApp requests are prefilled in the user's browser; the user must press **Send** in WhatsApp. The website does not send WhatsApp messages automatically.
