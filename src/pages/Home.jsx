@@ -152,10 +152,10 @@ const Home = () => {
             As a <span className="font-semibold">certified Yoga professional</span>, she integrates ancient wisdom with modern understanding to address:
           </p>
           <ul className="text-lg text-gray-700 mb-8 space-y-3">
-            <li>✓ Chronic conditions & pain management</li>
-            <li>✓ Immunity strengthening & detoxification</li>
-            <li>✓ Stress relief & mental wellness</li>
-            <li>✓ Lifestyle optimization & preventive care</li>
+            <li>Chronic conditions & pain management</li>
+            <li>Immunity strengthening & detoxification</li>
+            <li>Stress relief & mental wellness</li>
+            <li>Lifestyle optimization & preventive care</li>
           </ul>
           <a href="/about" className="inline-block btn-primary">
             Read Full Biography →
@@ -212,14 +212,14 @@ const Home = () => {
             <div className="home-contact-list space-y-6">
               <p className="text-lg">
                 <span className="font-semibold text-deep-green">WhatsApp:</span>
-                <a href="https://wa.me/917619529616" target="_blank" rel="noopener noreferrer" className="text-gold hover:text-amber ml-2 transition">
-                  +91 7619529616
+                <a href="https://wa.me/919740191089" target="_blank" rel="noopener noreferrer" className="text-gold hover:text-amber ml-2 transition">
+                  +91 97401 91089
                 </a>
               </p>
               <p className="text-lg">
                 <span className="font-semibold text-deep-green">Phone:</span>
-                <a href="tel:+919187398489" className="text-gold hover:text-amber ml-2 transition">
-                  +919187398489
+                <a href="tel:+919740191089" className="text-gold hover:text-amber ml-2 transition">
+                  +91 97401 91089
                 </a>
               </p>
               <p className="text-lg">

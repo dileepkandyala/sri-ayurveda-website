@@ -41,7 +41,7 @@ export default function GrievanceRedressal() {
             <p><strong>Qualification:</strong> BAMS (Bachelor of Ayurvedic Medicine & Surgery)</p>
             <p><strong>Registration Number:</strong> 47019 (Karnataka Ayurvedic & Unani Practitioners' Board)</p>
             <p style={{marginTop: '1rem'}}><strong>Email:</strong> lakshmi@sriayurvedawellness.com</p>
-            <p><strong>Phone:</strong> +91-7619529616</p>
+            <p><strong>Phone:</strong> +91 97401 91089</p>
             <p><strong>Address:</strong> #Hamsa complex, Magadi main road, near Sharath Memorial School, Ramanagara, Bengaluru South District-562159, Karnataka</p>
           </div>
 
@@ -75,9 +75,9 @@ export default function GrievanceRedressal() {
           <p>Submit your complaint through any of the following methods:</p>
           <ul className="list-disc list-inside ml-4 mb-4 space-y-2">
             <li><strong>Email:</strong> lakshmi@sriayurvedawellness.com (Subject: "Patient Grievance - [Your Name]")</li>
-            <li><strong>Phone:</strong> +91-7619529616 (Verbal complaints can be registered; follow-up written confirmation recommended)</li>
+            <li><strong>Phone:</strong> +91 97401 91089 (Verbal complaints can be registered; follow-up written confirmation recommended)</li>
             <li><strong>In-Person:</strong> Visit the clinic address to submit a written complaint</li>
-            <li><strong>WhatsApp:</strong> Send a written complaint message to +91-7619529616 (WhatsApp)</li>
+            <li><strong>WhatsApp:</strong> Send a written complaint message to +91 97401 91089 (WhatsApp)</li>
           </ul>
 
           <h3 className="mb-2">Step 3: Grievance Registration</h3>
@@ -178,8 +178,8 @@ export default function GrievanceRedressal() {
             <p><strong>For Grievances, Contact:</strong></p>
             <p><strong>Grievance Officer:</strong> Dr. Shreelakshmi.M.V, BAMS</p>
             <p><strong>Email:</strong> lakshmi@sriayurvedawellness.com</p>
-            <p><strong>Phone:</strong> +91-7619529616</p>
-            <p><strong>WhatsApp:</strong> +91-7619529616</p>
+            <p><strong>Phone:</strong> +91 97401 91089</p>
+            <p><strong>WhatsApp:</strong> +91 97401 91089</p>
             <p style={{marginTop: '1rem'}}><strong>Response Guarantee:</strong> Acknowledgment within 48 hours | Resolution within 15 business days</p>
           </div>
 

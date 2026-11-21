@@ -94,14 +94,14 @@ export const SEO_CONFIG = {
       postalCode: '562159',
       addressCountry: 'IN'
     },
-    telephone: '+919187398489',
+    telephone: '+919740191089',
     contactPoint: {
-      telephone: '+919187398489',
+      telephone: '+919740191089',
       contactType: 'Customer Support'
     },
     sameAs: [
       'https://www.instagram.com/sri_ayurveda_clinic',
-      'https://wa.me/917619529616'
+      'https://wa.me/919740191089'
     ],
     priceRange: '₹₹₹'
   }

@@ -36,7 +36,7 @@ export default function PrivacyPolicy() {
           <h3 className="mb-4">Data Fiduciary Information</h3>
           <p><strong>Name:</strong> Sri Ayurveda Clinic</p>
           <p><strong>Grievance Redressal Officer:</strong> Dr. Shreelakshmi.M.V, BAMS</p>
-          <p><strong>Email:</strong> lakshmi@sriayurvedawellness.com | <strong>Phone:</strong> +91-7619529616</p>
+          <p><strong>Email:</strong> lakshmi@sriayurvedawellness.com | <strong>Phone:</strong> +91 97401 91089</p>
           <p><strong>Address:</strong> #Hamsa complex, Magadi main road, near Sharath Memorial School, Ramanagara, Bengaluru South District-562159</p>
 
           <h2 className="mb-4 mt-6">1. Notice & Explicit Consent (DPDP Act 2023, Section 6)</h2>
@@ -83,7 +83,7 @@ export default function PrivacyPolicy() {
           <div style={{padding: '1rem', backgroundColor: '#f3f4f6', borderRadius: '6px', marginTop: '1rem'}}>
             <p><strong>Grievance Officer:</strong> Dr. Shreelakshmi.M.V, BAMS</p>
             <p><strong>Email:</strong> lakshmi@sriayurvedawellness.com</p>
-            <p><strong>Phone:</strong> +91-7619529616</p>
+            <p><strong>Phone:</strong> +91 97401 91089</p>
             <p><strong>Address:</strong> #Hamsa complex, Magadi main road, near Sharath Memorial School, Ramanagara, Bengaluru South District-562159, Karnataka</p>
             <p style={{marginTop: '1rem'}}><strong>Acknowledgment:</strong> Within 48 hours | <strong>Resolution Target:</strong> Within 15 business days</p>
           </div>

@@ -91,7 +91,7 @@ Submit contact form and save to Excel
 {
   "name": "John Doe",
   "email": "verified@example.com",
-  "phone": "+919876543210",
+  "phone": "+919740191089",
   "appointmentDate": "2026-10-11",
   "appointmentTime": "11:00 AM",
   "consultationType": "Online",
@@ -135,8 +135,8 @@ Ready to deploy on:
 
 ## 📞 Contact Information
 
-- **Phone:** +91-8113452402
-- **WhatsApp:** +91-7619529616
+- **Phone:** +91 97401 91089
+- **WhatsApp:** +91 97401 91089
 - **Location:** Ramanagara, Karnataka, India
 - **Website:** https://www.sriayurvedawellness.com
 

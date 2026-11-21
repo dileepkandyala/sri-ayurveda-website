@@ -1153,3 +1153,136 @@ footer a {
 }
 
 .home-section:nth-child(4) { animation-delay: 300ms; }
+
+/* =========================
+   Polish: small fixes that keep the existing look
+========================= */
+
+/* Centered section titles: center their gold accent bar too */
+.text-center > h2::after,
+h2.text-center::after {
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+/* Link-style buttons: no underline, consistent box */
+a.btn,
+a.btn-primary,
+a.btn-ghost {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  text-decoration: none;
+}
+
+/* Breathing room between home sections */
+#services,
+#dosha-quiz,
+#wellness-path,
+#testimonials,
+#newsletter,
+section:has(.stats-card) {
+  padding-top: 3.5rem;
+  padding-bottom: 1.5rem;
+}
+
+/* Services call-to-action panel */
+#services .mt-20 { margin-top: 3rem; }
+
+#services .mt-20 > div {
+  padding: clamp(2rem, 5vw, 3.5rem) clamp(1.25rem, 4vw, 3rem);
+  color: #fff;
+  border-radius: 20px;
+  background: linear-gradient(135deg, var(--deep-green) 0%, var(--emerald) 100%);
+  box-shadow: 0 18px 45px rgba(11, 79, 59, 0.18);
+}
+
+#services .mt-20 > div h3 { margin-bottom: 0.75rem; color: #fffdf3; }
+#services .mt-20 > div p { max-width: 42rem; margin: 0 auto 1.75rem; color: rgba(255, 255, 255, 0.85) !important; }
+
+#services .mt-20 .btn-primary {
+  color: var(--emerald) !important;
+  background: #fffdf4;
+}
+
+#services .mt-20 .btn-primary:hover { color: var(--emerald) !important; background: #fff; }
+
+/* Dosha quiz: inner padding and spacing between answers */
+.dosha-quiz-card { padding: clamp(1.25rem, 4vw, 2.75rem); background: #fff; }
+.dosha-quiz-card .dosha-question { margin: 1rem 0 1.25rem; }
+.dosha-quiz-card .dosha-answer + .dosha-answer { margin-top: 0.75rem; }
+
+/* Wellness journey: bullet and label side by side */
+.wellness-card .space-y-2 > div {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.wellness-card .space-y-2 > div + div { margin-top: 0.35rem; }
+
+/* Stats: one row of three, with prominent numbers */
+.grid:has(> .stats-card) {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1.25rem;
+}
+
+.stats-card { padding: 2rem 1.25rem; }
+.stats-card svg { width: 2.25rem; height: 2.25rem; margin: 0 auto 0.75rem; color: var(--gold); }
+
+.stats-card .text-5xl {
+  color: var(--emerald);
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(2rem, 4vw, 2.75rem);
+  font-weight: 700;
+  line-height: 1.1;
+}
+
+.stats-card .text-lg { margin: 0.35rem 0 0; color: #58705f; font-weight: 600; }
+
+@media (max-width: 640px) {
+  .grid:has(> .stats-card) { grid-template-columns: 1fr; gap: 0.85rem; }
+}
+
+/* Testimonials: gold stars, no stray border, tidy author row */
+.testimonial-card > div { border: 0 !important; }
+
+.testimonial-card > div > div:first-child {
+  display: flex;
+  gap: 0.2rem;
+  margin-bottom: 0.9rem;
+}
+
+.testimonial-card svg {
+  width: 1.15rem;
+  height: 1.15rem;
+  color: var(--gold);
+  fill: var(--gold);
+}
+
+.testimonial-card > div > p { color: #3a4a40; }
+
+.testimonial-card > div > div:last-child {
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+}
+
+.testimonial-card > div > div:last-child .text-4xl { font-size: 2rem; line-height: 1; }
+.testimonial-card > div > div:last-child p { margin: 0; }
+.testimonial-card > div > div:last-child p:first-child { color: var(--ink-green); font-weight: 700; }
+.testimonial-card > div > div:last-child p:last-child { color: var(--amber); font-size: 0.85rem; }
+
+#section-doctor .btn-primary { margin-bottom: 2rem; }
+
+/* Long email addresses wrap instead of overflowing on phones */
+.home-contact-list a { overflow-wrap: anywhere; }
+
+/* Doctor portrait: keep it a sensible height on wide screens */
+#section-doctor .ayurveda-image img {
+  max-height: 620px;
+  object-fit: cover;
+  object-position: center 30%;
+}
