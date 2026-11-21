@@ -35,7 +35,7 @@ const structuredData = {
   "description": "Authentic Ayurvedic wellness center offering Panchakarma therapies, yoga, and personalized treatments by Dr. Shreelakshmi M.V., BAMS",
   "image": "https://www.sriayurvedawellness.com/logo.png",
   "url": "https://www.sriayurvedawellness.com",
-  "telephone": "+919187398489",
+  "telephone": "+919740191089",
   "email": "lakshmi@sriayurvedawellness.com",
   "areaServed": ["Ramanagara", "Bengaluru", "Karnataka"],
   "priceRange": "₹₹₹",
@@ -54,7 +54,7 @@ const structuredData = {
   },
   "sameAs": [
     "https://www.instagram.com/sri_ayurveda_clinic",
-    "https://wa.me/917619529616"
+    "https://wa.me/919740191089"
   ],
   "openingHoursSpecification": {
     "@type": "OpeningHoursSpecification",

@@ -260,7 +260,7 @@ export default function Contact() {
                   </div>
                   <div>
                     <h4 className="font-semibold text-green-900 mb-2 text-lg">Phone</h4>
-                    <p className="text-gray-700">+919187398489</p>
+                    <p className="text-gray-700">+91 97401 91089</p>
                   </div>
                 </div>
 
@@ -270,8 +270,8 @@ export default function Contact() {
                   </div>
                   <div>
                     <h4 className="font-semibold text-green-900 mb-2 text-lg">WhatsApp</h4>
-                    <a href="https://wa.me/917619529616" className="text-gold hover:text-amber font-semibold transition">
-                      +91 7619529616
+                    <a href="https://wa.me/919740191089" className="text-gold hover:text-amber font-semibold transition">
+                      +91 97401 91089
                     </a>
                   </div>
                 </div>

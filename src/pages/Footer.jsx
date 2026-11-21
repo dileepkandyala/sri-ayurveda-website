@@ -12,7 +12,7 @@ export default function Footer() {
     },
     {
       name: 'WhatsApp',
-      url: 'https://wa.me/917619529616',
+      url: 'https://wa.me/919740191089',
       icon: MessageCircle,
       color: 'hover:text-green-400',
     },
@@ -107,11 +107,11 @@ export default function Footer() {
             <h4 className="footer-heading">Clinic Details</h4>
             <div className="footer-contact-list">
               <a
-                href="tel:+919187398489"
+                href="tel:+919740191089"
                 className="footer-contact-link"
               >
                 <Phone aria-hidden="true" />
-                <span>+919187398489</span>
+                <span>+91 97401 91089</span>
               </a>
               <a
                 href="mailto:lakshmi@sriayurvedawellness.com"

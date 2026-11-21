@@ -15,6 +15,10 @@ import img12 from '../images/shirobasti.jpg';
 import img13 from '../images/abhyanga.jpg';
 import img14 from '../images/yoga hd.jpg';
 import ayurvedicImg from '../images/ayurvedic.jpg';
+import clinicFront from '../images/IMG_3029.png';
+import clinicEntrance from '../images/IMG_3027.png';
+import clinicDoor from '../images/IMG_3026.png';
+import therapyRoom from '../images/IMG_3025.png';
 import video1 from '../images/WhatsApp Video 2026-07-03 at 12.37.52 PM.mp4';
 import video2 from '../images/WhatsApp Video 2026-07-03 at 12.37.53 PM.mp4';
 import video3 from '../images/WhatsApp Video 2026-07-03 at 12.37.53 PM (1).mp4';
@@ -32,6 +36,10 @@ const Gallery = () => {
     { type: 'image', src: img3, alt: 'Healing ambience in the clinic', category: 'Facility' },
     { type: 'image', src: img4, alt: 'Therapeutic treatment setup', category: 'Treatment' },
     { type: 'image', src: img6, alt: 'Wellness therapy setup', category: 'Clinic' },
+    { type: 'image', src: clinicFront, alt: 'Sri Ayurveda Clinic storefront and pharmacy', category: 'Clinic' },
+    { type: 'image', src: clinicEntrance, alt: 'Clinic entrance decorated with marigold garlands', category: 'Clinic' },
+    { type: 'image', src: clinicDoor, alt: 'Sri Ayurveda logo on the clinic door', category: 'Clinic' },
+    { type: 'image', src: therapyRoom, alt: 'Panchakarma therapy room with droni table', category: 'Clinic' },
     { type: 'image', src: img7, alt: 'Doctor consultation and guidance', category: 'Doctor' },
     { type: 'image', src: img8, alt: 'Treatment room and wellness atmosphere', category: 'Facility' },
     { type: 'image', src: img9, alt: 'Janu Basti therapy', category: 'Therapy' },

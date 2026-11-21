@@ -114,7 +114,7 @@ export default function MedicalDisclaimer() {
           <div style={{padding: '1rem', backgroundColor: '#f3f4f6', borderRadius: '6px', marginTop: '1rem'}}>
             <p><strong>Dr. Shreelakshmi.M.V, BAMS</strong></p>
             <p><strong>Email:</strong> lakshmi@sriayurvedawellness.com</p>
-            <p><strong>Phone:</strong> +91-7619529616</p>
+            <p><strong>Phone:</strong> +91 97401 91089</p>
           </div>
 
           <div style={{marginTop: '2rem', padding: '1rem', backgroundColor: '#f0fdf4', borderRadius: '6px'}}>
